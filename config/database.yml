@@ -83,3 +83,4 @@ production:
   database: go-eggplant_production
   username: go-eggplant
   password: <%= ENV['GO-EGGPLANT_DATABASE_PASSWORD'] %>
+
