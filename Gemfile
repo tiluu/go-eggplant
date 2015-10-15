@@ -23,6 +23,8 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'dotenv-rails'
+
 # APIs
 gem 'yelp', require: 'yelp'
 gem 'trip_advisor'
