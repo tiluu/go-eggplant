@@ -1,0 +1,14 @@
+<h1>Trip</h1>
+<%= link_to 'new trip', new_trip_path %> | add people to this trip
+
+<p>
+    Going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> from <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
+</p>
+
+<p>Restaurants: <br>
+    <% @result.businesses.each do |b| %>
+        <%= b.name %><br>
+    <% end %> 
+</p>
+
+<a href="javascript:history.back()">Back</a>

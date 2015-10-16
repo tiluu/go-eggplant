@@ -1,7 +1,12 @@
 class TripsController < ApplicationController
     def index
         @trips = Trip.all
-        @result = Yelp.client.search('Vancouver BC', {term:'coffee', limit: 10})
+    end
+
+    def show
+        @trip = Trip.find(params[:id])
+        search_params = @trip.city + @trip.state_or_province + @trip.country
+        @result = Yelp.client.search(search_params, {term: 'restaurants', limit: 10})
     end
 
     def new
@@ -11,7 +16,7 @@ class TripsController < ApplicationController
     def create
         @trip = Trip.new(trip_params)
         if @trip.save
-            redirect_to action: 'index'
+            redirect_to action: 'show'
         else
             render 'new'
         end
@@ -24,7 +29,7 @@ class TripsController < ApplicationController
     def update
         @trip = Trip.find(params[:id])
         if @trip.update_attributes(trip_params)
-            redirect_to action: 'index'
+            redirect_to action: 'show'
         else
             render 'edit'
         end
@@ -38,8 +43,9 @@ class TripsController < ApplicationController
     private
         def trip_params
             params.require(:trip).permit(:name, :start_date,
-                                         :end_date, :location,
-                                         :password)
+                                         :end_date, :city, 
+                                         :state_or_province,
+                                         :country, :password)
         end
 
 end

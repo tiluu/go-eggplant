@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :trips
 
-  # root 'welcome#index'
+  root 'home_pages#home'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
