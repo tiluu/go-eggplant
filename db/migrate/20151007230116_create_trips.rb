@@ -3,7 +3,9 @@ class CreateTrips < ActiveRecord::Migration
     create_table :trips do |t|
       t.string      :name
       t.string      :password
-      t.string      :location
+      t.string      :city
+      t.string      :state_or_province
+      t.string      :country
       t.datetime    :start_date
       t.datetime    :end_date
 

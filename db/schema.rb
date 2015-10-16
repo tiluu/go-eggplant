@@ -19,11 +19,13 @@ ActiveRecord::Schema.define(version: 20151007230135) do
   create_table "trips", force: :cascade do |t|
     t.string   "name"
     t.string   "password"
-    t.string   "location"
+    t.string   "city"
+    t.string   "state_or_province"
+    t.string   "country"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: :cascade do |t|

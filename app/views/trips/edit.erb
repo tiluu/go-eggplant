@@ -3,17 +3,25 @@
 <%= form_for(@trip) do |f| %>
     <%= f.label :name %><br>
     <%= f.text_field :name %><br>
-
+    
     <%= f.label :start_date %><br>
-    <%= f.date_field :start_date %><br>
+    <%= select_date Date.today, prefix: :start_date %><br>
 
     <%= f.label :end_date %><br>
-    <%= f.date_field :end_date %><br>
+    <%= select_date Date.today + 1, prefix: :end_date %><br>
+    
+    <%= f.label :city %><br>
+    <%= f.text_field :city %><br>
 
-    <%= f.label :location %><br>
-    <%= f.text_field :location %>
+    <%= f.label :state_or_province %><br>
+    <%= f.text_field :state_or_province %><br>
+
+    <%= f.label :country %><br>
+    <%= f.text_field :country %>
 
     <p>
         <%= f.submit "Save changes" %>
     </p>
 <% end %>
+
+<p><a href="javascript:history.back()"><< Back</a>
