@@ -1,10 +1,10 @@
-<h1>Yelp</h1>
+<h1>Trip</h1>
 <%= link_to 'new trip', new_trip_path %> 
 
 <p><strong>Current list of trips</strong><br>
     <ul>
         <% @trips.each do |trip| %>
-            <li> <%= trip.name %><br>
+            <li> <%= trip.name %> <%= trip.location %> <%= link_to 'edit trip', edit_trip_path(trip) %> <%= link_to 'delete trip', trip, method: :delete, data: {confirm: "You sure?" } %><br>
         <% end %>
     </ul>
 </p>
