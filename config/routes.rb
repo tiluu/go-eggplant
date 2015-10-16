@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-Rails.application.routes.draw do  
-=======
 Rails.application.routes.draw do
-<<<<<<< HEAD
->>>>>>> f9bb059fb9f8f9e39ca4d41dd75a52102abfbf7f
   resources :users
 
   resources :trips

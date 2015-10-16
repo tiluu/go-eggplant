@@ -1,6 +1,17 @@
 <h1>Yelp</h1>
- 
-<% @result.businesses.each do |b| %>
-    <%= b.name %><br>
-<% end %> 
+<%= link_to 'new trip', new_trip_path %> 
+
+<p><strong>Current list of trips</strong><br>
+    <ul>
+        <% @trips.each do |trip| %>
+            <li> <%= trip.name %><br>
+        <% end %>
+    </ul>
+</p>
+
+<p><strong>Test Yelp API results</strong><br>
+    <% @result.businesses.each do |b| %>
+        <%= b.name %><br>
+    <% end %> 
+</p>
 

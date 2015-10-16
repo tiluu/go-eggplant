@@ -79,10 +79,6 @@ GEM
     coffee-script-source (1.9.1.1)
     colored (1.2)
     debug_inspector (0.0.2)
-    dotenv (2.0.2)
-    dotenv-rails (2.0.2)
-      dotenv (= 2.0.2)
-      railties (~> 4.0)
     erubis (2.7.0)
     escape (0.0.4)
     execjs (2.6.0)
@@ -149,19 +145,11 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
-<<<<<<< HEAD
     rest-client (1.6.9)
       mime-types (~> 1.16)
     rubyzip (0.9.9)
     rugged (0.19.0)
     sass (3.4.19)
-=======
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
-    rubyzip (0.9.9)
-    rugged (0.19.0)
-    sass (3.4.18)
->>>>>>> f9bb059fb9f8f9e39ca4d41dd75a52102abfbf7f
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
@@ -222,7 +210,6 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
-  dotenv-rails
   jbuilder (~> 2.0)
   jquery-rails
   pg
