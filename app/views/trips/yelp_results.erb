@@ -1,0 +1,11 @@
+<%= @result.total %> results total 
+
+<%= @result.businesses.each do |b| %>
+    <p>
+        <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
+       <%= safe_join(b.location.display_address, '<br>'.html_safe) %>
+    </p>
+<% end %> 
+
+<p><a href="javascript:history.back()"><< Back</a>
+

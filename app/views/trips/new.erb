@@ -1,29 +1,5 @@
 <h1>Create a trip</h1>
 
-<%= form_for(@trip) do |f| %>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %><br>
+<%= render 'shared/trip_form' %> 
 
-    <%= f.label :start_date %><br>
-    <%= select_date Date.today, prefix: :start_date %><br>
-
-    <%= f.label :end_date %><br>
-    <%= select_date Date.today + 1, prefix: :end_date %><br>
-
-    <%= f.label :city %><br>
-    <%= f.text_field :city %><br>
-
-    <%= f.label :state_or_province %><br>
-    <%= f.text_field :state_or_province %><br>
-
-    <%= f.label :country %> [change to dropdown]<br>
-    <%= f.text_field :country %><br>
-
-    <%= f.label :password %><br>
-    <%= f.password_field :password %>
-
-<p><%= f.submit "Create trip" %></p>
-
-<% end %>
-
-<p><a href="javascript:history.back()"><< Back</a>
+<p><a href="javascript:history.back()"><< Back</a></p>

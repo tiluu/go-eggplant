@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/trips/yelp_results/:id' => 'trips#yelp_results', as: 'yelp_results'
   resources :users
 
   resources :trips

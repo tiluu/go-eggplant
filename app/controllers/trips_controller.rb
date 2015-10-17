@@ -16,7 +16,7 @@ class TripsController < ApplicationController
     def create
         @trip = Trip.new(trip_params)
         if @trip.save
-            redirect_to action: 'show'
+            redirect_to @trip
         else
             render 'new'
         end
@@ -33,6 +33,12 @@ class TripsController < ApplicationController
         else
             render 'edit'
         end
+    end
+
+    def yelp_results
+        @trip = Trip.find(params[:id])
+        search_params = @trip.city + @trip.state_or_province + @trip.country
+        @result = Yelp.client.search(search_params, {term: 'restaurants', limit: 20})
     end
 
     def destroy
