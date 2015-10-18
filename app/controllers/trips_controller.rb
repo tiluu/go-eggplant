@@ -26,15 +26,17 @@ class TripsController < ApplicationController
 
     def edit
         @trip = Trip.find(params[:id])
+        @users = @trip.users
     end
 
     def update
         @trip = Trip.find(params[:id])
+        @users = @trip.users
         if @trip.update_attributes(trip_params)
             redirect_to @trip
         else
             @errors = @trip.errors
-            render 'edit'
+            render :edit
         end
     end
 
@@ -46,7 +48,7 @@ class TripsController < ApplicationController
 
     def destroy
         Trip.find(params[:id]).destroy
-        redirect_to action: 'index'
+        redirect_to :index
     end
 
     private
@@ -55,6 +57,7 @@ class TripsController < ApplicationController
                                          :end_date, :city, 
                                          :state_or_province,
                                          :country, :password,
+                                         :password_confirmation,
                                          users_attributes: [:name, :email])
         end
 
