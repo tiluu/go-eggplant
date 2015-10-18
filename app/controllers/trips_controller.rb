@@ -11,6 +11,7 @@ class TripsController < ApplicationController
 
     def new
         @trip = Trip.new
+        @trip.users.build
     end
 
     def create
@@ -18,7 +19,8 @@ class TripsController < ApplicationController
         if @trip.save
             redirect_to @trip
         else
-            render 'new'
+            @errors = @trip.errors
+            render :new
         end
     end
 
@@ -29,8 +31,9 @@ class TripsController < ApplicationController
     def update
         @trip = Trip.find(params[:id])
         if @trip.update_attributes(trip_params)
-            redirect_to action: 'show'
+            redirect_to @trip
         else
+            @errors = @trip.errors
             render 'edit'
         end
     end
@@ -51,7 +54,8 @@ class TripsController < ApplicationController
             params.require(:trip).permit(:name, :start_date,
                                          :end_date, :city, 
                                          :state_or_province,
-                                         :country, :password)
+                                         :country, :password,
+                                         users_attributes: [:name, :email])
         end
 
 end
