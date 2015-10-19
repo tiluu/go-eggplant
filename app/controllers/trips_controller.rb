@@ -5,6 +5,7 @@ class TripsController < ApplicationController
 
     def show
         @trip = Trip.find(params[:id])
+        @users = @trip.users
         search_params = @trip.city + @trip.state_or_province + @trip.country
         @result = Yelp.client.search(search_params, {term: 'restaurants', limit: 10})
     end
@@ -26,12 +27,10 @@ class TripsController < ApplicationController
 
     def edit
         @trip = Trip.find(params[:id])
-        @users = @trip.users
     end
 
     def update
         @trip = Trip.find(params[:id])
-        @users = @trip.users
         if @trip.update_attributes(trip_params)
             redirect_to @trip
         else
@@ -48,7 +47,7 @@ class TripsController < ApplicationController
 
     def destroy
         Trip.find(params[:id]).destroy
-        redirect_to :index
+        redirect_to action: 'index'
     end
 
     private
@@ -58,7 +57,7 @@ class TripsController < ApplicationController
                                          :state_or_province,
                                          :country, :password,
                                          :password_confirmation,
-                                         users_attributes: [:name, :email])
+                                         users_attributes: [:id, :name, :email])
         end
 
 end

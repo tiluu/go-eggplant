@@ -14,6 +14,13 @@ class UsersController < ApplicationController
             render :new
         end
     end
+    
+    def destroy
+        #@trip = Trip.find(params[:trip_id])
+        #@trip.users.find_by_id(params[:id]).destroy
+        @user = User.find(params[:id]).destroy
+        redirect_to trip_path(@user.trip_id)
+    end
 
     private
         def user_params

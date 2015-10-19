@@ -1,6 +1,7 @@
 class Trip < ActiveRecord::Base
     has_many :users, dependent: :destroy
     accepts_nested_attributes_for :users
+
     validates :name, :password, :password_confirmation, :city, 
               :country, :state_or_province, presence: true
     

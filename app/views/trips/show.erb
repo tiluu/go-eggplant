@@ -7,10 +7,11 @@
 
 <p>People on this trip:</p>
 <ul>
-    <% @trip.users.each do |person| %>
+    <% @users.each do |user| %>
         <li> 
-            <%= person.name %> 
-            <%= person.email %>
+            <%= user.name %> 
+            <%= user.email %> 
+            <%= link_to 'remove', user, method: :delete, data: {confirm: 'You sure?'} %>
         </li>
     <% end %>
 </ul>
