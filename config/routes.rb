@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   get '/trips/yelp_results/:id' => 'trips#yelp_results', as: 'yelp_results'
-  resources :users
-
-  resources :trips
-
+   
+  get 'trips/trip-:url' => 'trips#show', as: 'trip_url'
+  get 'trips/trip-:url/edit' => 'trips#edit', as: 'edit_trip_url'
+  
+  resources :trips do 
+      resources :users
+  end
   root 'home_pages#home'
 
   # Example of regular route:

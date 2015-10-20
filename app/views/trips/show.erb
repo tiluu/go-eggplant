@@ -1,5 +1,5 @@
 <h1><%= "#{@trip.name} Dashboard" %></h1>
-<%= link_to 'new trip', new_trip_path %> | <%= link_to 'edit trip', edit_trip_path(@trip) %> | add people to this trip
+<%= link_to 'new trip', new_trip_path %> | <%= link_to 'edit trip', edit_trip_url_path(url: @trip.url) %> | <%= link_to 'add people to this trip', new_trip_user_path(@trip.id) %>
 
 <p>
     Going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> from <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
@@ -11,7 +11,7 @@
         <li> 
             <%= user.name %> 
             <%= user.email %> 
-            <%= link_to 'remove', user, method: :delete, data: {confirm: 'You sure?'} %>
+            <%= link_to 'remove', trip_user_path(@trip.id, user.id), method: :delete, data: {confirm: 'You sure?'} %>
         </li>
     <% end %>
 </ul>

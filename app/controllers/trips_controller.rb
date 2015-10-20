@@ -4,7 +4,7 @@ class TripsController < ApplicationController
     end
 
     def show
-        @trip = Trip.find(params[:id])
+        @trip = Trip.find_by_url(params[:url])
         @users = @trip.users
         search_params = @trip.city + @trip.state_or_province + @trip.country
         @result = Yelp.client.search(search_params, {term: 'restaurants', limit: 10})
@@ -17,8 +17,9 @@ class TripsController < ApplicationController
 
     def create
         @trip = Trip.new(trip_params)
+        @trip.url = SecureRandom.urlsafe_base64
         if @trip.save
-            redirect_to @trip
+            redirect_to trip_url_path(url: @trip.url)
         else
             @errors = @trip.errors
             render :new
@@ -26,13 +27,13 @@ class TripsController < ApplicationController
     end
 
     def edit
-        @trip = Trip.find(params[:id])
+        @trip = Trip.find_by_url(params[:url])
     end
 
     def update
         @trip = Trip.find(params[:id])
         if @trip.update_attributes(trip_params)
-            redirect_to @trip
+            redirect_to trip_url_path(url: @trip.url)
         else
             @errors = @trip.errors
             render :edit
@@ -50,9 +51,14 @@ class TripsController < ApplicationController
         redirect_to action: 'index'
     end
 
+#    def show_by_url
+#        @trip = Trip.find_by_url(params[:url])
+#        render :show
+#    end
+
     private
         def trip_params
-            params.require(:trip).permit(:name, :start_date,
+            params.require(:trip).permit(:name, :url, :start_date,
                                          :end_date, :city, 
                                          :state_or_province,
                                          :country, :password,

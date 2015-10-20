@@ -8,6 +8,7 @@ class CreateTrips < ActiveRecord::Migration
       t.string      :country
       t.datetime    :start_date
       t.datetime    :end_date
+      t.string      :url 
 
       t.timestamps null: false
     end

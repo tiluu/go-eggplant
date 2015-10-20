@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20151007230135) do
     t.string   "country"
     t.datetime "start_date"
     t.datetime "end_date"
+    t.string   "url"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(version: 20151007230135) do
     t.string   "name"
     t.string   "email"
     t.integer  "phone"
+    t.string   "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
