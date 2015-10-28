@@ -1,4 +1,6 @@
 class TripsController < ApplicationController
+    include ApplicationHelper
+
     def index
         @trips = Trip.all
     end
@@ -6,9 +8,14 @@ class TripsController < ApplicationController
     def show
         @trip = Trip.find_by_url(params[:url])
         @users = @trip.users
-        search_params = @trip.city + @trip.state_or_province + @trip.country
-        @result = Yelp.client.search(search_params, {term: 'restaurants', limit: 10})
-    end
+        location = @trip.city + @trip.state_or_province + @trip.country
+        if !params[:neighborhood]
+            search_params = location 
+        else 
+            search_params = params[:neighborhood] + location 
+        end 
+        yelp_api(search_params, 'restaurants', 10)
+   end
 
     def new
         @trip = Trip.new
@@ -17,6 +24,7 @@ class TripsController < ApplicationController
 
     def create
         @trip = Trip.new(trip_params)
+        # or have people come up with their own URLs
         @trip.url = SecureRandom.urlsafe_base64
         if @trip.save
             redirect_to trip_url_path(url: @trip.url)
@@ -41,9 +49,9 @@ class TripsController < ApplicationController
     end
 
     def yelp_results
-        @trip = Trip.find(params[:id])
+        @trip = Trip.find_by_url(params[:url])
         search_params = @trip.city + @trip.state_or_province + @trip.country
-        @result = Yelp.client.search(search_params, {term: 'restaurants', limit: 20})
+        yelp_api(search_params, 'restaurants', 20)
     end
 
     def destroy

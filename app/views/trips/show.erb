@@ -17,18 +17,25 @@
 </ul>
 
 <p>
-    What are you looking for? <br>
-    [ Search form here ]
+<%= form_tag trip_url_path(@trip.url), method: "get" do %>
+    <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %>
+    <%= submit_tag "Search" %> 
+<% end %> 
+
 </p>
    
 <p>Restaurants: <br>
+    <% if !@yelp_error.nil? %>
+        <%= @yelp_error %>
+    <% else%> 
     <% @result.businesses.each do |b| %>
         <p>
         <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
             <%= safe_join(b.location.display_address, '<br>'.html_safe) %>
         </p>
     <% end %> 
-    <em><%= link_to "See more", yelp_results_path(@trip) %></em>
+    <em><%= link_to "See more", yelp_results_path(url: @trip.url) %></em>
+<% end %>
 </p>
 
 <a href="javascript:history.back()"><< Back</a>
