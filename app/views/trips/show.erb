@@ -30,6 +30,7 @@
     <% else%> 
     <% @result.businesses.each do |b| %>
         <p>
+        <%= image_tag(b.image_url, alt: "#{b.name}") %> <br>
         <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
             <%= safe_join(b.location.display_address, '<br>'.html_safe) %>
         </p>

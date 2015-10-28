@@ -30,10 +30,6 @@ GEM
       activemodel (= 4.2.0)
       activesupport (= 4.2.0)
       arel (~> 6.0)
-    activeresource (4.0.0)
-      activemodel (~> 4.0)
-      activesupport (~> 4.0)
-      rails-observers (~> 0.1.1)
     activesupport (4.2.0)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
@@ -142,8 +138,6 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
-    rails-observers (0.1.2)
-      activemodel (~> 4.0)
     railties (4.2.0)
       actionpack (= 4.2.0)
       activesupport (= 4.2.0)
@@ -218,6 +212,7 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    will_paginate (3.0.7)
     xcodeproj (0.26.3)
       activesupport (>= 3)
       claide (~> 0.9.1)
@@ -232,7 +227,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activeresource
   byebug
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
@@ -247,6 +241,7 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  will_paginate
   yelp
 
 BUNDLED WITH
