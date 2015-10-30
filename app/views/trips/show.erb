@@ -18,7 +18,8 @@
 
 <p>
 <%= form_tag trip_url_path(@trip.url), method: "get" do %>
-    <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %>
+    <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %><br>
+    <%= text_field_tag(:cuisine, "", placeholder: "Cuisine") %><br>
     <%= submit_tag "Search" %> 
 <% end %> 
 
@@ -28,14 +29,18 @@
     <% if !@yelp_error.nil? %>
         <%= @yelp_error %>
     <% else%> 
+     
     <% @result.businesses.each do |b| %>
         <p>
         <%= image_tag(b.image_url, alt: "#{b.name}") %> <br>
         <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
-            <%= safe_join(b.location.display_address, '<br>'.html_safe) %>
+        Rating: <%= b.rating %><br>
+        <%= safe_join(b.location.display_address, '<br>'.html_safe) %><br>
+        Neighborhood: <%= safe_join(b.location.neighborhoods, ','.html_safe) %>
+
         </p>
     <% end %> 
-    <em><%= link_to "See more", yelp_results_path(url: @trip.url) %></em>
+   
 <% end %>
 </p>
 

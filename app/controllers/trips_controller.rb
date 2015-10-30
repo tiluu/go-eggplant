@@ -8,14 +8,17 @@ class TripsController < ApplicationController
     def show
         @trip = Trip.find_by_url(params[:url])
         @users = @trip.users
+        
         location = @trip.city + @trip.state_or_province + @trip.country
-        if !params[:neighborhood]
-            search_params = location 
+
+        if !params[:neighborhood] 
+           @search_params = location 
         else 
-            search_params = params[:neighborhood] + location 
+           @search_params = params[:neighborhood] + location 
         end 
-        yelp_api(search_params, 'restaurants', 10)
-   end
+
+        yelp_api(@search_params, 'restaurants', params[:cuisine])
+    end
 
     def new
         @trip = Trip.new

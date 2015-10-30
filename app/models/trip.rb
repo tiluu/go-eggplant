@@ -8,4 +8,5 @@ class Trip < ActiveRecord::Base
     validates :name, length: { maximum: 50 }
     validates :password, confirmation: true,
                          length: { in: 6..15 }
+
 end
