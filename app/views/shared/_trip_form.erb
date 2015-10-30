@@ -12,10 +12,10 @@
     <%= f.text_field :name %><br>
 
     <%= f.label :start_date %><br>
-    <%= date_select :trip, :start_date %><br>
+    <%= date_select :trip, :start_date, default: 1.day.from_now %><br>
 
     <%= f.label :end_date %><br>
-    <%= date_select :trip, :end_date %><br>
+    <%= date_select :trip, :end_date, default: 2.days.from_now %><br>
 
     <%= f.label :city %><br>
     <%= f.text_field :city %><br>
