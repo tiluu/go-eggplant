@@ -8,7 +8,7 @@ class UsersController < ApplicationController
         @trip = Trip.find(params[:trip_id])
         @user = @trip.users.build(user_params)
         if @user.save
-            redirect_to trip_path(@trip.id)
+            redirect_to trip_url_path(url: @trip.url)
         else
             @errors = @user.errors
             render :new
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
         @trip = Trip.find(params[:trip_id])
         @trip.users.find_by_id(params[:id]).destroy
         #@user = User.find(params[:id]).destroy
-        redirect_to trip_path(@trip.id)
+        redirect_to trip_url_path(@trip.url)
     end
 
     private

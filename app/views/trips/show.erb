@@ -1,5 +1,6 @@
-<header> <h1><%= "#{@trip.name} Dashboard" %></h1>
-<a href="javascript:history.back()"><< Back</a>
+<header> 
+    <h1><%= "#{@trip.name} Dashboard" %></h1>
+    <a href="javascript:history.back()"><< Back</a>
 
 <nav>
     <ul>
@@ -24,20 +25,46 @@
     <% end %>
 </ul>
 </header>
+
 <section>
     <p>
-        What are you looking for? <br>
-        [ Search form here ]
+    <%= form_tag trip_url_path(@trip.url), method: "get" do %>
+        <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %><br>
+        <%= text_field_tag(:cuisine, "", placeholder: "Cuisine") %><br>
+        <%= submit_tag "Search" %> 
+    <% end %> 
+
     </p>
-       
-    <h2>Restaurants: </h2>
-        <% @result.businesses.each do |b| %>
-            <div>
-                <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
-                <%= safe_join(b.location.display_address, '<br>'.html_safe) %>
-            </div>
-        <% end %> 
-        <span><%= link_to "See more", yelp_results_path(@trip) %></span>
-    </p>
+
+    <p>Sort results by:</p> 
+    <%= form_tag trip_url_path(@trip.url), method: "get" do %>  
+        <%= radio_button_tag(:sort, 0) %>
+        <%= label_tag(:relevance, "relevance") %>
+        <%= radio_button_tag(:sort, 1) %>
+        <%= label_tag(:distance, "distance") %>
+        <%= radio_button_tag(:sort, 2) %>
+        <%= label_tag(:rating, "rating") %>
+        <%= submit_tag "Sort" %> 
+    <% end %> 
+
+    <p>Restaurants: <br>
+    <% if !@yelp_error.nil? %>
+        <%= @yelp_error %>
+    <% else%> 
+     
+    <% @result.businesses.each do |b| %>
+        <p>
+        <%= image_tag(b.image_url, alt: "#{b.name}") %> <br>
+        <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
+        Rating: <%= b.rating %><br>
+        <%= safe_join(b.location.display_address, '<br>'.html_safe) %><br>
+        Neighborhood: <%= safe_join(b.location.neighborhoods, ','.html_safe) %>
+
+        </p>
+    <% end %> 
+   
+<% end %>
+</p>
 </section>
 
+<a href="javascript:history.back()"><< Back</a>
