@@ -1,22 +1,23 @@
 <header> <h1><%= "#{@trip.name} Dashboard" %></h1>
 <a href="javascript:history.back()"><< Back</a>
+
 <nav>
     <ul>
         <li> <%= link_to 'new trip', new_trip_path %> |</li>
         <li><%= link_to 'edit trip', edit_trip_url_path(url: @trip.url) %> |</li>
-        <li> <%= link_to 'add people to this trip', new_trip_user_path(@trip.id) %></li>
+        <li> <%= link_to 'invite', new_trip_user_path(@trip.id) %></li>
     </ul>
 </nav>
 
-<p>
+<div>
     Going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> from <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
-</p>
+</div>
 
 <p>People on this trip:</p>
 <ul>
     <% @users.each do |user| %>
         <li> 
-            <%= user.name %> 
+            <%= user.name %> -
             <%= user.email %> 
             <%= link_to 'remove', trip_user_path(@trip.id, user.id), method: :delete, data: {confirm: 'You sure?'} %>
         </li>
@@ -29,14 +30,14 @@
         [ Search form here ]
     </p>
        
-    <p>Restaurants: <br>
+    <h2>Restaurants: </h2>
         <% @result.businesses.each do |b| %>
-            <p>
-            <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
+            <div>
+                <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
                 <%= safe_join(b.location.display_address, '<br>'.html_safe) %>
-            </p>
+            </div>
         <% end %> 
-        <em><%= link_to "See more", yelp_results_path(@trip) %></em>
+        <span><%= link_to "See more", yelp_results_path(@trip) %></span>
     </p>
 </section>
 
