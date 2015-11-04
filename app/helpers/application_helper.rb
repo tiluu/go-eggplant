@@ -16,5 +16,6 @@ module ApplicationHelper
             @yelp_error = "No results available for #{location}"
         end
     end
-   
+
+      
    end

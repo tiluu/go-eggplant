@@ -6,8 +6,6 @@ class Trip < ActiveRecord::Base
               :country, :state_or_province, presence: true
     
     validates :name, length: { maximum: 50 }
-    validates :password, confirmation: true,
-                         length: { in: 6..15 }
     
     validate :start_date_not_in_past, on: :create
     validate :end_date_not_in_past
