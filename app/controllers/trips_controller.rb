@@ -17,7 +17,7 @@ class TripsController < ApplicationController
            @search_params = params[:neighborhood] + location 
         end 
 
-        yelp_api(@search_params, 'restaurants', params[:cuisine])
+        yelp_api(@search_params, 'restaurants')
     end
 
     def new
