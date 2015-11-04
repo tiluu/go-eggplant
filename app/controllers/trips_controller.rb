@@ -12,12 +12,14 @@ class TripsController < ApplicationController
         location = @trip.city + @trip.state_or_province + @trip.country
 
         if !params[:neighborhood] 
-           @search_params = location 
+           search_params = location 
         else 
-           @search_params = params[:neighborhood] + location 
+           search_params = params[:neighborhood] + location 
         end 
 
-        yelp_api(@search_params, 'restaurants')
+        params[:sort].present? ? sort = params[:sort] : sort = 0
+
+        yelp_api(search_params, 'restaurants', sort)
     end
 
     def new

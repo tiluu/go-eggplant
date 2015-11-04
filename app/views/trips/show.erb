@@ -35,7 +35,18 @@
     <% end %> 
 
     </p>
-   
+
+    <p>Sort results by:</p> 
+    <%= form_tag trip_url_path(@trip.url), method: "get" do %>  
+        <%= radio_button_tag(:sort, 0) %>
+        <%= label_tag(:relevance, "relevance") %>
+        <%= radio_button_tag(:sort, 1) %>
+        <%= label_tag(:distance, "distance") %>
+        <%= radio_button_tag(:sort, 2) %>
+        <%= label_tag(:rating, "rating") %>
+        <%= submit_tag "Sort" %> 
+    <% end %> 
+
     <p>Restaurants: <br>
     <% if !@yelp_error.nil? %>
         <%= @yelp_error %>
