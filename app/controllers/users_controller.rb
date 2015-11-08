@@ -1,14 +1,12 @@
 class UsersController < ApplicationController
     def new
-        @trip = Trip.find(params[:trip_id])
-        @user = @trip.users.build
+        @user = User.new
     end
 
     def create
-        @trip = Trip.find(params[:trip_id])
-        @user = @trip.users.build(user_params)
+        @user = User.new
         if @user.save
-            redirect_to trip_url_path(url: @trip.url)
+            redirect_to user_path(@user.id)
         else
             @errors = @user.errors
             render :new
@@ -16,10 +14,9 @@ class UsersController < ApplicationController
     end
     
     def destroy
-        @trip = Trip.find(params[:trip_id])
-        @trip.users.find_by_id(params[:id]).destroy
+        User.find(params[:id]).destroy
         #@user = User.find(params[:id]).destroy
-        redirect_to trip_url_path(@trip.url)
+        redirect_to root_path
     end
 
     private
