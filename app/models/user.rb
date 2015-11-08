@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-    belongs_to :trips
+    has_many :trips, dependent: :destroy
+    has_secure_password
+
     validates :name, :email, :password, presence: true, on: :create
     validates :name, length: { maximum: 50 }
     

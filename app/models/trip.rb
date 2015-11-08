@@ -1,5 +1,5 @@
 class Trip < ActiveRecord::Base
-    has_many :users, dependent: :destroy
+    belongs_to :user
     accepts_nested_attributes_for :users
 
     validates :name, :password, :password_confirmation, :city, 

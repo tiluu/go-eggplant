@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   get 'trips/trip-:url' => 'trips#show', as: 'trip_url'
   get 'trips/trip-:url/edit' => 'trips#edit', as: 'edit_trip_url'
   
-  resources :trips do 
-      resources :users
+  resources :users do 
+      resources :trips
   end
   root 'home_pages#home'
 
