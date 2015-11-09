@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   get '/trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
-  get 'trips/trip-:url' => 'trips#show', as: 'trip_url'
-  get 'trips/trip-:url/edit' => 'trips#edit', as: 'edit_trip_url'
+  get '/users/:user_id/trips/trip-:url' => 'trips#show', as: 'trip_url'
+  get '/users/:user_id/trips/trip-:url/edit' => 'trips#edit', as: 'edit_trip_url'
   
+  get 'login' => 'users#login', as: :login  
+  post 'login' => 'users#authenticate'
+
   resources :users do 
       resources :trips
   end

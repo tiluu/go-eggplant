@@ -4,9 +4,9 @@
 
 <nav>
     <ul>
-        <li> <%= link_to 'new trip', new_trip_path %> |</li>
-        <li><%= link_to 'edit trip', edit_trip_url_path(url: @trip.url) %> |</li>
-        <li> <%= link_to 'add people to this trip', new_trip_user_path(@trip.id) %></li>
+        <li> <%= link_to 'new trip', new_user_trip_path(@user.id) %> |</li>
+        <li><%= link_to 'edit trip', edit_trip_url_path(@user.id, @trip.url) %> |</li>
+        <li> add people to this trip</li>
     </ul>
 </nav>
 
@@ -16,19 +16,13 @@
 
 <p>People on this trip:</p>
 <ul>
-    <% @users.each do |user| %>
-        <li> 
-            <%= user.name %> 
-            <%= user.email %> 
-            <%= link_to 'remove', trip_user_path(@trip.id, user.id), method: :delete, data: {confirm: 'You sure?'} %>
-        </li>
-    <% end %>
-</ul>
+    <li> person 1</li>
+    <li> person 2</li>
 </header>
 
 <section>
     <p>
-    <%= form_tag trip_url_path(@trip.url), method: "get" do %>
+    <%= form_tag trip_url_path(@user.id, @trip.url), method: "get" do %>
         <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %><br>
         <%= text_field_tag(:cuisine, "", placeholder: "Cuisine") %><br>
         <%= submit_tag "Search" %> 
@@ -37,7 +31,7 @@
     </p>
 
     <p>Sort results by:</p> 
-    <%= form_tag trip_url_path(@trip.url), method: "get" do %>  
+    <%= form_tag trip_url_path(@user.id, @trip.url), method: "get" do %>  
         <%= radio_button_tag(:sort, 0) %>
         <%= label_tag(:relevance, "relevance") %>
         <%= radio_button_tag(:sort, 1) %>

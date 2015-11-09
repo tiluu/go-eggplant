@@ -35,7 +35,7 @@ class TripsController < ApplicationController
         # or have people come up with their own URLs
         @trip.url = SecureRandom.urlsafe_base64
         if @trip.save
-            redirect_to trip_url_path(url: @trip.url)
+            redirect_to trip_url_path(user_id: @user.id, url: @trip.url)
         else
             @errors = @trip.errors
             render :new
@@ -43,7 +43,7 @@ class TripsController < ApplicationController
     end
 
     def edit
-        @user = User.find(params[:user_id]
+        @user = User.find(params[:user_id])
         @trip = @user.trips.find_by_url(params[:url])
     end
 
@@ -66,7 +66,7 @@ class TripsController < ApplicationController
     end
 
     def destroy
-        @user = User.find(params[:user_id]
+        @user = User.find(params[:user_id])
         @user.trips.find_by_id(params[:id]).destroy
         redirect_to action: 'index'
     end

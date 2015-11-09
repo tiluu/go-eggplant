@@ -1,8 +1,8 @@
 class Trip < ActiveRecord::Base
     belongs_to :user
 
-    validates :name, :password, :password_confirmation, :city, 
-              :country, :state_or_province, presence: true
+    validates :name, :city, :country, 
+              :state_or_province, presence: true
     
     validates :name, length: { maximum: 50 }
     
