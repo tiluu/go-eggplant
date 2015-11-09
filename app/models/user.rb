@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
     has_many :trips, dependent: :destroy
     has_secure_password
 
-    validates :name, :email, :password, presence: true, on: :create
+    validates :name, :email, :password, :password_confirmation, presence: true, on: :create
     validates :name, length: { maximum: 50 }
     
     validates :password, confirmation: true, 

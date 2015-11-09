@@ -4,13 +4,18 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.new
+        @user = User.new(user_params)
         if @user.save
             redirect_to user_path(@user.id)
         else
             @errors = @user.errors
             render :new
         end
+    end
+
+    def show
+        @user = User.find(params[:id])
+        @trips = @user.trips
     end
     
     def destroy
@@ -22,6 +27,7 @@ class UsersController < ApplicationController
     private
         def user_params
             params.require(:user).permit(:name, :email,
-                                         :phone)
+                                         :phone, :password, 
+                                         :password_confirmation)
         end
 end

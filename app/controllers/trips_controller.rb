@@ -81,9 +81,7 @@ class TripsController < ApplicationController
             params.require(:trip).permit(:name, :url, :start_date,
                                          :end_date, :city, 
                                          :state_or_province,
-                                         :country, :password,
-                                         :password_confirmation,
-                                         users_attributes: [:id, :name, :email])
+                                         :country)
         end
 
 end

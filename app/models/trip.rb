@@ -1,6 +1,5 @@
 class Trip < ActiveRecord::Base
     belongs_to :user
-    accepts_nested_attributes_for :users
 
     validates :name, :password, :password_confirmation, :city, 
               :country, :state_or_province, presence: true
