@@ -1,5 +1,15 @@
+<header> 
+<nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+        <li><a>Account</a></li>
+        <li> <%= link_to 'new trip', new_trip_path %></li>
+        <li><%= link_to 'edit trip', edit_trip_url_path(url: @trip.url) %></li>
+        <li> <%= link_to 'invite', new_trip_user_path(@trip.id) %></li>
+    </ul>
+</nav>
+
+</header>
+
 <h1>Create a trip</h1>
 
 <%= render 'shared/trip_form' %> 
-
-<p><a href="javascript:history.back()"><< Back</a></p>
