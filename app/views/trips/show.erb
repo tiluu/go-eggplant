@@ -2,23 +2,34 @@
     <h1><%= "#{@trip.name} Dashboard" %></h1>
     <a href="javascript:history.back()"><< Back</a>
 
-<nav>
-    <ul>
-        <li> <%= link_to 'new trip', new_user_trip_path(@user.id) %> |</li>
-        <li><%= link_to 'edit trip', edit_trip_url_path(@user.id, @trip.url) %> |</li>
-        <li> add people to this trip</li>
+<nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+        <li><a>Account</a></li>
+        <li> <%= link_to 'new trip', new_trip_path %></li>
+        <li><%= link_to 'edit trip', edit_trip_url_path(url: @trip.url) %></li>
+        <li> <%= link_to 'invite', new_trip_user_path(@trip.id) %></li>
     </ul>
 </nav>
+<!-- <a href="javascript:history.back()"><< Back</a> -->
+<h1><%= "#{@trip.name}" %></h1>
 
-<p>
-    Going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> from <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
-</p>
+
+<div>
+    You are going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
+</div>
 
 <p>People on this trip:</p>
 <ul>
     <li> person 1</li>
     <li> person 2</li>
+</ul>
 </header>
+<section class="api-dashboard">
+    <div>API</div>
+    <div>API</div>
+    <div>API</div>
+    <div>API</div>
+</section>
 
 <section>
     <p>
@@ -51,6 +62,8 @@
         <%= image_tag(b.image_url, alt: "#{b.name}") %> <br>
         <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
         Rating: <%= b.rating %><br>
+
+
         <%= safe_join(b.location.display_address, '<br>'.html_safe) %><br>
         Neighborhood: <%= safe_join(b.location.neighborhoods, ','.html_safe) %>   
         </p>
@@ -59,5 +72,3 @@
 <% end %>
 </p>
 </section>
-
-<a href="javascript:history.back()"><< Back</a>
