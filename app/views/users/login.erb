@@ -1,4 +1,9 @@
 <h1>Login</h1>
+<% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>">
+        <%= value %> 
+    </div>
+<% end %>
 
 <%= form_tag "/login" do %> 
     <%= text_field_tag(:email, "", placeholder: "Email") %><br>

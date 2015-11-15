@@ -3,11 +3,14 @@ Rails.application.routes.draw do
   get '/users/:user_id/trips/trip-:url' => 'trips#show', as: 'trip_url'
   get '/users/:user_id/trips/trip-:url/edit' => 'trips#edit', as: 'edit_trip_url'
   
+  get 'signup' => 'users#new', as: :signup
   get 'login' => 'users#login', as: :login  
   post 'login' => 'users#authenticate'
+  delete 'logout' => 'users#logout', as: :logout
+ 
 
   resources :users do 
-      resources :trips
+      resources :trips, except: :index
   end
   root 'home_pages#home'
 

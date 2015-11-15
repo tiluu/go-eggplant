@@ -1,14 +1,24 @@
 class UsersController < ApplicationController
+    before_action :require_login, only: [:edit, :update, :destroy, :show]
+    #before_action :require_logout, only: [:new, :create, :login, :authenticate]
+
     def login
     end
 
     def authenticate
-        @user = User.authenticate(params[:email], params[:password])
-        if @user
-            redirect_to user_path(@user.id)
+    @current_user = User.authenticate(params[:email], params[:password])
+    if @current_user
+            login_user(@current_user)
         else
+            flash[:danger] = "Wrong email/password combination"
             render :login
         end
+    end
+
+    def logout
+        session.delete(:user_id)
+        flash[:success] = "Logged out successfully"
+        redirect_to root_path
     end
 
     def new
@@ -18,7 +28,8 @@ class UsersController < ApplicationController
     def create
         @user = User.new(user_params)
         if @user.save
-            redirect_to user_path(@user.id)
+            login_user(@user)
+            #redirect_to user_path(@user.id)
         else
             @errors = @user.errors
             render :new
@@ -26,12 +37,20 @@ class UsersController < ApplicationController
     end
 
     def show
-        @user = User.find(params[:id])
-        @trips = @user.trips
+        @current_user = current_user
+        @trips = @current_user.trips
+    end
+
+    def edit
+        @current_user = current user
+    end
+
+    def update
+        @current_user = current_user
     end
     
     def destroy
-        User.find(params[:id]).destroy
+        current_user.destroy
         #@user = User.find(params[:id]).destroy
         redirect_to root_path
     end
@@ -42,4 +61,5 @@ class UsersController < ApplicationController
                                          :phone, :password, 
                                          :password_confirmation)
         end
+
 end

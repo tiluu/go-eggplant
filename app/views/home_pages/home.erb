@@ -1,6 +1,12 @@
 
-<h1>Where are you going?</h1>
+<% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>">
+        <%= value %>
+    </div>
+<% end %> 
 
-<%= link_to 'Sign up', new_user_path %> | <%= link_to 'Log in', login_path %>
+
+
+<h1>Where are you going?</h1>
 
 <p>About | Contact</p>

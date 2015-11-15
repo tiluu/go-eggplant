@@ -7,7 +7,7 @@
     <% end %>
 <% end%>
 
-<%= form_for([:user, @trip]) do |f| %>
+<%= form_for([@user, @trip]) do |f| %>
     <%= label_tag(:name, "Trip name") %><br>
     <%= f.text_field :name %><br>
 

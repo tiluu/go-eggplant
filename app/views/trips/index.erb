@@ -1,8 +1,0 @@
-<h1>Trips Admin</h1>
-
-<% @trips.each do |trip| %>
-    Created by: <%= trip.users.first.name %> 
-    <%= link_to "#{trip.name}", trip_url_path(url: trip.url) %> 
-    <%= link_to 'edit', edit_trip_url_path(url: trip.url) %> 
-    <%= link_to 'delete', trip, method: :delete, data: {confirm: 'You sure?' } %><br>
-<% end %>

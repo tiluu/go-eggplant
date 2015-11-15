@@ -1,14 +1,9 @@
 class TripsController < ApplicationController
     include ApplicationHelper
-
-    def index
-        @user = User.find(params[:user_id])
-        @trips = @user.trips
-    end
+    before_action :require_login
 
     def show
-        @user = User.find(params[:user_id])
-        @trip = @user.trips.find_by_url(params[:url])
+        @trip = current_user.trips.find_by_url(params[:url])
         
         
         location = @trip.city + @trip.state_or_province + @trip.country
@@ -25,12 +20,12 @@ class TripsController < ApplicationController
     end
 
     def new
-        @user = User.find(params[:user_id])
+        @user = current_user
         @trip = @user.trips.build
     end
 
     def create
-        @user = User.find(params[:user_id])
+        @user = current_user
         @trip = @user.trips.build(trip_params)
         # or have people come up with their own URLs
         @trip.url = SecureRandom.urlsafe_base64
@@ -43,15 +38,15 @@ class TripsController < ApplicationController
     end
 
     def edit
-        @user = User.find(params[:user_id])
+        @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
     end
 
     def update
-        @user = User.find(params[:user_id])
+        @user = current_user
         @trip = @user.trips.find(params[:id])
         if @trip.update_attributes(trip_params)
-            redirect_to trip_url_path(url: @trip.url)
+            redirect_to trip_url_path(@user.id, @trip.url)
         else
             @errors = @trip.errors
             render :edit
@@ -59,16 +54,16 @@ class TripsController < ApplicationController
     end
 
     def yelp_results
-        @user = User.find(params[:user_id])
+        @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
         search_params = @trip.city + @trip.state_or_province + @trip.country
         yelp_api(search_params, 'restaurants', 20)
     end
 
     def destroy
-        @user = User.find(params[:user_id])
+        @user = current_user
         @user.trips.find_by_id(params[:id]).destroy
-        redirect_to action: 'index'
+        redirect_to user_path(@user.id)
     end
 
 #    def show_by_url
