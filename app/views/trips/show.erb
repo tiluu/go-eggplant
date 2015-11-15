@@ -5,9 +5,9 @@
 <nav class="navbar navbar-default">
     <ul class="nav navbar-nav">
         <li><a>Account</a></li>
-        <li> <%= link_to 'new trip', new_trip_path %></li>
-        <li><%= link_to 'edit trip', edit_trip_url_path(url: @trip.url) %></li>
-        <li> <%= link_to 'invite', new_trip_user_path(@trip.id) %></li>
+        <li> <%= link_to 'new trip', new_user_trip_path(current_user.id) %></li>
+        <li><%= link_to 'edit trip', edit_trip_url_path(current_user.id, @trip.url) %></li>
+        <li> Invite people</li>
     </ul>
 </nav>
 <!-- <a href="javascript:history.back()"><< Back</a> -->

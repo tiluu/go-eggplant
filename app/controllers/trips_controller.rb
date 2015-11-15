@@ -3,7 +3,8 @@ class TripsController < ApplicationController
     before_action :require_login
 
     def show
-        @trip = current_user.trips.find_by_url(params[:url])
+        @user = current_user
+        @trip = @user.trips.find_by_url(params[:url])
         
         
         location = @trip.city + @trip.state_or_province + @trip.country
