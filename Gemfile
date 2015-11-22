@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # angular
 gem 'angularjs-rails'
+gem 'responders'
 
 gem 'will_paginate'
 

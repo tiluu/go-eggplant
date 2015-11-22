@@ -1,7 +1,7 @@
 class TripsController < ApplicationController
     include ApplicationHelper
     before_action :require_login
-
+   
     def show
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])

@@ -22,5 +22,20 @@ class Trip < ActiveRecord::Base
         end
     end
 
+    def as_json(options={})
+        super(:only => [:start_date, :end_date],
+              :methods => [:start_d, :end_d])
+    end
+    
+    def format_date(date)
+        date.nil? ? "" : date.strftime("%a %b %d %Y")
+    end
+    def start_d
+        format_date(self.start_date)
+    end
+
+    def end_d
+        format_date(self.end_date)
+    end
 
 end

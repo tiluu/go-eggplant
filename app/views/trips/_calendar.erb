@@ -1,37 +1,45 @@
 <style>
-.today {background:steelblue;
-    width: 20px;
-    height:20px;
-    padding-left: 2px;
-    border-radius: 50%;
-    color: #fff;
-    }
+    .today {background:steelblue;
+        width: 20px;
+        height:20px;
+        padding-left: 2px;
+        border-radius: 50%;
+        color: #fff;
+     }
+     .trip {
+         background: #92c500;
+         width: 20px;
+         height: 20px;
+         padding-left: 2px;
+         border-radius: 50%;
+         color: #fff;
+     }
 </style>
 <h1>{{ getMonth() }} {{ year }}</h1>
-    
-    <table>
-        <thead>
-            <th ng-repeat="weekday in weekdays">
-                {{ weekday }}
-            </th>
-        </thead>
+
+<div id="date-data" start_date="<%= start_d %>" end_date="<%= end_d %>"></div>
+<table>
+    <thead>
+        <th ng-repeat="weekday in weekdays">
+            {{ weekday }}
+        </th>
+    </thead>
         
-        <tbody>
-            <tr>
-                <td ng-repeat="day in firstWeekOfMonth() track by $index">
-                    {{ day }}
-                </td>
-            </tr>
+    <tbody>
+        <tr>
+            <td ng-repeat="day in firstWeekOfMonth() track by $index">
+                <div ng-class="{'trip': tripDates(data.start_d, data.end_d, 11, day)}">{{ day }}</div>
+            </td>
+        </tr>
       
-            <tr ng-repeat="week in [0,1,2,3]">
-                <td ng-repeat="day in remainingWeeks() track by $index" ng-if="notMaxDays(day,week)">
-                    <div ng-class="{'today': highlightToday(getMonth(), getDay(day,week))}">
-                        {{ getDay(day,week) }}
-                    </div>
-                </td>
-                
-            </tr>
-        </tbody>
-    </table>
+        <tr ng-repeat="week in [0,1,2,3]">
+            <td ng-repeat="day in remainingWeeks() track by $index" ng-if="notMaxDays(day,week)">
+                <div ng-class="{'trip': tripDates(data.start_d, data.end_d, 11, getDay(day,week))}">
+                    {{ getDay(day,week) }}
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 </div>
