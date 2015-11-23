@@ -15,26 +15,31 @@
          color: #fff;
      }
 </style>
-<h1>{{ getMonth() }} {{ year }}</h1>
 
 <div id="date-data" start_date="<%= start_d %>" end_date="<%= end_d %>"></div>
 <table>
     <thead>
-        <th ng-repeat="weekday in weekdays">
-            {{ weekday }}
+        <th colspan=7>
+            <h1>{{ getMonth() }}</h1>
         </th>
     </thead>
-        
+
     <tbody>
         <tr>
+            <td ng-repeat="weekday in weekdays">
+                {{ weekday }}
+            </td>
+        </tr>
+           
+        <tr>
             <td ng-repeat="day in firstWeekOfMonth() track by $index">
-                <div ng-class="{'trip': tripDates(data.start_d, data.end_d, 11, day)}">{{ day }}</div>
+                <div ng-class="{'trip': tripDates(day)}">{{ day }}</div>
             </td>
         </tr>
       
         <tr ng-repeat="week in [0,1,2,3]">
             <td ng-repeat="day in remainingWeeks() track by $index" ng-if="notMaxDays(day,week)">
-                <div ng-class="{'trip': tripDates(data.start_d, data.end_d, 11, getDay(day,week))}">
+                <div ng-class="{'trip': tripDates(getDay(day,week))}">
                     {{ getDay(day,week) }}
                 </div>
             </td>

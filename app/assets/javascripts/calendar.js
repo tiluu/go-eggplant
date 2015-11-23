@@ -8,19 +8,33 @@
             start_d: div.getAttribute("start_date"),
             end_d: div.getAttribute("end_date")
         };
-
-        var date = new Date();
-        $scope.year = date.getFullYear(); 
-        $scope.curr_month = date.getMonth();                
-        $scope.today = date.getDate();
-        $scope.weekdays = wkService;
         
+        $scope.weekdays = wkService;
+
         var months = Object.keys(mnthService);
-      
+
+        var start_d = new Date($scope.data.start_d)
+        var end_d = new Date($scope.data.end_d);
+
+        $scope.year = start_d.getFullYear();
         // convert date.getMonth() to name of current month 
+        /**
+        $scope.getMonths = function() {
+            var trip_months = [];
+            var m1 = start_d.getMonth();
+            var m2 = end_d.getMonth();
+            if (m1 != m2) { 
+                trip_months.push(months[m1], months[m2]);            }
+            else {
+                trip_months.push(months[m1])
+            }
+            return trip_months;    
+        };
+        **/
+
         $scope.getMonth = function() {
-            var m = $scope.curr_month; 
-            return months[m];    
+            var m = start_d.getMonth();
+            return months[m];
         }
         
         // calculate current date
@@ -31,9 +45,14 @@
         // keep printing out dates until max # days in the month is reached
         $scope.notMaxDays = function(day,week) {
             var m = $scope.getMonth();
-            return $scope.getDay(day,week) <= mnthService[m].num_days;
-        }
-            
+            var notMaxDays;
+            /**
+            if (m.length == 2) { 
+               return $scope.getDay(day, week) <= mnthService[m[0]].num_days && $scope.getDay(day,week <= mnthService[m[1]].num_days;
+            }
+          **/
+           return $scope.getDay(day,week) <= mnthService[m].num_days;
+        }   
 
         // find out what day of the week the first day of the current month falls on
         $scope.firstDayOfMonth = function() {
@@ -45,7 +64,8 @@
                 var d = new Date(first_day_of_month);
                 start_weekdays.push(d.getDay()); 
             }; 
-            return start_weekdays[$scope.curr_month];          
+            var m = start_d.getMonth();
+            return start_weekdays[m];          
         };
         
         // construct the first week of the current month
@@ -84,28 +104,14 @@
             return curr_row;
        };
 
-       // highlight current day--> switch to trip dates
-       $scope.highlightToday = function(month,day) {
-           var month_num = mnthService[month].num;
-           var curr_month = $scope.curr_month + 1;                
-           var today = date.getDate(); 
-
-           return month_num == curr_month && day == today;
-       };
-
-       $scope.tripDates =function(start,end,cal_month,cal_day) {
-            var start_d = new Date(start);
-            var end_d = new Date(end);
-            var start_mnth = start_d.getMonth()+1; 
-            var end_mnth = end_d.getMonth()+1;
+       // highlights trip date
+       $scope.tripDates =function(cal_day) {
             var start_day = start_d.getDate();
             var end_day = end_d.getDate();
 
-            var match_start_month = start_mnth == cal_month;
-            var match_end_month = end_mnth == cal_month;
             var match_days = start_day <= cal_day && end_day >= cal_day;
 
-            return match_start_month && match_end_month && match_days;
+            return match_days;
        };
 
      })
