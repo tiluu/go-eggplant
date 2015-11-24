@@ -5,10 +5,12 @@ GLOBAL
 ***********/
 
 html { font-size: 16px;}
-h1 { font-size: 2rem;}
+h1.page-header { font-size: 2rem; margin: 0;}
 
 .cf { content: ""; display: table;}
-.content { width: 100%; padding: 32px;}
+.content { width: 100%;}
+
+.closed { display: none;}
 
 /*********
 
@@ -26,26 +28,34 @@ DASHBOARD
 
 .trip--calendar { 
 	float: left;
-	width: 75%; 
-	height: 400px; 
-	outline: 1px solid blue; 
+	width: 60%; 
+	height: 600px; 
 	padding: 0 1rem;
 }
-.trip--saved_list { 
+.trip--fav { 
 	float: left;
-	width: 25%; 
-	height: 400px; 
+	width: 40%; 
+	height: 600px; 
 	position: relative;
-	outline: 1px solid orange; 
+	padding: 0 12px;
+	border-left: 1px solid black;
 
-	button { 
-		width: 100%; 
-		position: absolute; 
-		bottom: 0; 
-		left: 0;
-		background-color: #fff;
-		outline: 1px solid green;
+	.btn-group { width: 100%;}
+	.btn-group button { width: 33.33%;}
+
+	li { 
+		padding: 8px;
+		border-top: 1px solid dotted;
+		border-bottom: 1px solid dotted;
 	}
+}
 
-	li { padding: 8px 0px;}
+/*********
+
+ERROR MESSAGE
+
+***********/
+.error { 
+	background-color: orange;
+	padding: 8px;
 }

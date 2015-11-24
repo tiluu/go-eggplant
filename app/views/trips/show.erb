@@ -24,35 +24,44 @@
     </ul>
 </nav>
 <h1 class="page-header"><%= "#{@trip.name}" %></h1>
-<div>
-You are going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
-<%= @trip.start_date%>
- <%= @trip.end_date%>
-</div>
-
-<p>People on this trip:</p>
-<ul>
-    <% @users.each do |user| %>
-        <li> 
-            <%= user.name %> <!-- -
-            <%= user.email %> --> 
-            <%= link_to 'remove', trip_user_path(@trip.id, user.id), method: :delete, data: {confirm: 'You sure?'} %>
-        </li>
-    <% end %>
-</ul>
 </header>
 <div class="content cf">
     <section class="trip--calendar">
+        <div>
+            You are going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
+        </div>
+        <p>People on this trip:</p>
+        <ul>
+            <% @users.each do |user| %>
+                <li> 
+                    <%= user.name %> <!-- -
+                    <%= user.email %> --> 
+                    <%= link_to 'remove', trip_user_path(@trip.id, user.id), method: :delete, data: {confirm: 'You sure?'} %>
+                </li>
+            <% end %>
+        </ul>
         <div>Calendar</div>
     </section>
-    <aside class="well well-lg trip--saved_list">
-        <h3> Suggested Ideas</h3>
-        <ul>
-            <li>Hot pot on Sept 10, 2015</li>
-            <li>dim sum on Sept 10, 2015</li>
-            <li>Opera on Sept 10, 2015</li>
-            <li>shopping on Sept 10, 2015</li>
-        </ul>
+    <aside class="trip--fav">
+        <h4> Suggested Ideas</h4>
+        <div class="btn-group trip--fav_action" role="group" aria-label="...">
+          <button type="button" data-type="food" class="btn btn-default active">Food</button>
+          <button type="button" data-type="attrac" class="btn btn-default">Attractions</button>
+          <button type="button" data-type="events" class="btn btn-default">Events</button>
+        </div>
+        <div class="trip--list">
+            <ul class="list-group" data-type="food">
+                <li class="list-group-item">Hot pot on Sept 10, 2015</li>
+                <li class="list-group-item">dim sum on Sept 10, 2015</li>
+                <li class="list-group-item">Opera on Sept 10, 2015</li>
+            </ul>
+            <ul class="list-group closed" data-type="attrac">
+                 <li class="list-group-item">Opera on Sept 10, 2015</li>
+            </ul>
+            <ul class="list-group closed" data-type="events">
+                <li class="list-group-item">Movies on Sept 10, 2015</li>
+            </ul>
+        </div>
         <button type="button" class="btn">Add +</button>
     </aside>
 </div>
