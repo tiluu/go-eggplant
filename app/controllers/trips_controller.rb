@@ -1,13 +1,11 @@
 class TripsController < ApplicationController
     include ApplicationHelper
-
-    def index
-        @trips = Trip.all
-    end
-
+    before_action :require_login
+   
     def show
-        @trip = Trip.find_by_url(params[:url])
-        @users = @trip.users
+        @user = current_user
+        @trip = @user.trips.find_by_url(params[:url])
+        
         
         location = @trip.city + @trip.state_or_province + @trip.country
 
@@ -23,16 +21,17 @@ class TripsController < ApplicationController
     end
 
     def new
-        @trip = Trip.new
-        @trip.users.build
+        @user = current_user
+        @trip = @user.trips.build
     end
 
     def create
-        @trip = Trip.new(trip_params)
+        @user = current_user
+        @trip = @user.trips.build(trip_params)
         # or have people come up with their own URLs
         @trip.url = SecureRandom.urlsafe_base64
         if @trip.save
-            redirect_to trip_url_path(url: @trip.url)
+            redirect_to trip_url_path(user_id: @user.id, url: @trip.url)
         else
             @errors = @trip.errors
             render :new
@@ -40,13 +39,15 @@ class TripsController < ApplicationController
     end
 
     def edit
-        @trip = Trip.find_by_url(params[:url])
+        @user = current_user
+        @trip = @user.trips.find_by_url(params[:url])
     end
 
     def update
-        @trip = Trip.find(params[:id])
+        @user = current_user
+        @trip = @user.trips.find(params[:id])
         if @trip.update_attributes(trip_params)
-            redirect_to trip_url_path(url: @trip.url)
+            redirect_to trip_url_path(@user.id, @trip.url)
         else
             @errors = @trip.errors
             render :edit
@@ -54,14 +55,16 @@ class TripsController < ApplicationController
     end
 
     def yelp_results
-        @trip = Trip.find_by_url(params[:url])
+        @user = current_user
+        @trip = @user.trips.find_by_url(params[:url])
         search_params = @trip.city + @trip.state_or_province + @trip.country
         yelp_api(search_params, 'restaurants', 20)
     end
 
     def destroy
-        Trip.find(params[:id]).destroy
-        redirect_to action: 'index'
+        @user = current_user
+        @user.trips.find_by_id(params[:id]).destroy
+        redirect_to user_path(@user.id)
     end
 
 #    def show_by_url
@@ -74,9 +77,7 @@ class TripsController < ApplicationController
             params.require(:trip).permit(:name, :url, :start_date,
                                          :end_date, :city, 
                                          :state_or_province,
-                                         :country, :password,
-                                         :password_confirmation,
-                                         users_attributes: [:id, :name, :email])
+                                         :country)
         end
 
 end

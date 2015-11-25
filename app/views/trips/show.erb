@@ -1,4 +1,7 @@
 <header> 
+    <h1><%= "#{@trip.name} Dashboard" %></h1>
+    <a href="javascript:history.back()"><< Back</a>
+
 <nav class="navbar navbar-default">
     <ul class="nav navbar-nav">
         <li>
@@ -40,7 +43,9 @@
                 </li>
             <% end %>
         </ul>
-        <div>Calendar</div>
+        <div ng-app="Calendar" ng-controller="CalendarCtrl">
+            <%= render 'calendar' %> 
+        </div>
     </section>
     <aside class="trip--fav">
         <h4> Suggested Ideas</h4>
@@ -65,9 +70,10 @@
         <button type="button" class="btn">Add +</button>
     </aside>
 </div>
+
 <section>
     <p>
-    <%= form_tag trip_url_path(@trip.url), method: "get" do %>
+    <%= form_tag trip_url_path(@user.id, @trip.url), method: "get" do %>
         <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %><br>
         <%= text_field_tag(:cuisine, "", placeholder: "Cuisine") %><br>
         <%= submit_tag "Search" %> 
@@ -76,7 +82,7 @@
     </p>
 
     <p>Sort results by:</p> 
-    <%= form_tag trip_url_path(@trip.url), method: "get" do %>  
+    <%= form_tag trip_url_path(@user.id, @trip.url), method: "get" do %>  
         <%= radio_button_tag(:sort, 0) %>
         <%= label_tag(:relevance, "relevance") %>
         <%= radio_button_tag(:sort, 1) %>
@@ -99,7 +105,8 @@
 
 
         <%= safe_join(b.location.display_address, '<br>'.html_safe) %><br>
-        Neighborhood: <%#= safe_join(b.location.neighborhoods, ','.html_safe) %>
+        
+        Neighborhood: <%= safe_join(b.location.neighborhoods, ','.html_safe) %>   
 
         </p>
     <% end %> 

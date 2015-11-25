@@ -1,9 +1,23 @@
-<%= form_for([:trip, @user]) do |f| %>
+<% if !@errors.nil? %>
+    <% @errors.full_messages.each do |msg| %>
+        <ul>
+            <li> <%= msg %>
+        </ul>
+    <% end %>
+<% end %>
+
+<%= form_for(@user) do |f| %>
     <%= f.label :name %><br>
     <%= f.text_field :name %><br>
 
     <%= f.label :email %><br>
     <%= f.text_field :email %><br>
+
+    <%= f.label :password %><br>
+    <%= f.password_field :password %><br>
+
+    <%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation %><br>
 
     <%= f.label :phone %> [optional]<br>
     <%= f.text_field :phone %>

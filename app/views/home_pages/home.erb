@@ -1,7 +1,13 @@
 <div class="front">
 	<div><h1>Where are you going?</h1></div>
 
-	<div><%= link_to 'New trip', new_trip_path %> | Sign in </div>
+<% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>">
+        <%= value %>
+    </div>
+<% end %> 
+
+
 
 	<p>About | Contact</p>
 

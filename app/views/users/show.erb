@@ -1,0 +1,13 @@
+<h1>Hello <%= current_user.name %>!</h1>
+
+<p><h2>Trips</h2></p>
+
+<p><%= link_to 'new trip', new_user_trip_path(current_user.id) %> 
+
+<p>
+    <% @trips.each do |trip| %>
+        <%= link_to "#{trip.name}", trip_url_path(current_user.id, trip.url) %> | 
+        invite people | 
+        <%= link_to 'edit', edit_trip_url_path(current_user.id, trip.url) %> | 
+        <%= link_to 'delete', [current_user, trip], method: :delete, data: {confirm: 'You sure?'} %><br>
+    <% end %>

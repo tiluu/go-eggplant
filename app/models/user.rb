@@ -1,9 +1,25 @@
 class User < ActiveRecord::Base
-    belongs_to :trip
-    validates :name, :email, presence: true
+    has_many :trips, dependent: :destroy
+    has_secure_password
+
+    validates :name, :email, :password, :password_confirmation, presence: true, on: :create
     validates :name, length: { maximum: 50 }
-    validates :email, format: { with: /\A[\w+\-._]+?@[a-z\d\-.]+\.[a-z]+\z/i,
+    
+    validates :password, confirmation: true, 
+                         length: { in: 6..15 }
+
+    validates :email, uniqueness: true, 
+                      format: { with: /\A[\w+\-._]+?@[a-z\d\-.]+\.[a-z]+\z/i,
                                 message: "Invalid format for email address" }
+    
     validates :phone, numericality: { only_integer: true },
                       allow_blank: true
+
+    def self.authenticate(email, password)
+        user = User.find_by(email: email)
+        if user.present? && user.authenticate(password)
+            user
+        end
+    end
+
 end

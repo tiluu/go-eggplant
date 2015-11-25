@@ -1,13 +1,10 @@
 class Trip < ActiveRecord::Base
-    has_many :users, dependent: :destroy
-    accepts_nested_attributes_for :users
+    belongs_to :user
 
-    validates :name, :password, :password_confirmation, :city, 
-              :country, :state_or_province, presence: true
+    validates :name, :city, :country, 
+              :state_or_province, presence: true
     
     validates :name, length: { maximum: 50 }
-    validates :password, confirmation: true,
-                         length: { in: 6..15 }
     
     validate :start_date_not_in_past, on: :create
     validate :end_date_not_in_past
@@ -24,6 +21,5 @@ class Trip < ActiveRecord::Base
             errors.add(:end_date, "can't end earlier than trip start date") 
         end
     end
-
 
 end
