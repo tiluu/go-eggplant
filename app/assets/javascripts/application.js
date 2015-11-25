@@ -15,3 +15,18 @@
 //= require angular
 //= require angular-resource
 //= require_tree .
+
+(function($){
+
+	//Toggle list
+	$('.trip--fav_action').find('button').on('click', function(){
+		$('.trip--fav_action').find('.btn').removeClass('active');
+		$(this).addClass('active');
+
+		$('.trip--list').find('ul').addClass('closed');
+		$('.trip--list').find('[data-type="'+$(this).data('type')+'"]').removeClass('closed');
+
+	});
+
+
+})(jQuery, this, this.document);

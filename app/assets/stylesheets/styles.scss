@@ -1,6 +1,61 @@
+/*********
+
+GLOBAL
+
+***********/
+
 html { font-size: 16px;}
-h1 { font-size: 2rem;}
+h1.page-header { font-size: 2rem; margin: 0;}
+
+.cf { content: ""; display: table;}
+.content { width: 100%;}
+
+.closed { display: none;}
+
+/*********
+
+LANDING PAGE
+
+***********/
 
 .front { text-align: center;}
 
-.api-dashboard div { width: 100px; height: 100px; outline: 1px solid blue; padding: 0 1rem;}
+/*********
+
+DASHBOARD
+
+***********/
+
+.trip--calendar { 
+	float: left;
+	width: 60%; 
+	height: 600px; 
+	padding: 0 1rem;
+}
+.trip--fav { 
+	float: left;
+	width: 40%; 
+	height: 600px; 
+	position: relative;
+	padding: 0 12px;
+	border-left: 1px solid black;
+
+	.btn-group { width: 100%;}
+	.btn-group button { width: 33.33%;}
+
+	li { 
+		padding: 8px;
+		border-top: 1px solid dotted;
+		border-bottom: 1px solid dotted;
+	}
+}
+
+/*********
+
+ERROR MESSAGE
+
+***********/
+.error { 
+	background-color: orange;
+	padding: 8px;
+}

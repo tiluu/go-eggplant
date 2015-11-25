@@ -1,5 +1,29 @@
-<h1>Edit Trip</h1>
+<header> 
+<nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+        <li><a>Account</a></li>
+        <li>
+            <a href="#"class="dropdown-toggle" data-toggle="dropdown">Trip<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li> <%= link_to 'New trip', new_trip_path %></li>
+                <li><%= link_to 'Edit trip', edit_trip_url_path(url: @trip.url) %></li>
+                <li> <%= link_to 'Invite', new_trip_user_path(@trip.id) %></li>
+            </ul>
+        </li>
+        <li><a href="#"class="dropdown-toggle" data-toggle="dropdown" >Discover<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li>Restaurants</li>
+                <li>Hotels</li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+</header>
+
+<h1 class="page-header" >Edit Trip</h1>
 
 <%= render 'shared/trip_form' %> 
 
-<p><a href="javascript:history.back()"><< Back</a></p>
+<div> <button class="btn">Back</button></div>
+
