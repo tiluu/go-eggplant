@@ -13,7 +13,7 @@
     <% end%>
 
 
-<%= form_for(@trip) do |f| %>
+<%= form_for([@user,@trip]) do |f| %>
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1"><%= label_tag(:name, "Trip name") %></span>
       <%= f.text_field :name, class: 'form-control'%>

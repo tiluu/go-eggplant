@@ -1,5 +1,10 @@
 <div class="front">
 	<div><h1>Where are you going?</h1></div>
+	<% if current_user %>    
+    Logged in as <%= current_user.name %> | <%= link_to 'Log out', logout_path, method: :delete %>
+<% else %> 
+    <%= link_to 'Sign up', signup_path %> | <%= link_to 'Log in', login_path %> 
+<% end %> 
 
 <% flash.each do |key, value| %>
     <div class="alert alert-<%= key %>">
