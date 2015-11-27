@@ -1,40 +1,67 @@
 <header> 
-    <h1><%= "#{@trip.name} Dashboard" %></h1>
-    <a href="javascript:history.back()"><< Back</a>
+    <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="#"class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
+                <ul class="dropdown-menu"> 
 
-<nav class="navbar navbar-default">
-    <ul class="nav navbar-nav">
-        <li><a>Account</a></li>
-        <li> <%= link_to 'new trip', new_user_trip_path(current_user.id) %></li>
-        <li><%= link_to 'edit trip', edit_trip_url_path(current_user.id, @trip.url) %></li>
-        <li> Invite people</li>
-    </ul>
-</nav>
-<!-- <a href="javascript:history.back()"><< Back</a> -->
-<h1><%= "#{@trip.name}" %></h1>
-
-
-<div>
-    You are going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> on <%= "#{start_d} to #{end_d}" %>
-</div>
-
-<p>People on this trip:</p>
-<ul>
-    <li> person 1</li>
-    <li> person 2</li>
-</ul>
+                    <li><%= link_to 'Me', user_path(current_user) %></li>
+                    <li><%= link_to 'Log out', logout_path, method: :delete %></li>
+                </ul>
+            <li>
+                <a href="#"class="dropdown-toggle" data-toggle="dropdown">Trip<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li> <%= link_to 'New trip', new_user_trip_path %></li>
+                    <li><%= link_to 'Edit trip', edit_trip_url_path(current_user.id, @trip.url) %></li>
+                    <li> <%= link_to 'Invite', new_user_trip_path(@trip.id) %></li>
+                </ul>
+            </li>
+            <li><a href="#"class="dropdown-toggle" data-toggle="dropdown" >Discover<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li>Restaurants</li>
+                    <li>Hotels</li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+<h1 class="page-header"><%= "#{@trip.name} Dashboard" %></h1>
 </header>
+<div class="content cf">
+    <section class="trip--calendar">
+        <div>
+            You are going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
+        </div>
+        <p>People on this trip:</p>
+        <ul>
 
-<div ng-app="Calendar" ng-controller="CalendarCtrl">
-    <%= render 'calendar' %> 
+        </ul>
+        <div ng-app="Calendar" ng-controller="CalendarCtrl">
+            <%= render 'calendar' %> 
+        </div>
+    </section>
+    <aside class="trip--fav">
+        <h4> Suggested Ideas</h4>
+        <div class="btn-group trip--fav_action" role="group" aria-label="...">
+          <button type="button" data-type="food" class="btn btn-default active">Food</button>
+          <button type="button" data-type="attrac" class="btn btn-default">Attractions</button>
+          <button type="button" data-type="events" class="btn btn-default">Events</button>
+        </div>
+        <div class="trip--list">
+            <ul class="list-group" data-type="food">
+                <li class="list-group-item">Hot pot on Sept 10, 2015</li>
+                <li class="list-group-item">dim sum on Sept 10, 2015</li>
+                <li class="list-group-item">Opera on Sept 10, 2015</li>
+            </ul>
+            <ul class="list-group closed" data-type="attrac">
+                 <li class="list-group-item">Opera on Sept 10, 2015</li>
+            </ul>
+            <ul class="list-group closed" data-type="events">
+                <li class="list-group-item">Movies on Sept 10, 2015</li>
+            </ul>
+        </div>
+        <button type="button" class="btn">Add +</button>
+    </aside>
 </div>
-
-<section class="api-dashboard">
-    <div>API</div>
-    <div>API</div>
-    <div>API</div>
-    <div>API</div>
-</section>
 
 <section>
     <p>
@@ -70,7 +97,9 @@
 
 
         <%= safe_join(b.location.display_address, '<br>'.html_safe) %><br>
-        Neighborhood: <%= safe_join(b.location.neighborhoods, ','.html_safe) %>   
+        
+        Neighborhood: <%#= safe_join(b.location.neighborhoods, ','.html_safe) %>   
+
         </p>
     <% end %> 
    

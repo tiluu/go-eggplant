@@ -1,15 +1,23 @@
-<% if !@errors.nil? %>
-    <%= pluralize(@errors.count, "error") %> found
-    <%= @errors.full_messages.each do |msg| %>
-        <ul>
-            <li> <%= msg %></li>
-        </ul>
-    <% end %>
-<% end%>
+<div class="create--trip">
+    <% if !@errors.nil? %>
+        <div class="error">
+            <%= pluralize(@errors.count, "error") %> found
+            <%= @errors.full_messages.each do |msg| %>
+            <div class="error--msg">
+                <ul>
+                    <li> <%= msg %></li>
+                </ul>
+            </div>
+            <% end %>
+        </div>
+    <% end%>
 
-<%= form_for([@user, @trip]) do |f| %>
-    <%= label_tag(:name, "Trip name") %><br>
-    <%= f.text_field :name %><br>
+
+<%= form_for([@user,@trip]) do |f| %>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1"><%= label_tag(:name, "Trip name") %></span>
+      <%= f.text_field :name, class: 'form-control'%>
+    </div>
 
     <%= f.label :start_date %><br>
     <%= date_select :trip, :start_date, default: 1.day.from_now %><br>
@@ -17,16 +25,46 @@
     <%= f.label :end_date %><br>
     <%= date_select :trip, :end_date, default: 2.days.from_now %><br>
 
-    <%= f.label :city %><br>
-    <%= f.text_field :city %><br>
-
-    <%= f.label :state_or_province %><br>
-    <%= f.text_field :state_or_province %><br>
-
-    <%= f.label :country %><br>
-    <%= f.text_field :country %><br>
-
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon2"><%= f.label :city %><br></span>
+         <%= f.text_field :city , class: 'form-control'%>
+    </div>
    
-    <p><%= f.submit "Submit" %></p>
+
+     <div class="input-group">
+        <span class="input-group-addon" id="basic-addon3"><%= f.label :state_or_province %></span>
+        <%= f.text_field :state_or_province, class: 'form-control'%>
+    </div>
+    
+
+     <div class="input-group">
+        <span class="input-group-addon" id="basic-addon4"><%= f.label :country %></span>
+        <%= f.text_field :country, class: 'form-control'%>
+    </div>
+
+<h1 class="page-header"><small>Account information</small></h1>
+    <%= f.fields_for :users do |user| %>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon5"><%= label_tag(:name, "Your name") %></span>
+             <%= user.text_field :name, class: 'form-control' %>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon5"><%= user.label :email %></span>
+            <%= user.text_field :email, class: 'form-control' %>
+        </div>
+    <% end %>
+
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon5"> <%= f.label :password %></span>
+        <%= f.password_field :password, class: 'form-control' %>
+    </div>
+   
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon5"><%= f.label :password_confirmation %></span>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+
+    <p><%= f.submit "Submit", class: 'btn' %></p>
 
 <% end %>
+</div>
