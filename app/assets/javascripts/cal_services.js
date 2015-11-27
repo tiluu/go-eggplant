@@ -22,5 +22,13 @@
         return weeks;
     });   
     
+    services.factory("tripData", function() {
+        var div = document.getElementById('date-data');
+        var data = {
+            start_d: div.getAttribute("start_date"),
+            end_d: div.getAttribute("end_date")
+        };
+        return data;
+    });
    
 })();
