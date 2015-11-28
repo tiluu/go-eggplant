@@ -31,7 +31,7 @@ class TripsController < ApplicationController
         # or have people come up with their own URLs
         @trip.url = SecureRandom.urlsafe_base64
         if @trip.save
-            redirect_to trip_url_path(user_id: @user.id, url: @trip.url)
+            redirect_to trip_path(@trip.url)
         else
             @errors = @trip.errors
             render :new

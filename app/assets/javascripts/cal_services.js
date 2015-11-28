@@ -1,8 +1,8 @@
 (function() {
     var services = angular.module("calServices", []);
+    
 
     services.factory("mnthService", function() {
-        //todo: account for leap year
         var months = {January: {num: 1, num_days: 31}, 
                       February: {num: 2, num_days: 28}, 
                       March: {num: 3, num_days: 31}, 
@@ -20,7 +20,9 @@
     });
     
     services.factory("wkService", function() {
-        var weeks = ['Sunday', 'Monday', 'Tuesday',                                   'Wednesday', 'Thursday','Friday',                                'Saturday'];
+        var weeks = ['Sunday', 'Monday', 'Tuesday', 
+        'Wednesday', 'Thursday','Friday',  
+        'Saturday'];
         return weeks;
     });   
     
@@ -33,10 +35,10 @@
 
         var data = {
             start_y: start.getFullYear(),
-            start_m: start.getMonth(),
+            start_m: start.getMonth() + 1,
             start_d: start.getDate(),
             end_y: end.getFullYear(),
-            end_m: end.getMonth(),
+            end_m: end.getMonth() + 1,
             end_d: end.getDate()
                
         };

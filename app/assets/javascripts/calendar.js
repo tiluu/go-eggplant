@@ -4,19 +4,64 @@
    
     calendar.controller('CalendarCtrl', function($scope, mnthService, wkService, tripData) {  
         $scope.weekdays = wkService;
-        var tripDates = tripData; 
-        var months = Object.keys(mnthService);      
 
-        // convert date.getMonth() to name of current month 
-        $scope.getMonths = function() {
-                                   
-            var trip_months = [];
-            var m1 = tripDates.start_m;
-            var m2 = tripDates.end_m;
+        // GLOBAL VARIABLES [within the controller]
+        var months = Object.keys(mnthService);      
+        var m1 = tripData.start_m;
+        var m2 = tripData.end_m;
+        var y1 = tripData.start_y;
+        var y2 = tripData.end_y;
+              
+        // leap year
+        var isLeapYear = function(month) {
+            var yr = mnthService[month].year; 
+            var leap_yr = (yr % 4 === 0) && (yr%100 !== 0) || (yr%400 === 0);
+            if (leap_yr && month === "February") {
+                mnthService[month].num_days = 29;
+            }
+        }
+
+        // create a new function & add year to mnthService hash
+        var setYear = function() {       
+            if (y2 - y1 > 0) {
+                var december = 12; 
+
+                for (var m = m1 - 1; m < december; m++) {
+                    var curr_month = months[m];
+                    mnthService[curr_month].year = y1;
+                }
+                for (var m = 0;m <= m2;m++) {
+                    var curr_month = months[m]
+                    mnthService[curr_month].year = y2;
+                }
+            }
+            else {
+                for (var m = m1 - 1; m < m2; m++) {
+                    var curr_month = months[m];                
+                    mnthService[curr_month].year = y1;
+                }
+            }          
             
-            for (var m = m1; m <= m2; m++) {                      
-                trip_months.push(months[m]);            
-              }
+           return mnthService;   
+        }
+                
+        // convert date.getMonth() to name of current month 
+        $scope.getMonths = function() {                     
+            var trip_months = [];
+            var december = 12;
+            if (m2 - m1 < 0) {
+                for (var m = m1 - 1; m < december; m++) {
+                    trip_months.push(months[m]);
+                }
+                for (var m = 0; m < m2; m++) {
+                    trip_months.push(months[m]);
+                }
+            }
+            else {
+                for (var m = m1 -1; m < m2; m++) {                      
+                    trip_months.push(months[m]);                
+                }
+            }
 
             return trip_months;    
         };  
@@ -28,18 +73,19 @@
 
         // keep printing out dates until max # days in the month is reached
         $scope.notMaxDays = function(month, day,week) {
-            return $scope.getDay(day,week) <= mnthService[month].num_days;
+            isLeapYear(month);
+            return $scope.getDay(day,week) <= numDays(month);
         }   
 
         // find out what day of the week the first day of the current month falls on
         $scope.firstDayOfMonth = function(month) {
-            var start_y = tripDates.start_y;
-            var end_y = tripDates.end_y;
+            setYear();
+            var year = mnthService[month].year;
             var start_weekdays = [];
            
             for (var mnth in months) {
                 //to account for year, may consider making year a param for the function 
-                var first_day_of_month = months[mnth]+" 1 "+ start_y;
+                var first_day_of_month = months[mnth]+" 1 "+ year;
                 var d = new Date(first_day_of_month);
                 start_weekdays.push(d.getDay()); 
             }; 
@@ -84,20 +130,19 @@
 
        // highlights trip date
        $scope.tripDates = function(month, cal_day) {
-           var start_d = tripDates.start_d;
-           var start_m = tripDates.start_m + 1;
-           var end_d = tripDates.end_d;
-           var end_m = tripDates.end_m + 1;
+           var d1 = tripData.start_d;
+           var d2 = tripData.end_d;
+           var curr_yr = mnthService[month].year;
+           var month_num = mnthService[month].num;
+          
+           var y_diff = y2 - curr_yr;
+           var m_diff = (m2 + (12*y_diff)) - month_num;
            
-           var curr_month = mnthService[month].num; 
-           var start_diff = curr_month - start_m;
-           var end_diff = end_m - curr_month;
-           
-           var new_start_d = start_d - (start_d * start_diff)
-           var new_end_d = end_d + (mnthService[month].num_days * end_diff)
-           
+           var new_start_d = d1 - d1*(Math.abs(month_num - m1));           
+           var new_end_d = d2 + m_diff*31 + d2*(Math.abs(m2 - month_num));
+          
            var match_days = new_start_d <= cal_day && new_end_d >= cal_day && cal_day !== '';
-       
+        
            return match_days;
        };
 
