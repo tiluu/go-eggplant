@@ -5,14 +5,14 @@
                 <a href="#"class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
                 <ul class="dropdown-menu"> 
 
-                    <li><%= link_to 'Me', user_path(current_user) %></li>
+                    <li><%= link_to 'Me', dashboard_path %></li>
                     <li><%= link_to 'Log out', logout_path, method: :delete %></li>
                 </ul>
             <li>
                 <a href="#"class="dropdown-toggle" data-toggle="dropdown">Trip<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li> <%= link_to 'New trip', new_user_trip_path %></li>
-                    <li><%= link_to 'Edit trip', edit_trip_url_path(current_user.id, @trip.url) %></li>
+                    <li> <%= link_to 'New trip', new_trip_path %></li>
+                    <li><%= link_to 'Edit trip', edit_trip_path(@trip.url) %></li>
                     <li> <%= link_to 'Invite', new_user_trip_path(@trip.id) %></li>
                 </ul>
             </li>
@@ -65,7 +65,7 @@
 
 <section>
     <p>
-    <%= form_tag trip_url_path(@user.id, @trip.url), method: "get" do %>
+    <%= form_tag trip_path(@trip.url), method: "get" do %>
         <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %><br>
         <%= text_field_tag(:cuisine, "", placeholder: "Cuisine") %><br>
         <%= submit_tag "Search" %> 
@@ -74,7 +74,7 @@
     </p>
 
     <p>Sort results by:</p> 
-    <%= form_tag trip_url_path(@user.id, @trip.url), method: "get" do %>  
+    <%= form_tag trip_path(@trip.url), method: "get" do %>  
         <%= radio_button_tag(:sort, 0) %>
         <%= label_tag(:relevance, "relevance") %>
         <%= radio_button_tag(:sort, 1) %>

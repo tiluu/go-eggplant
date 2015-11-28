@@ -6,8 +6,8 @@
 
 <p>
     <% @trips.each do |trip| %>
-        <%= link_to "#{trip.name}", trip_url_path(current_user.id, trip.url) %> | 
+        <%= link_to "#{trip.name}", trip_path(trip.url) %> | 
         invite people | 
-        <%= link_to 'edit', edit_trip_url_path(current_user.id, trip.url) %> | 
+        <%= link_to 'edit', edit_trip_path(trip.url) %> | 
         <%= link_to 'delete', [current_user, trip], method: :delete, data: {confirm: 'You sure?'} %><br>
     <% end %>

@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 
   def login_user(user)
       session[:user_id] = user.id
-      redirect_to user_path(user)
+      redirect_to dashboard_path
   end
 
   helper_method :current_user, :require_login, :login_user
