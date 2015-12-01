@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  get '/trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
-  get '/users/:user_id/trips/trip-:url' => 'trips#show', as: 'trip_url'
-  get '/users/:user_id/trips/trip-:url/edit' => 'trips#edit', as: 'edit_trip_url'
-  
+  get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
+  get 'user/trip-:url' => 'trips#show', as: 'trip'
+  get 'user/trip-:url/edit' => 'trips#edit', as: 'edit_trip'
+  get 'user/trips/new' => 'trips#new', as: 'new_trip'
+  get 'user/dashboard' => 'users#show', as: :dashboard
+
   get 'signup' => 'users#new', as: :signup
   get 'login' => 'users#login', as: :login  
   post 'login' => 'users#authenticate'
