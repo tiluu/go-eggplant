@@ -1,14 +1,7 @@
 <header>
 	<nav class="navbar navbar-default">
         <ul class="nav navbar-nav">
-            <li>
-              
-            <li>
-               
-            </li>
-            <li>
-            Logout
-            </li>
+            <li><%= link_to 'Log out', logout_path, method: :delete %></li>
         </ul>
     </nav>
 	<h1>Hello <%= current_user.name %>!</h1>
@@ -24,11 +17,12 @@
 				<ul class="list-group">
 					<% @trips.each do |trip| %>
 						<li class="list-group-item">
-					    <%= link_to "#{trip.name}", trip_url_path(current_user.id, trip.url) %> 
+						<% trip %>
+					    <%= link_to "#{trip.name}", trip_path(trip.url) %> 
 					    <%= "#{format_date(trip.start_date)} to #{format_date(trip.end_date)} to #{trip.city},#{trip.country} " %>
 					    | 
 					    invite people | 
-					    <%= link_to 'edit', edit_trip_url_path(current_user.id, trip.url) %> | 
+					    <%= link_to 'edit', edit_trip_path(trip.url) %> | 
 					    <%= link_to 'delete', [current_user, trip], method: :delete, data: {confirm: 'You sure?'} %>
 					   </li>
 					<% end %>
