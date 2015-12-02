@@ -1,11 +1,10 @@
 class TripsController < ApplicationController
-    include ApplicationHelper
     before_action :require_login
    
     def show
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
-        
+        @ideas = @trip.ideas
         
         location = @trip.city + @trip.state_or_province + @trip.country
 
@@ -77,7 +76,9 @@ class TripsController < ApplicationController
             params.require(:trip).permit(:name, :url, :start_date,
                                          :end_date, :city, 
                                          :state_or_province,
-                                         :country)
+                                         :country,
+                                        ideas_attributes: [:title, :start_date,                                                                         :end_date, :start_time,
+                                                        :end_time, :location,                                                                           :notes, :category] )
         end
 
 end

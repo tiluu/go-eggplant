@@ -48,6 +48,9 @@
         </div>
         <div class="trip--list">
             <ul class="list-group" data-type="food">
+                <% @ideas.each do |idea| %>
+                    <li class="list-group-item"><%= idea.title %></li>
+                <% end %>
                 <li class="list-group-item">Hot pot on Sept 10, 2015</li>
                 <li class="list-group-item">dim sum on Sept 10, 2015</li>
                 <li class="list-group-item">Opera on Sept 10, 2015</li>
@@ -59,7 +62,7 @@
                 <li class="list-group-item">Movies on Sept 10, 2015</li>
             </ul>
         </div>
-        <button type="button" class="btn">Add +</button>
+        <%= button_to "Add +", new_idea_path(@trip.url), class: 'btn' %> 
     </aside>
 </div>
 

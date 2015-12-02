@@ -1,0 +1,48 @@
+<div class="create--trip">
+    <% if !@errors.nil? %> 
+        <div class="error">
+            <%= pluralize(@errors.count, "error") %> found
+            <% @errors.full_messages.each do |msg| %>
+                <div class="error--msg">
+                    <ul>
+                        <li><%= msg %></li>
+                    </ul>
+                </div>
+            <% end %>
+         </div>
+     <% end %>
+ </div>
+
+ <%= form_for(@trip) do |f| %>
+     <%= f.fields_for :ideas do |idea| %>
+        <div class="input-group">
+            <%= label_tag(:title, "Idea") %><br>
+            <%= idea.text_field :title, class: 'form_control' %>
+        </div>
+
+        <%= idea.label :category %><br>
+
+        <%= idea.label :start_date %><br>
+        <%= date_select :idea, :start_date, default: @trip.start_date %><br>
+
+        <%= idea.label :end_date %><br>
+        <%= date_select :idea, :end_date, default: @trip.end_date %><br>
+
+        <div class="input-group">
+            <%= idea.label :start_time %><br>
+        </div>
+
+        <div class="input-group">
+            <%= idea.label :end_time %><br>
+        </div>  
+
+    <div class="input-group">
+        <%= idea.label :location %><br>
+        <%= idea.text_field :location, class: 'form-control' %>
+    </div>
+<% end%>
+
+    <P><%= f.submit "Submit", class: 'btn' %></p>
+<% end %>
+    
+
