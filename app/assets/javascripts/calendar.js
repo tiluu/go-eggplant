@@ -45,7 +45,8 @@
            return mnthService;   
         }
                 
-        // convert date.getMonth() to name of current month 
+        // a list of months in the trip
+        // todo: account for trips that span 2+years
         $scope.getMonths = function() {                     
             var trip_months = [];
             var december = 12;
@@ -74,7 +75,7 @@
         // keep printing out dates until max # days in the month is reached
         $scope.notMaxDays = function(month, day,week) {
             isLeapYear(month);
-            return $scope.getDay(day,week) <= numDays(month);
+            return $scope.getDay(day,week) <= mnthService[month].num_days;
         }   
 
         // find out what day of the week the first day of the current month falls on
@@ -144,7 +145,7 @@
            var match_days = new_start_d <= cal_day && new_end_d >= cal_day && cal_day !== '';
         
            return match_days;
-       };
+       }
 
      })
 })();
