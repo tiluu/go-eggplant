@@ -1,13 +1,46 @@
-<h1>Hello <%= current_user.name %>!</h1>
+<header>
+	<nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+            <li>
+              
+            <li>
+               
+            </li>
+            <li>
+            Logout
+            </li>
+        </ul>
+    </nav>
+	<h1>Hello <%= current_user.name %>!</h1>
+</header>
+<div class="content cf">
+		<section>
+			<h2>Account info</h2>
+		</section>
+		<section>
+			<h2>Current Trips</h2>
+			<p><%= link_to 'Create new trip', new_user_trip_path(current_user.id) %> </p>
+			<div>
+				<ul class="list-group">
+					<% @trips.each do |trip| %>
+						<li class="list-group-item">
+					    <%= link_to "#{trip.name}", trip_url_path(current_user.id, trip.url) %> 
+					    <%= "#{format_date(trip.start_date)} to #{format_date(trip.end_date)} to #{trip.city},#{trip.country} " %>
+					    | 
+					    invite people | 
+					    <%= link_to 'edit', edit_trip_url_path(current_user.id, trip.url) %> | 
+					    <%= link_to 'delete', [current_user, trip], method: :delete, data: {confirm: 'You sure?'} %>
+					   </li>
+					<% end %>
+				</ul>
+			</div>
+		</section>
 
-<p><h2>Trips</h2></p>
-
-<p><%= link_to 'new trip', new_trip_path %> 
-
-<p>
-    <% @trips.each do |trip| %>
-        <%= link_to "#{trip.name}", trip_path(trip.url) %> | 
-        invite people | 
-        <%= link_to 'edit', edit_trip_path(trip.url) %> | 
-        <%= link_to 'delete', [current_user, trip], method: :delete, data: {confirm: 'You sure?'} %><br>
-    <% end %>
+</div>
+<div style="outline:1px solid black; position:absolute; bottom:0; right: 0;"> TO DO
+<ol>
+	<li>separate acccount info from trip form. and add it here</li>
+	<li>add cancel account option</li>
+	<li>get trip date and city</li>
+</ol>
+</div>
