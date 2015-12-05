@@ -76,9 +76,7 @@ class TripsController < ApplicationController
             params.require(:trip).permit(:name, :url, :start_date,
                                          :end_date, :city, 
                                          :state_or_province,
-                                         :country,
-                                        ideas_attributes: [:title, :start_date,                                                                         :end_date, :start_time,
-                                                        :end_time, :location,                                                                           :notes, :category] )
+                                         :country)
         end
 
 end

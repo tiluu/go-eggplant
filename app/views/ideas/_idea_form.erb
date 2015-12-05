@@ -1,46 +1,38 @@
-<div class="create--trip">
-    <% if !@errors.nil? %> 
-        <div class="error">
-            <%= pluralize(@errors.count, "error") %> found
-            <% @errors.full_messages.each do |msg| %>
-                <div class="error--msg">
-                    <ul>
-                        <li><%= msg %></li>
-                    </ul>
-                </div>
-            <% end %>
-         </div>
-     <% end %>
- </div>
 
- <%= form_for(@trip) do |f| %>
-     <%= f.fields_for :ideas do |idea| %>
+
+
+ <%= form_for(:idea) do |f| %>
         <div class="input-group">
             <%= label_tag(:title, "Idea") %><br>
-            <%= idea.text_field :title, class: 'form_control' %>
+            <%= f.text_field :title, class: 'form_control' %>
         </div>
 
-        <%= idea.label :category %><br>
+        <%= f.label :category %><br>
+        [ DROP DOWN MENU ]<br>
 
-        <%= idea.label :start_date %><br>
+        <%= f.label :start_date %><br>
         <%= date_select :idea, :start_date, default: @trip.start_date %><br>
 
-        <%= idea.label :end_date %><br>
+        <%= f.label :end_date %><br>
         <%= date_select :idea, :end_date, default: @trip.end_date %><br>
 
         <div class="input-group">
-            <%= idea.label :start_time %><br>
+            <%= f.label :start_time %><br>
         </div>
 
         <div class="input-group">
-            <%= idea.label :end_time %><br>
+            <%= f.label :end_time %><br>
         </div>  
 
     <div class="input-group">
-        <%= idea.label :location %><br>
-        <%= idea.text_field :location, class: 'form-control' %>
+        <%= f.label :location %><br>
+        <%= f.text_field :location, class: 'form-control' %>
     </div>
-<% end%>
+
+    <div class="input-group">
+        <%= f.label :notes %> <br>
+        <%= f.text_area :notes, rows: 3, class: 'form-control' %>
+    </div>
 
     <P><%= f.submit "Submit", class: 'btn' %></p>
 <% end %>

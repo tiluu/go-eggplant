@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
       @current_user ||= User.find_by(id: session[:user_id])
   end
 
+  def current_trips
+      @current_trip = current_user.trips
+  end
+
   def require_login
       if current_user.nil? 
           flash[:danger] = "Please log in before proceeding"

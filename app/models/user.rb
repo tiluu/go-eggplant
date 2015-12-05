@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
     has_many :trips, dependent: :destroy
-    #has_many :ideas, through: :trips
+    has_many :ideas, through: :trips
     has_secure_password
 
     validates :name, :email, :password, :password_confirmation, presence: true, on: :create

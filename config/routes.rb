@@ -5,10 +5,10 @@ Rails.application.routes.draw do
   get 'user/trips/new' => 'trips#new', as: :new_trip
   get 'user/dashboard' => 'users#show', as: :dashboard
   
-  get 'user/trip-:url/ideas/new' =>'ideas#new', as: :new_idea
-  post 'user/trip-:url/ideas/new' => 'ideas#new'
+  get 'user/trip-:url/ideas/new' =>'ideas#new', as: :new_idea   
+  post 'user/trip-:url/ideas/new' => 'ideas#create'
   get 'user/trip-:url/ideas/:id' => 'ideas#show', as: :idea
-  
+  #post 'user/trip-:url' => 'trips#show'
 
   get 'signup' => 'users#new', as: :signup
   get 'login' => 'users#login', as: :login  
@@ -16,10 +16,10 @@ Rails.application.routes.draw do
   delete 'logout' => 'users#logout', as: :logout
  
 
-  resources :users do 
-      resources :trips, except: :index do
+  resources :users do
+    resources :trips, except: :index do
         resources :ideas, except: :index
-      end
+    end
   end
   root 'home_pages#home'
 

@@ -1,19 +1,22 @@
 class IdeasController < ApplicationController
     before_action :require_login
 
+    def index
+        @trip = current_trips.find_by_url(params[:url])
+        @ideas = @trip.ideas
+    end
+
     def new
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
-        @idea = @trip.ideas.new
+        @trip = current_trips.find_by_url(params[:url])
+        @idea = @trip.ideas.build
     end
 
     def create
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
-        @idea = @trip.ideas.new(idea_params)
+        @trip = current_trips.find_by_url(params[:url])
+        @idea = @trip.ideas.build(idea_params)
         
         if @idea.save
-            redirect_to @trip.path(@trip.url)
+            redirect_to trip_path(@trip.url)
         else
             @errors = @idea.errors
             render :new

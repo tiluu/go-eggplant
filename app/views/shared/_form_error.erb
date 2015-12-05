@@ -1,0 +1,15 @@
+<div class="create--trip">
+    <% if !@errors.nil? %> 
+        <div class="error">
+            <%= pluralize(@errors.count, "error") %> found
+            <% @errors.full_messages.each do |msg| %>
+                <div class="error--msg">
+                    <ul>
+                        <li><%= msg %></li>
+                    </ul>
+                </div>
+            <% end %>
+         </div>
+     <% end %>
+ </div>
+
