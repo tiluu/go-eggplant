@@ -24,6 +24,6 @@ class ApplicationController < ActionController::Base
       session[:user_id] = user.id
       redirect_to dashboard_path
   end
-
-  helper_method :current_user, :require_login, :login_user
+        
+  helper_method :current_user, :require_login, :login_user, :getCategory
 end

@@ -11,14 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151128220847) do
+ActiveRecord::Schema.define(version: 20151206173705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "idea_categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "ideas", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "trip_id"
+    t.integer  "idea_category_id"
     t.string   "title"
     t.date     "start_date"
     t.date     "end_date"
@@ -27,10 +34,11 @@ ActiveRecord::Schema.define(version: 20151128220847) do
     t.string   "location"
     t.text     "notes"
     t.string   "category"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
+  add_index "ideas", ["idea_category_id"], name: "index_ideas_on_idea_category_id", using: :btree
   add_index "ideas", ["trip_id"], name: "index_ideas_on_trip_id", using: :btree
   add_index "ideas", ["user_id"], name: "index_ideas_on_user_id", using: :btree
 

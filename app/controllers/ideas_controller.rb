@@ -51,7 +51,8 @@ class IdeasController < ApplicationController
             params.require(:idea).permit(:title, :start_date, 
                                          :end_date, :start_time,
                                          :end_time, :location,
-                                         :notes, :category)
+                                         :notes, :idea_category_id,
+                                         :user_id, :trip_id)
         end
        
 end

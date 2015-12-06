@@ -4,8 +4,9 @@ class TripsController < ApplicationController
     def show
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
-        @ideas = @trip.ideas
-        
+        @food = IdeaCategory.find_by_name("food")
+        @event = IdeaCategory.find_by_name("event")
+        @attraction = IdeaCategory.find_by_name("attraction")    
         location = @trip.city + @trip.state_or_province + @trip.country
 
         if !params[:neighborhood] 

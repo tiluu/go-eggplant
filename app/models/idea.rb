@@ -3,7 +3,7 @@ class Idea < ActiveRecord::Base
 
     belongs_to :user
     belongs_to :trip
-   
+    belongs_to :idea_category
+
     validates :title, presence: true 
-  
 end

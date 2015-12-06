@@ -3,6 +3,7 @@ class CreateIdeas < ActiveRecord::Migration
     create_table :ideas do |t|
       t.belongs_to :user, index: true
       t.belongs_to :trip, index: true
+      t.belongs_to :idea_category, index: true
       t.string      :title
       t.date        :start_date
       t.date        :end_date
@@ -10,7 +11,6 @@ class CreateIdeas < ActiveRecord::Migration
       t.datetime    :end_time
       t.string      :location
       t.text        :notes
-      t.string      :category
       t.timestamps null: false
     end
   end

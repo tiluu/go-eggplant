@@ -1,5 +1,6 @@
 <h1><%= @idea.title %></h1>
-Category: <%= @idea.category %><br>
+Suggested by: <%= @idea.user.name %> <br>
+Category: <%= @idea.idea_category.name %><br>
 Suggested day: <%= display_idea(@idea.start_date, @idea.end_date) %><br>
 Suggested time: <%= display_idea(start_t, end_t) %><br>
 Location: <%= display_idea(@idea.location) %><br>

@@ -45,27 +45,40 @@
           <button type="button" data-type="food" class="btn btn-default active">Food</button>
           <button type="button" data-type="attrac" class="btn btn-default">Attractions</button>
           <button type="button" data-type="events" class="btn btn-default">Events</button>
-        </div>
+      </div>
         <div class="trip--list">
             <ul class="list-group" data-type="food">
-                <% @ideas.each do |idea| %>
+                <% @food.ideas.each do |idea| %>
                     <li class="list-group-item">
-                        <%= idea.title %>
-                        <%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> 
-                        <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %>
+                        <%= "#{idea.title} on #{format_date(idea.start_date)}" %>
+                    <%= link_to 'details', idea_path(@trip.url, idea.id) %> 
+                    <%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> 
+                    <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %>
                     </li>
                 <% end %>
-                <li class="list-group-item">Hot pot on Sept 10, 2015</li>
-                <li class="list-group-item">dim sum on Sept 10, 2015</li>
-                <li class="list-group-item">Opera on Sept 10, 2015</li>
             </ul>
             <ul class="list-group closed" data-type="attrac">
-                 <li class="list-group-item">Opera on Sept 10, 2015</li>
+                  <% @attraction.ideas.each do |idea| %>
+                    <li class="list-group-item">
+                        <%= "#{idea.title} on #{format_date(idea.start_date)}" %>
+                    <%= link_to 'details', idea_path(@trip.url, idea.id) %> 
+                    <%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> 
+                    <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %>
+                    </li>
+                <% end %>
+               
             </ul>
             <ul class="list-group closed" data-type="events">
-                <li class="list-group-item">Movies on Sept 10, 2015</li>
+                 <% @event.ideas.each do |idea| %>
+                    <li class="list-group-item">
+                        <%= "#{idea.title} on #{format_date(idea.start_date)}" %>
+                    <%= link_to 'details', idea_path(@trip.url, idea.id) %> 
+                    <%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> 
+                    <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %>
+                    </li>
+                <% end %>
             </ul>
-        </div>
+       </div>
         <%= button_to "Add +", new_idea_path(@trip.url), method: 'get', class: 'btn' %> 
     </aside>
 </div>
