@@ -1,11 +1,6 @@
 class IdeasController < ApplicationController
     before_action :require_login
 
-    def index
-        @trip = current_trips.find_by_url(params[:url])
-        @ideas = @trip.ideas
-    end
-
     def new
         @trip = current_trips.find_by_url(params[:url])
         @idea = @trip.ideas.build
@@ -24,18 +19,29 @@ class IdeasController < ApplicationController
     end
 
     def show
-        @trip = current_user.trips.find_by_url(params[:url])
+        @trip = current_trips.find_by_url(params[:url])
         @idea = @trip.ideas.find(params[:id])
     end
 
     def edit
+        @trip = current_trips.find_by_url(params[:url])
+        @idea = @trip.ideas.find(params[:id])
     end
 
     def update
+        @trip = current_trips.find_by_url(params[:url])
+        @idea = @trip.ideas.find(params[:id])
+
+        if @idea.update_attributes(idea_params)
+            redirect_to idea_path(@trip.url, params[:id])
+        else
+            @errors = @trip.errors
+            render :edit
+        end
     end
 
     def destroy
-        @trip = current_user.trips.find_by_url(:url)
+        @trip = current_trips.find(params[:trip_id])
         @trip.ideas.find(params[:id]).destroy
         redirect_to trip_path(@trip.url)
     end
@@ -45,7 +51,7 @@ class IdeasController < ApplicationController
             params.require(:idea).permit(:title, :start_date, 
                                          :end_date, :start_time,
                                          :end_time, :location,
-                                         :notes)
+                                         :notes, :category)
         end
        
 end

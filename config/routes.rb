@@ -7,8 +7,9 @@ Rails.application.routes.draw do
   
   get 'user/trip-:url/ideas/new' =>'ideas#new', as: :new_idea   
   post 'user/trip-:url/ideas/new' => 'ideas#create'
-  get 'user/trip-:url/ideas/:id' => 'ideas#show', as: :idea
-  #post 'user/trip-:url' => 'trips#show'
+  get 'user/trip-:url/idea-:id' => 'ideas#show', as: :idea
+  get 'user/trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
+  post 'user/trip-:url/idea-:id/edit' => 'ideas#update'
 
   get 'signup' => 'users#new', as: :signup
   get 'login' => 'users#login', as: :login  

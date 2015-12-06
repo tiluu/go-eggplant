@@ -1,4 +1,16 @@
 module ApplicationHelper
+    def format_time(time)
+        time.nil? ? "" : time.strftime("%I: %M %p")    
+    end
+
+    def start_t
+        format_time(@idea.start_time)
+    end
+
+    def end_t
+        format_time(@idea.end_time)
+    end
+
     def format_date(date)
        date.nil? ? "" : date.strftime("%a %b %d, %Y")
     end

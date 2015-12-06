@@ -7,8 +7,9 @@
             <%= f.text_field :title, class: 'form_control' %>
         </div>
 
+        <div class="dropdown">
         <%= f.label :category %><br>
-        [ DROP DOWN MENU ]<br>
+        <%= f.select :category, [["Food", "food"], ["Attractions", "attraction"], ["Events", "event"], ["Activity", "activity"]], class: 'dropdown-toggle' %><br>
 
         <%= f.label :start_date %><br>
         <%= date_select :idea, :start_date, default: @trip.start_date %><br>
@@ -18,6 +19,12 @@
 
         <div class="input-group">
             <%= f.label :start_time %><br>
+            <%= time_select :idea, :start_time %><br> 
+        </div>
+
+        <div class="input-group">
+            <%= f.label :end_time %><br>
+            <%= time_select :idea, :end_time %><br>
         </div>
 
         <div class="input-group">

@@ -1,2 +1,8 @@
 <h1><%= @idea.title %></h1>
+Category: <%= @idea.category %><br>
+Suggested day: <%= display_idea(@idea.start_date, @idea.end_date) %><br>
+Suggested time: <%= display_idea(start_t, end_t) %><br>
+Location: <%= display_idea(@idea.location) %><br>
+Additional details: <%= display_idea(@idea.notes) %>
 
+<p><%= button_to "Back", trip_path(@trip.url), method: 'get', class: 'btn' %></p>
