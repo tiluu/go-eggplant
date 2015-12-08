@@ -23,29 +23,30 @@
             </li>
         </ul>
     </nav>
-<h1 class="page-header"><%= "#{@trip.name} Dashboard" %></h1>
 </header>
-<div class="content cf">
+<div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
+        <h1><%= "#{@trip.name} Dashboard" %></h1>
         <div>
-            You are going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
+            You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
         </div>
-        <p>People on this trip:</p>
-        <ul>
-        </ul>
-        <div ng-app="Calendar" ng-controller="CalendarCtrl">
+
+        <div id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>" ng-controller="CalendarCtrl">
             <%= render 'calendar' %> 
         </div>
     </section>
-    <aside class="trip--fav">
+    <aside class="trip--fav" ng-controller="TabController as tab">
+        <p>People on this trip:</p>
+        <ul>
+        </ul>
         <h4> Suggested Ideas</h4>
-        <div class="btn-group trip--fav_action" role="group" aria-label="..." ng-controller="TabController as tab">
-        <ul  class="btn-group">
-            <li class="btn btn-default" ng-class="{ active:tab.isSet(1) }">
+        <div class="trip--fav_action" role="group" aria-label="...">
+        <ul  class="nav nav-pills">
+            <li ng-class="{'active':tab.isSet(1)}">
                 <a href ng-click="tab.setTab(1)">Food</a></li>
-            <li class="btn btn-default" ng-class="{ active:tab.isSet(2)}">
+            <li ng-class="{'active':tab.isSet(2)}">
                 <a href ng-click="tab.setTab(2)">Attractions</a></li>
-            <li class="btn btn-default" ng-class="{ active:tab.isSet(3) }">
+            <li ng-class="{'active':tab.isSet(3)}">
                 <a href ng-click="tab.setTab(3)">Events</a></li>
         </ul>
         </div>
@@ -55,10 +56,10 @@
                 <li class="list-group-item">dim sum on Sept 10, 2015</li>
                 <li class="list-group-item">Opera on Sept 10, 2015</li>
             </ul>
-            <ul class="list-group closed" data-type="attrac" ng-show="tab.isSet(2)">
+            <ul class="list-group" data-type="attrac" ng-show="tab.isSet(2)">
                  <li class="list-group-item">Opera on Sept 10, 2015</li>
             </ul>
-            <ul class="list-group closed" data-type="events" ng-show="tab.isSet(3)">
+            <ul class="list-group" data-type="events" ng-show="tab.isSet(3)">
                 <li class="list-group-item">Movies on Sept 10, 2015</li>
             </ul>
         </div>
@@ -94,7 +95,7 @@
      
     <% @result.businesses.each do |b| %>
         <p>
-        <%= image_tag(b.image_url, alt: "#{b.name}") %> <br>
+        <figure style="width:200px"><%= image_tag(b.image_url, alt: "#{b.name}") %> </figure><br>
         <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
         Rating: <%= b.rating %><br>
 

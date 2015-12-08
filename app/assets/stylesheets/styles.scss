@@ -5,12 +5,15 @@ GLOBAL
 ***********/
 
 html { font-size: 16px;}
+body { background-color: #f8f8f8; }
 h1.page-header { font-size: 2rem; margin: 0;}
 
-.cf { content: ""; display: table;}
+h2 { margin: 0;}
 .content { width: 100%;}
 
 .closed { display: none;}
+
+img { width: 100%;}
 
 /*********
 
@@ -19,6 +22,29 @@ LANDING PAGE
 ***********/
 
 .front { text-align: center;}
+
+/*********
+
+USER
+
+***********/
+.user-profile { 
+	width: 75%; 
+	margin: 0 auto;
+	min-width: 796px;
+	
+	aside { width: 200px; float: left;}
+	section { 
+		height: 600px;
+		float: left; 
+		border-radius: 5px;
+		background-color: #fff;
+		width: 596px;
+	}
+
+	figure { width: 200px; float: left; margin-right: 15px;}
+
+}
 
 /*********
 
@@ -49,6 +75,33 @@ DASHBOARD
 		border-bottom: 1px solid dotted;
 	}
 }
+
+/*********
+
+CALENDAR
+
+***********/
+.trip-date {
+   //background: #92c500;
+   color: #92c500;
+   font-size: 14px;
+   font-weight: 600;
+}
+
+#calendar-dates { 
+	table { 
+		width: 100%;
+	}
+
+	td { 
+		width: 14%;
+		border: 1px solid grey;}
+
+	.calendar--day { text-align: center; padding: 2px 0;}
+	.calendar--week td { height: 100px;}
+	.calendar--date { padding: 12px;}
+}
+
 
 /*********
 

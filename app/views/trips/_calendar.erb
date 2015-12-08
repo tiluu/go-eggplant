@@ -1,18 +1,3 @@
-<style>
-    /** .trip corresponds to the class name in ng-class **/
-    .trip {
-         background: #92c500;
-         width: 20px;
-         height: 20px;
-         padding-left: 2px;
-         border-radius: 50%;
-         color: #fff;
-     }
-</style>
-
-
-<div id="date-data" start_date="<%= start_d %>" end_date="<%= end_d %>">
-
 <table ng-repeat="month in getMonths()">
     <thead>
         <th colspan=7>
@@ -21,26 +6,25 @@
     </thead>
 
     <tbody>
-        <tr>
+        <tr class="calendar--day">
             <td ng-repeat="weekday in weekdays">
                 {{ weekday }}
             </td>
         </tr>
            
-        <tr>
+        <tr class="calendar--week">
             <td ng-repeat="day in firstWeekOfMonth(month) track by $index">
-                <div ng-class="{'trip': tripDates(month,day)}">{{ day }}</div>
+                <div class="calendar--date" ng-class="{'trip-date': tripDates(month,day)}">{{ day }}</div>
             </td>
         </tr>
       
-        <tr ng-repeat="week in [0,1,2,3]">
+        <tr class="calendar--week" ng-repeat="week in [0,1,2,3]">
             <td ng-repeat="day in remainingWeeks(month) track by $index" ng-if="notMaxDays(month, day,week)">
-                <div ng-class="{'trip': tripDates(month, getDay(day,week))}">
+                <div class="calendar--date" ng-class="{'trip-date': tripDates(month, getDay(day,week))}">
                     {{ getDay(day,week) }}
                 </div>
             </td>
         </tr>
     </tbody>
 </table>
-</div>
 
