@@ -41,11 +41,18 @@ class UsersController < ApplicationController
     end
 
     def edit
-        @current_user = current user
+        @current_user = current_user
     end
 
     def update
         @current_user = current_user
+        if @current_user.update_attributes(user_params)
+            flash[:success] = "Profile updated"
+            redirect_to dashboard_path
+        else
+            @errors = @current_user.errors
+            render :edit
+        end
     end
     
     def destroy
@@ -57,7 +64,7 @@ class UsersController < ApplicationController
     private
         def user_params
             params.require(:user).permit(:name, :email,
-                                         :phone, :password, 
+                                         :password, 
                                          :password_confirmation)
         end
 
