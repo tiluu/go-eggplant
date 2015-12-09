@@ -20,14 +20,14 @@
     });
     
     services.factory("wkService", function() {
-        var weeks = ['Sunday', 'Monday', 'Tuesday', 
-        'Wednesday', 'Thursday','Friday',  
-        'Saturday'];
+        var weeks = ['Sun', 'Mon', 'Tue', 
+        'Wed', 'Thurs','Fri',  
+        'Sat'];
         return weeks;
     });   
     
     services.factory("tripData", function() {
-        var div = document.getElementById('date-data');
+        var div = document.getElementById('calendar-dates');
         var start_date = div.getAttribute("start_date");
         var end_date = div.getAttribute("end_date")
         var start = new Date(start_date);

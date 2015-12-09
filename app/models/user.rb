@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-    has_many :trips, dependent: :destroy
+    
+    has_many :trips
+
     has_many :ideas, through: :trips
     has_secure_password
 

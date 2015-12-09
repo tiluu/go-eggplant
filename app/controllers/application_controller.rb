@@ -25,5 +25,5 @@ class ApplicationController < ActionController::Base
       redirect_to dashboard_path
   end
         
-  helper_method :current_user, :require_login, :login_user, :getCategory
+  helper_method :current_user, :require_login, :login_user
 end

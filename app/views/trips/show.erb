@@ -4,7 +4,6 @@
             <li>
                 <a href="#"class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
                 <ul class="dropdown-menu"> 
-
                     <li><%= link_to 'Me', dashboard_path %></li>
                     <li><%= link_to 'Log out', logout_path, method: :delete %></li>
                 </ul>
@@ -24,31 +23,36 @@
             </li>
         </ul>
     </nav>
-<h1 class="page-header"><%= "#{@trip.name} Dashboard" %></h1>
 </header>
-<div class="content cf">
+<div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
+        <h1><%= "#{@trip.name} Dashboard" %></h1>
         <div>
-            You are going to <strong><%= "#{@trip.city} #{@trip.state_or_province} #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
+            You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %>
         </div>
-        <p>People on this trip:</p>
-        <ul>
 
-        </ul>
-        <div ng-app="Calendar" ng-controller="CalendarCtrl">
+        <div id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>" ng-controller="CalendarCtrl">
             <%= render 'calendar' %> 
         </div>
     </section>
-    <aside class="trip--fav">
+    <aside class="trip--fav" ng-controller="TabController as tab">
+        <p>People on this trip:</p>
+        <ul>
+        </ul>
         <h4> Suggested Ideas</h4>
-        <div class="btn-group trip--fav_action" role="group" aria-label="...">
-          <button type="button" data-type="food" class="btn btn-default active">Food</button>
-          <button type="button" data-type="attrac" class="btn btn-default">Attractions</button>
-          <button type="button" data-type="events" class="btn btn-default">Events</button>
-      </div>
+                         
+        <div class="trip--fav_action" role="group" aria-label="...">
+        <ul  class="nav nav-pills">
+            <li ng-class="{'active':tab.isSet(1)}">
+                <a href ng-click="tab.setTab(1)">Food</a></li>
+            <li ng-class="{'active':tab.isSet(2)}">
+                <a href ng-click="tab.setTab(2)">Attractions</a></li>
+            <li ng-class="{'active':tab.isSet(3)}">
+                <a href ng-click="tab.setTab(3)">Events</a></li>
+        </ul>
+        </div>
         <div class="trip--list">
-            <ul class="list-group" data-type="food">
-                <% @food.ideas.each do |idea| %>
+            <ul class="list-group" data-type="food" ng-show="tab.isSet(1)">                <% @food.ideas.each do |idea| %>
                     <li class="list-group-item">
                         <%= "#{idea.title} on #{format_date(idea.start_date)}" %>
                     <%= link_to 'details', idea_path(@trip.url, idea.id) %> 
@@ -57,8 +61,8 @@
                     </li>
                 <% end %>
             </ul>
-            <ul class="list-group closed" data-type="attrac">
-                  <% @attraction.ideas.each do |idea| %>
+            <ul class="list-group" data-type="attrac" ng-show="tab.isSet(2)">
+                <% @attraction.ideas.each do |idea| %>
                     <li class="list-group-item">
                         <%= "#{idea.title} on #{format_date(idea.start_date)}" %>
                     <%= link_to 'details', idea_path(@trip.url, idea.id) %> 
@@ -66,9 +70,8 @@
                     <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %>
                     </li>
                 <% end %>
-               
             </ul>
-            <ul class="list-group closed" data-type="events">
+            <ul class="list-group" data-type="events" ng-show="tab.isSet(3)">
                  <% @event.ideas.each do |idea| %>
                     <li class="list-group-item">
                         <%= "#{idea.title} on #{format_date(idea.start_date)}" %>
@@ -77,7 +80,7 @@
                     <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %>
                     </li>
                 <% end %>
-            </ul>
+           </ul>
        </div>
         <%= button_to "Add +", new_idea_path(@trip.url), method: 'get', class: 'btn' %> 
     </aside>
@@ -111,13 +114,14 @@
      
     <% @result.businesses.each do |b| %>
         <p>
-        <%= image_tag(b.image_url, alt: "#{b.name}") %> <br>
+        <figure style="width:200px"><%= image_tag(b.image_url, alt: "#{b.name}") %> </figure><br>
         <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
         Rating: <%= b.rating %><br>
 
 
         <%= safe_join(b.location.display_address, '<br>'.html_safe) %><br>
         
+
         Neighborhood: <%#= safe_join(b.location.neighborhoods, ','.html_safe) %>   
 
         </p>
