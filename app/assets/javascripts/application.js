@@ -18,6 +18,40 @@
 
 (function($){
 	var app = angular.module('trip', ['calServices']);
+    
+    app.controller('WeekCtrl', function($scope, mnthService, wkService, tripData) {
+        $scope.weekdays = wkService;
+        var m1 = tripData.start_m - 1;
+        var months = Object.keys(mnthService);
+        $scope.m1 = months[m1];
+        var y1 = tripData.start_y;
+        var d1 = tripData.start_d;
+        var d2 = tripData.end_d;
+
+        $scope.week = [];
+        
+        $scope.getWkdays = function() {
+            var d = new Date($scope.m1 + " " + d1 + " " + y1);
+            var d1_wkday = d.getDay();
+            var begin_of_week = d1_wkday - 0;
+            var end_of_week = 7 - d1_wkday; 
+            
+            var start_wkdate = d1 - begin_of_week;
+            while (begin_of_week > 0) {
+                $scope.week.push(start_wkdate);
+                start_wkdate++;
+                begin_of_week--;
+            }
+            while (end_of_week >0) {
+                $scope.week.push(d1);
+                d1++;
+                end_of_week--;
+            }
+           return $scope.week;
+        }
+
+    });
+
 
 	app.controller('CalendarCtrl', function($scope, mnthService, wkService, tripData) {  
         $scope.weekdays = wkService;
@@ -28,8 +62,6 @@
         var m2 = tripData.end_m;
         var y1 = tripData.start_y;
         var y2 = tripData.end_y;
-
-        console.log(tripData);
               
         // leap year
         var isLeapYear = function(month) {

@@ -1,0 +1,21 @@
+<table>
+    <thead>
+        <th colspan=7>
+            <h3>{{ m1 }}</h3>
+        </th>
+    </thead>
+
+    <tbody>
+        <tr class="calendar--day">
+            <td ng-repeat="weekday in weekdays">
+                {{ weekday }}
+            </td>
+        </tr>
+        <tr class="calendar--week" ng-init="getWkdays()"> 
+            <td ng-repeat="day in week track by $index">
+                {{ day }} 
+            </td>
+        </tr>
+    </tbody>
+</table>
+
