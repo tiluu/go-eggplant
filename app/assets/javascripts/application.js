@@ -17,44 +17,12 @@
 //= require_tree .
 
 (function($){
-	var app = angular.module('trip', ['calServices']);
-    
-    app.controller('WeekCtrl', function($scope, mnthService, wkService, tripData) {
+	var app = angular.module('trip', ['calServices', 'WeeklyCalendar']);
+
+
+	app.controller('CalendarCtrl', function($scope, mnthService, wkService, tripData, currDay, tripMnths) {  
         $scope.weekdays = wkService;
-        var m1 = tripData.start_m - 1;
-        var months = Object.keys(mnthService);
-        $scope.m1 = months[m1];
-        var y1 = tripData.start_y;
-        var d1 = tripData.start_d;
-        var d2 = tripData.end_d;
-
-        $scope.week = [];
-        
-        $scope.getWkdays = function() {
-            var d = new Date($scope.m1 + " " + d1 + " " + y1);
-            var d1_wkday = d.getDay();
-            var begin_of_week = d1_wkday - 0;
-            var end_of_week = 7 - d1_wkday; 
-            
-            var start_wkdate = d1 - begin_of_week;
-            while (begin_of_week > 0) {
-                $scope.week.push(start_wkdate);
-                start_wkdate++;
-                begin_of_week--;
-            }
-            while (end_of_week >0) {
-                $scope.week.push(d1);
-                d1++;
-                end_of_week--;
-            }
-           return $scope.week;
-        }
-
-    });
-
-
-	app.controller('CalendarCtrl', function($scope, mnthService, wkService, tripData) {  
-        $scope.weekdays = wkService;
+        $scope.currDay = currDay;
 
         // GLOBAL VARIABLES [within the controller]
         var months = Object.keys(mnthService);      
@@ -62,7 +30,11 @@
         var m2 = tripData.end_m;
         var y1 = tripData.start_y;
         var y2 = tripData.end_y;
-              
+        $scope.getMonths =  tripMnths.getMnths(months, m1, m2);
+
+       $scope.getMonths =  tripMnths.getMnths(months, m1, m2);
+
+             
         // leap year
         var isLeapYear = function(month) {
             var yr = mnthService[month].year; 
@@ -96,37 +68,10 @@
            return mnthService;   
         }
                 
-        // a list of months in the trip
-        // todo: account for trips that span 2+years
-        $scope.getMonths = function() {                     
-            var trip_months = [];
-            var december = 12;
-            if (m2 - m1 < 0) {
-                for (var m = m1 - 1; m < december; m++) {
-                    trip_months.push(months[m]);
-                }
-                for (var m = 0; m < m2; m++) {
-                    trip_months.push(months[m]);
-                }
-            }
-            else {
-                for (var m = m1 -1; m < m2; m++) {                      
-                    trip_months.push(months[m]);                
-                }
-            }
-
-            return trip_months;    
-        };  
-
-        // calculate current date
-        $scope.getDay = function(day, week) {
-            return day + 7*week;
-        }
-
         // keep printing out dates until max # days in the month is reached
         $scope.notMaxDays = function(month, day,week) {
             isLeapYear(month);
-            return $scope.getDay(day,week) <= mnthService[month].num_days;
+            return currDay.getDay(day,week) <= mnthService[month].num_days;
         }   
 
         // find out what day of the week the first day of the current month falls on

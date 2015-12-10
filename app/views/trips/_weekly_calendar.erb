@@ -1,4 +1,4 @@
-<table>
+<table ng-init="starters()" ng-repeat="month in getMonths">
     <thead>
         <th colspan=7>
             <h3>{{ m1 }}</h3>
@@ -11,9 +11,9 @@
                 {{ weekday }}
             </td>
         </tr>
-        <tr class="calendar--week" ng-init="getWkdays()"> 
+        <tr class="calendar--week" ng-repeat="wk in num_wks"> 
             <td ng-repeat="day in week track by $index">
-                {{ day }} 
+                {{ currDay.getDay(day,wk) }} 
             </td>
         </tr>
     </tbody>

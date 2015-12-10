@@ -24,6 +24,40 @@
         'Wed', 'Thurs','Fri',  
         'Sat'];
         return weeks;
+    });
+
+    services.factory("currDay", function() {
+        // calculate dates in the calendar
+        var func = {};
+        func.getDay = function(day,week) {
+            return day + 7*week;
+        }
+        return func;
+    });
+
+    services.factory("tripMnths", function() {
+        // a list of months in the trip
+        // todo: account for trips that span 2+yrs?
+        var func = {};
+        func.getMnths = function(months, m1, m2) {
+            var trip_months = [];
+            var december = 12;
+            if (m2 - m1 < 0) {
+                for (var m = m1 - 1;m < december; m++) {
+                    trip_months.push(months[m]);
+                }
+                for(var m = 0; m < m2; m++) {
+                    trip_months.pus(months[m]);
+                }
+            }
+            else {
+                for(var m = m1 -1; m < m2; m++) {
+                    trip_months.push(months[m]);   
+                }
+            }
+            return trip_months;
+        };
+        return func;
     });   
     
     services.factory("tripData", function() {
