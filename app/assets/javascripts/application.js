@@ -19,32 +19,21 @@
 (function($){
 	var app = angular.module('trip', ['calServices', 'WeeklyCalendar']);
 
-
-	app.controller('CalendarCtrl', function($scope, mnthService, wkService, tripData, currDay, tripMnths) {  
-        $scope.weekdays = wkService;
-        $scope.currDay = currDay;
-
-        // GLOBAL VARIABLES [within the controller]
+	app.controller('CalendarCtrl', function($scope, mnthService, tripDays, tripData, tripMnths) {  
+        // GLOBAL VARIABLES
         var months = Object.keys(mnthService);      
         var m1 = tripData.start_m;
         var m2 = tripData.end_m;
         var y1 = tripData.start_y;
         var y2 = tripData.end_y;
+        
+        $scope.tripDates = tripDays.duration;
         $scope.getMonths =  tripMnths.getMnths(months, m1, m2);
+        $scope.weekdays = tripDays.week;
+        $scope.days = tripDays;
+        $scope.notMaxDays = tripDays.notMaxDays;
 
-       $scope.getMonths =  tripMnths.getMnths(months, m1, m2);
-
-             
-        // leap year
-        var isLeapYear = function(month) {
-            var yr = mnthService[month].year; 
-            var leap_yr = (yr % 4 === 0) && (yr%100 !== 0) || (yr%400 === 0);
-            if (leap_yr && month === "February") {
-                mnthService[month].num_days = 29;
-            }
-        }
-
-        // create a new function & add year to mnthService hash
+        // tag trip months with their respective years
         var setYear = function() {       
             if (y2 - y1 > 0) {
                 var december = 12; 
@@ -66,13 +55,7 @@
             }          
             
            return mnthService;   
-        }
-                
-        // keep printing out dates until max # days in the month is reached
-        $scope.notMaxDays = function(month, day,week) {
-            isLeapYear(month);
-            return currDay.getDay(day,week) <= mnthService[month].num_days;
-        }   
+        }  
 
         // find out what day of the week the first day of the current month falls on
         $scope.firstDayOfMonth = function(month) {
@@ -124,24 +107,6 @@
             } 
             return curr_row;
        };
-
-       // highlights trip date
-       $scope.tripDates = function(month, cal_day) {
-           var d1 = tripData.start_d;
-           var d2 = tripData.end_d;
-           var curr_yr = mnthService[month].year;
-           var month_num = mnthService[month].num;
-          
-           var y_diff = y2 - curr_yr;
-           var m_diff = (m2 + (12*y_diff)) - month_num;
-           
-           var new_start_d = d1 - d1*(Math.abs(month_num - m1));           
-           var new_end_d = d2 + m_diff*31 + d2*(Math.abs(m2 - month_num));
-          
-           var match_days = new_start_d <= cal_day && new_end_d >= cal_day && cal_day !== '';
-        
-           return match_days;
-       }
 
      })
 

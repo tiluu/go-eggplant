@@ -20,8 +20,8 @@
       
         <tr class="calendar--week" ng-repeat="week in [0,1,2,3]">
             <td ng-repeat="day in remainingWeeks(month) track by $index" ng-if="notMaxDays(month, day,week)">
-                <div class="calendar--date" ng-class="{'trip-date': tripDates(month, currDay.getDay(day,week))}">
-                    {{ currDay.getDay(day,week) }}
+                <div class="calendar--date" ng-class="{'trip-date': tripDates(month, days.getDay(day,week))}">
+                    {{ days.getDay(day,week) }}
                 </div>
             </td>
         </tr>

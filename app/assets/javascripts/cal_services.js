@@ -16,23 +16,53 @@
                       November: {num: 11, num_days: 30},
                       December: {num: 12, num_days: 31}
                      };
+
+        // leap year
+        months.isLeapYear = function(month) {
+            var yr = months[month].year; 
+            var leap_yr = (yr % 4 === 0) && (yr%100 !== 0) || (yr%400 === 0);
+            if (leap_yr && month === "February") {
+                months[month].num_days = 29;
+            }
+        }
         return months;    
     });
     
-    services.factory("wkService", function() {
-        var weeks = ['Sun', 'Mon', 'Tue', 
-        'Wed', 'Thurs','Fri',  
-        'Sat'];
-        return weeks;
-    });
-
-    services.factory("currDay", function() {
-        // calculate dates in the calendar
-        var func = {};
-        func.getDay = function(day,week) {
+    services.factory("tripDays", function(mnthService, tripData) {
+        var trip = {};
+        trip.week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs','Fri',  'Sat'];
+        trip.getDay = function(day,week) {
             return day + 7*week;
         }
-        return func;
+
+        trip.duration = function(month, cal_day) {
+            // highlight trip dates
+           var d1 = tripData.start_d;
+           var d2 = tripData.end_d;
+           var m1 = tripData.start_m;
+           var m2 = tripData.end_m;
+           var y2 = tripData.end_y;
+
+           var curr_yr = mnthService[month].year;
+           var month_num = mnthService[month].num;
+          
+           var y_diff = y2 - curr_yr;
+           var m_diff = (m2 + (12*y_diff)) - month_num;
+           
+           var new_start_d = d1 - d1*(Math.abs(month_num - m1));           
+           var new_end_d = d2 + m_diff*31 + d2*(Math.abs(m2 - month_num));
+          
+           var match_days = new_start_d <= cal_day && new_end_d >= cal_day && cal_day !== '';
+        
+           return match_days;
+       }
+
+       trip.notMaxDays = function(month, day,week) {
+            // keep printing out dates until max # days in the month is reached
+            mnthService.isLeapYear(month);
+            return trip.getDay(day,week) <= mnthService[month].num_days;
+        }   
+        return trip;
     });
 
     services.factory("tripMnths", function() {

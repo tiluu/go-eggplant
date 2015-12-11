@@ -1,19 +1,21 @@
-<table ng-init="starters()" ng-repeat="month in getMonths">
+<table ng-repeat="month in getMonths">
     <thead>
         <th colspan=7>
-            <h3>{{ m1 }}</h3>
+            <h3>{{ month }}</h3>
         </th>
     </thead>
 
-    <tbody>
+    <tbody ng-init="starters(month)">
         <tr class="calendar--day">
             <td ng-repeat="weekday in weekdays">
                 {{ weekday }}
             </td>
         </tr>
-        <tr class="calendar--week" ng-repeat="wk in num_wks"> 
-            <td ng-repeat="day in week track by $index">
-                {{ currDay.getDay(day,wk) }} 
+        <tr class="calendar--week" ng-repeat="wk in num_wks track by $index"> 
+            <td ng-repeat="day in m[month].trip_week track by $index" ng-if="notMaxDays(month,day,wk)">
+                <div class="calendar--date" ng-class="{'trip-date': tripDates(month, days.getDay(day,wk))}">
+                    {{ days.getDay(day,wk) }}
+            </div>
             </td>
         </tr>
     </tbody>
