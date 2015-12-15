@@ -6,7 +6,8 @@ class TripsController < ApplicationController
         @trip = @user.trips.find_by_url(params[:url])
         @food = IdeaCategory.find_by_name("food")
         @event = IdeaCategory.find_by_name("event")
-        @attraction = IdeaCategory.find_by_name("attraction")    
+        @attraction = IdeaCategory.find_by_name("attraction") 
+        @activity = IdeaCategory.find_by_name("activity")   
         location = @trip.city + @trip.state_or_province + @trip.country
 
         if !params[:neighborhood] 

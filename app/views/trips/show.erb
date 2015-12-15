@@ -39,20 +39,23 @@
         <p>People on this trip:</p>
         <ul>
         </ul>
-        <h4> Suggested Ideas</h4>
+        <h4>Calendar</h4>
                          
         <div class="trip--fav_action" role="group" aria-label="...">
         <ul  class="nav nav-pills">
             <li ng-class="{'active':tab.isSet(1)}">
                 <a href ng-click="tab.setTab(1)">Food</a></li>
             <li ng-class="{'active':tab.isSet(2)}">
-                <a href ng-click="tab.setTab(2)">Attractions</a></li>
+                <a href ng-click="tab.setTab(2)">Activities</a></li>
             <li ng-class="{'active':tab.isSet(3)}">
                 <a href ng-click="tab.setTab(3)">Events</a></li>
         </ul>
         </div>
         <div class="trip--list">
-            <ul class="list-group" data-type="food" ng-show="tab.isSet(1)">                <% @food.ideas.each do |idea| %>
+           
+        <ul class="list-group" ng-show="tab.isSet(1)">  
+            <% if @food.ideas.empty? === false %>             
+                <% @food.ideas.each do |idea| %>
                     <li class="list-group-item">
                         <%= "#{idea.title} on #{format_date(idea.start_date)}" %>
                     <%= link_to 'details', idea_path(@trip.url, idea.id) %> 
@@ -60,9 +63,14 @@
                     <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %>
                     </li>
                 <% end %>
-            </ul>
-            <ul class="list-group" data-type="attrac" ng-show="tab.isSet(2)">
-                <% @attraction.ideas.each do |idea| %>
+            <% else %>
+                <li>Nothing planned. Add your idea</li>
+            <% end %>
+        </ul>
+
+        <ul class="list-group" ng-show="tab.isSet(2)">
+            <% if @activity.ideas.empty? === false %>
+                <% @activity.ideas.each do |idea| %>
                     <li class="list-group-item">
                         <%= "#{idea.title} on #{format_date(idea.start_date)}" %>
                     <%= link_to 'details', idea_path(@trip.url, idea.id) %> 
@@ -70,8 +78,13 @@
                     <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %>
                     </li>
                 <% end %>
-            </ul>
-            <ul class="list-group" data-type="events" ng-show="tab.isSet(3)">
+            <% else %>
+                <li>Nothing planned. Add your idea</li>
+            <% end %>
+        </ul>
+                 
+        <ul class="list-group" ng-show="tab.isSet(3)">
+            <% if @event.ideas.empty? === false %>
                  <% @event.ideas.each do |idea| %>
                     <li class="list-group-item">
                         <%= "#{idea.title} on #{format_date(idea.start_date)}" %>
@@ -80,9 +93,18 @@
                     <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %>
                     </li>
                 <% end %>
-           </ul>
+            <% else %>
+                <li>Nothing planned. Add your idea</li>
+           <% end %>
+       </ul>
+           
        </div>
-        <%= button_to "Add +", new_idea_path(@trip.url), method: 'get', class: 'btn' %> 
+
+       <button class="btn">Add + </button>
+       <div>
+           <%= render 'ideas/idea_form' %>
+       </div>
+        <%#= button_to "Add +", new_idea_path(@trip.url), method: 'get', class: 'btn' %> 
     </aside>
 </div>
 

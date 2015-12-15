@@ -1,48 +1,25 @@
-
-
-
 <%= form_for(:idea) do |f| %>
     <%= f.hidden_field :user_id, value: current_user.id %>
-    <div class="input-group">
-        <%= label_tag(:title, "Idea") %><br>
-        <%= f.text_field :title, class: 'form_control' %>
-    </div>
+    <%= label_tag(:title, "What") %><br>
+    <%= f.text_field :title, class: 'form-control' %> <br>
 
-    <div class="dropdown">
-        <%= label_tag(:idea_category_id, "Category") %><br>
-        <%= f.collection_select :idea_category_id, IdeaCategory.all, :id, :name, class: 'dropdown-toggle' %><br>
+    <%= label_tag(:idea_category_id, "Category") %>
+    <%= f.collection_select :idea_category_id, IdeaCategory.all, :id, :name, class: 'dropdown-toggle' %>
+    <br>
+    <label>When</label> <br>
+    <%= date_select :idea, :start_date, default: @trip.start_date %>
+    <%= time_select :idea, :start_time %><br>
 
-        <%= f.label :start_date %><br>
-        <%= date_select :idea, :start_date, default: @trip.start_date %><br>
+    <%= date_select :idea, :end_date, default: @trip.end_date %>
+    <%= time_select :idea, :end_time %><br>      
 
-        <%= f.label :end_date %><br>
-        <%= date_select :idea, :end_date, default: @trip.end_date %><br>
+    <%= f.label "Where" %><br>
+    <%= f.text_field :location, class: 'form-control' %>
 
-        <div class="input-group">
-            <%= f.label :start_time %><br>
-            <%= time_select :idea, :start_time %><br> 
-        </div>
+    <%= f.label 'Details' %> <br>
+    <%= f.text_area :notes, rows: 3, class: 'form-control' %>
 
-        <div class="input-group">
-            <%= f.label :end_time %><br>
-            <%= time_select :idea, :end_time %><br>
-        </div>
-
-        <div class="input-group">
-            <%= f.label :end_time %><br>
-        </div>  
-
-    <div class="input-group">
-        <%= f.label :location %><br>
-        <%= f.text_field :location, class: 'form-control' %>
-    </div>
-
-    <div class="input-group">
-        <%= f.label :notes %> <br>
-        <%= f.text_area :notes, rows: 3, class: 'form-control' %>
-    </div>
-
-    <P><%= f.submit "Submit", class: 'btn' %></p>
+    <%= f.submit "Submit", class: 'btn' %>
 <% end %>
     
 
