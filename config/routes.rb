@@ -3,8 +3,11 @@ Rails.application.routes.draw do
   get 'user/trip-:url' => 'trips#show', as: :trip
   get 'user/trip-:url/edit' => 'trips#edit', as: :edit_trip
   get 'user/trips/new' => 'trips#new', as: :new_trip
-  get 'user/dashboard' => 'users#show', as: :dashboard
   
+  get 'user/dashboard' => 'users#show', as: :dashboard
+  get 'user/account' => 'users#edit', as: :account
+  patch 'user/account' => 'users#update'
+
   get 'user/trip-:url/ideas/new' =>'ideas#new', as: :new_idea   
   post 'user/trip-:url/ideas/new' => 'ideas#create'
   get 'user/trip-:url/idea-:id' => 'ideas#show', as: :idea
@@ -12,6 +15,7 @@ Rails.application.routes.draw do
   post 'user/trip-:url/idea-:id/edit' => 'ideas#update'
 
   get 'signup' => 'users#new', as: :signup
+  post 'signup' => 'users#create'
   get 'login' => 'users#login', as: :login  
   post 'login' => 'users#authenticate'
   delete 'logout' => 'users#logout', as: :logout
