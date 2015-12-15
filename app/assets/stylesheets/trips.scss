@@ -8,4 +8,68 @@
     position: relative;
     margin-left: -300px;}
 
+/*********
+
+DASHBOARD
+
+***********/
+header { 
+	height:	200px;
+	text-align: center;
+	background-color: white;
+
+	h1 { padding-top: 50px;}
+}
+.trip--calendar { 
+	float: left;
+	width: 55%; 
+	height: 600px; 
+	padding: 0 1rem;
+}
+
+.trip--fav {
+	float: left; 
+  width: 45%; 
+	height: 600px; 
+	position: relative;
+	padding: 1rem;
+	border-left: 1px solid black;
+
+	.btn-group { width: 100%;}
+	.btn-group button { width: 33.33%;}
+
+	li { 
+		padding: 8px;
+		border-top: 1px solid dotted;
+		border-bottom: 1px solid dotted;
+	}
+}
+
+/*********
+
+CALENDAR
+
+***********/
+.trip-date {
+   //background: #92c500;
+   color: #92c500;
+   font-size: 14px;
+   font-weight: 600;
+}
+
+#calendar-dates { 
+	table { 
+		width: 100%;
+	}
+
+	td { 
+		width: 14%;
+		border: 1px solid grey;}
+
+	.calendar--day { text-align: center; padding: 2px 0;}
+	.calendar--week td { height: 100px;}
+	.calendar--date { padding: 12px;}
+}
+
+
     
