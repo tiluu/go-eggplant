@@ -30,7 +30,7 @@
 </header>
 <div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
-        <div class="closed" id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>" ng-controller="CalendarCtrl">
+        <div id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>" ng-controller="CalendarCtrl">
             <%= render 'calendar' %> 
         </div>
     </section>
@@ -101,7 +101,7 @@
 
        <button class="idea--form_action btn">Add + </button>
        
-       <div class="idea--form">
+       <div class="idea--form closed">
            <%= render 'ideas/idea_form' %>
        </div>
     </aside>
