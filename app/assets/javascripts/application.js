@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require angular
 //= require angular-resource
+//= require ./picker.js
 //= require_tree .
 
 (function($){
@@ -177,7 +178,17 @@
     this.isSet = function(tabName){
       return this.tab === tabName;
     };
-	});
+});
 
+    $('.idea--form_action').on('click', function(){
+        $(this).toggleClass('closed');
+        $('.idea--form').removeClass('closed');
+    })
+
+    $('.date-picker').pickadate({
+        today: '',
+    });
+
+    $('.time-picker').pickatime();
 
 })(jQuery, this, this.document);

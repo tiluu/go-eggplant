@@ -16,7 +16,7 @@ DASHBOARD
 header { 
 	height:	200px;
 	text-align: center;
-	background-color: white;
+	border-bottom: 1px solid #e7e7e7;
 
 	h1 { padding-top: 50px;}
 }
@@ -25,6 +25,7 @@ header {
 	width: 55%; 
 	height: 600px; 
 	padding: 0 1rem;
+	background-color: #FBFBFB;
 }
 
 .trip--fav {
@@ -33,16 +34,15 @@ header {
 	height: 600px; 
 	position: relative;
 	padding: 1rem;
-	border-left: 1px solid black;
 
 	.btn-group { width: 100%;}
 	.btn-group button { width: 33.33%;}
+}
 
-	li { 
-		padding: 8px;
-		border-top: 1px solid dotted;
-		border-bottom: 1px solid dotted;
-	}
+.trip--fav_action li{ display: inline-block;}
+.trip--list { 
+	margin-top: .5rem;
+	.badge a { color: white; font-weight: normal;}
 }
 
 /*********
