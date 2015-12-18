@@ -14,7 +14,9 @@
            
         <tr class="calendar--week">
             <td ng-repeat="day in firstWeekOfMonth(month) track by $index">
-                <div class="calendar--date" ng-class="{'trip-date': tripDates(month,day)}">{{ day }}</div>
+                <div class="calendar--date" ng-class="{'trip-date': tripDates(month,day)}">
+                    {{ day }}
+                </div>
             </td>
         </tr>
       

@@ -1,5 +1,5 @@
 (function() {
-    var weekly = angular.module('WeeklyCalendar', ['calServices']);
+    var weekly = angular.module('WeeklyCalendar', ['calServices', 'tripServices']);
 
     weekly.controller('WeekCtrl', function($scope, mnthService, tripDays, tripData, tripMnths) {
     	// GLOBAL VARIABLES
@@ -14,55 +14,32 @@
         $scope.weekdays = tripDays.week;
         $scope.tripDates = tripDays.duration;
         $scope.getMonths = tripMnths.getMnths(months, m1, m2);
-        $scope.notMaxDays = tripDays.notMaxDays;
+        $scope.notEndTrip = tripDays.notEndTrip;
         $scope.m = mnthService;
 
         $scope.starters = function(month) {
-            getWkdays(month);
+            //getWkdays(month);
             totalWks(month);
         }
 
-        var setCal = function(month, day) {
-        	return new Date(month + " " + day + " " + y1);
-        }
+        $scope.getWkdays = function(month) {
+        	var m = mnthService;
+        	var curr_m = m[month];
 
-        var daysInMnth = function(month) {
-        	return mnthService[month].num_days;
-        }
-        
-        var getWkdays = function(month) {
-        	// construct each week in the trip
-        	var m = mnthService[month];
-        	m.trip_week = [];
-        	if (month === months[m1-1]) {
-        		var start_d = setCal(months[m1-1], d1);
-        		var day = d1;
+        	if (curr_m !== months[m1-1]) {
+        		var start_d = m.setCal(months[m1-1], d1, y1);
         	}
         	else {
-        		var start_d = setCal(month, 1);
-        		var day = 1;     		
+        		
         	}
-            var d1_wkday = start_d.getDay();
-            var begin_of_week = d1_wkday;
-            var end_of_week = 7 - d1_wkday; 
-
-            while (begin_of_week > 0) {
-            	var start_wkdate = day - begin_of_week;
-                m.trip_week.push(start_wkdate);
-                begin_of_week--;
-            }
-            while (end_of_week > 0) {
-                m.trip_week.push(day);
-                day++;
-                end_of_week--;
-            }
         }
 
         // total # days in trip
         var totalDays = function() {
         	var days_in_month = [];
+        	var mnth = mnthService;
         	for (var m = m1-1; m < m2; m++) {
-        		var days = daysInMnth(months[m]);
+        		var days = mnth[months[m]];
         		days_in_month.push(days);
         	}
 
@@ -82,33 +59,24 @@
  			return total_days;
         }
 
-        var whichMnth = function() {
-        	// find out what # days in total days belong to which month
-        	for (var m = m1-1; m< m2;m++) {
-        		var mnth = mnthService[months[m]];
-        		mnth.trip_dates = [];
-        		for (var d = d1; d< d1+totalDays();d++) {
-        			mnth.trip_dates.push(day);
-        			if (d > mnth.num_days) {
-
-        				d = 1;
-        			}	
-        		}
-        	}
-        }
-
         var totalWks = function(month) {
         	// reset num_wks each time the function is called
-        	$scope.num_wks = [];
-            var num_wks = Math.ceil(totalDays() / 7);
-     		var m = mnthService[month];
-     		m.num_tripwks = [];
-            for (var i = 0; i < num_wks; i++) {
-               	$scope.num_wks.push(i);        
-            }
+        	var m = mnthService[month]
+        	m.num_weeks = [];
 
-            return $scope.num_wks;
+            if (m2 !== m1 && month === months[m2-1]) {
+            	var day = d2;
+            }
+            else {
+            	var day = totalDays();
+            } 
+
+            var num_wks = Math.ceil(day/ 7.0);
+            for (var i = 0; i < num_wks; i++) {
+               	m.num_weeks.push(i);        
+            }
         }
+      
     });
 
 })();

@@ -17,7 +17,7 @@
 //= require_tree .
 
 (function($){
-	var app = angular.module('trip', ['calServices', 'WeeklyCalendar']);
+	var app = angular.module('trip', ['calServices', 'tripServices', 'WeeklyCalendar']);
 
 	app.controller('CalendarCtrl', function($scope, mnthService, tripDays, tripData, tripMnths) {  
         // GLOBAL VARIABLES
@@ -110,15 +110,15 @@
 
      })
 
-		app.controller("TabController", function(){
+	app.controller("TabController", function(){
 		this.tab = 1;
 		this.setTab = function(newValue){
-      this.tab = newValue;
-    };
+            this.tab = newValue;
+        };
 
-    this.isSet = function(tabName){
-      return this.tab === tabName;
-    };
+        this.isSet = function(tabName){
+          return this.tab === tabName;
+        };
 	});
 
 
