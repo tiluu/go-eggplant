@@ -1,7 +1,7 @@
+// services related to the calendar in general
 (function() {
     var services = angular.module("calServices", []);
     
-
     services.factory("mnthService", function() {
         var months = {January: {num: 1, num_days: 31}, 
                       February: {num: 2, num_days: 28}, 
@@ -16,33 +16,21 @@
                       November: {num: 11, num_days: 30},
                       December: {num: 12, num_days: 31}
                      };
-        return months;    
-    });
-    
-    services.factory("wkService", function() {
-        var weeks = ['Sun', 'Mon', 'Tue', 
-        'Wed', 'Thurs','Fri',  
-        'Sat'];
-        return weeks;
-    });   
-    
-    services.factory("tripData", function() {
-        var div = document.getElementById('calendar-dates');
-        var start_date = div.getAttribute("start_date");
-        var end_date = div.getAttribute("end_date")
-        var start = new Date(start_date);
-        var end = new Date(end_date);
 
-        var data = {
-            start_y: start.getFullYear(),
-            start_m: start.getMonth() + 1,
-            start_d: start.getDate(),
-            end_y: end.getFullYear(),
-            end_m: end.getMonth() + 1,
-            end_d: end.getDate()
-               
-        };
-        return data;
-    });
+        // leap year
+        months.isLeapYear = function(month) {
+            var yr = months[month].year; 
+            var leap_yr = (yr % 4 === 0) && (yr%100 !== 0) || (yr%400 === 0);
+            if (leap_yr && month === "February") {
+                months[month].num_days = 29;
+            }
+        }
+
+        months.setCal = function(month,day,year) {
+            return new Date(month + " " + day + " " + year); 
+        }
+        
+        return months;    
+      });
    
 })();
