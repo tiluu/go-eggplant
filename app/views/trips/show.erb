@@ -25,7 +25,7 @@
 <header> 
     <h1><%= "#{@trip.name} Dashboard" %></h1>
     <p> You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
-    <div>34 days to go</div>
+    <div><%= trip_countdown %> to go</div>
 </header>
 <div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">

@@ -1,5 +1,5 @@
 <%= form_for(:idea) do |f| %>
-    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%#= f.hidden_field :user_id, value: current_user.id %>
     <%= label_tag(:title, "What") %><br>
     <%= f.text_field :title, class: 'form-control' %> <br>
 

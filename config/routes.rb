@@ -2,17 +2,18 @@ Rails.application.routes.draw do
   get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
   get 'user/trip-:url' => 'trips#show', as: :trip
   get 'user/trip-:url/edit' => 'trips#edit', as: :edit_trip
+  patch 'user/trip-:url/edit' => 'trips#update'
   get 'user/trips/new' => 'trips#new', as: :new_trip
   
   get 'user/dashboard' => 'users#show', as: :dashboard
   get 'user/account' => 'users#edit', as: :account
   patch 'user/account' => 'users#update'
-
-  get 'user/trip-:url' =>'ideas#new'   
+  
+  get 'user/trip-:url/ideas/new' => 'ideas#new'
   post 'user/trip-:url' => 'ideas#create'
   get 'user/trip-:url/idea-:id' => 'ideas#show', as: :idea
   get 'user/trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
-  post 'user/trip-:url/idea-:id/edit' => 'ideas#update'
+  patch 'user/trip-:url/idea-:id/edit' => 'ideas#update'
 
   get 'signup' => 'users#new', as: :signup
   post 'signup' => 'users#create'
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :trips, except: :index do
-        resources :ideas, except: :index
+        resources :ideas, except: [:index, :new, :create]
     end
   end
   root 'home_pages#home'

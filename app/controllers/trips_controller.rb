@@ -5,11 +5,10 @@ class TripsController < ApplicationController
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
         @food = IdeaCategory.find_by_name("food")
-        @event = IdeaCategory.find_by_name("event")
-        @attraction = IdeaCategory.find_by_name("attraction") 
-        @activity = IdeaCategory.find_by_name("activity")   
-        location = @trip.city + @trip.state_or_province + @trip.country
+        @event = IdeaCategory.find_by_name("event") 
+        @activity = IdeaCategory.find_by_name("activity")
 
+        location = @trip.city + @trip.state_or_province + @trip.country
         if !params[:neighborhood] 
            search_params = location 
         else 
@@ -46,7 +45,7 @@ class TripsController < ApplicationController
 
     def update
         @user = current_user
-        @trip = @user.trips.find(params[:id])
+        @trip = @user.trips.find_by_url(params[:url])
         if @trip.update_attributes(trip_params)
             redirect_to trip_path(@trip.url)
         else
@@ -79,6 +78,6 @@ class TripsController < ApplicationController
                                          :end_date, :city, 
                                          :state_or_province,
                                          :country)
-        end
+        end 
 
 end
