@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   get 'user/account' => 'users#edit', as: :account
   patch 'user/account' => 'users#update'
 
-  get 'user/trip-:url/ideas/new' =>'ideas#new', as: :new_idea   
-  post 'user/trip-:url/ideas/new' => 'ideas#create'
+  get 'user/trip-:url' =>'ideas#new'   
+  post 'user/trip-:url' => 'ideas#create'
   get 'user/trip-:url/idea-:id' => 'ideas#show', as: :idea
   get 'user/trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
   post 'user/trip-:url/idea-:id/edit' => 'ideas#update'

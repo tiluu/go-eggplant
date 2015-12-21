@@ -23,7 +23,7 @@
         return data;
     });
 
-    services.factory("tripMnths", function() {
+    services.factory("tripMnths", function(tripData, mnthService) {
         // a list of months in the trip
         // todo: account for trips that span 2+yrs?
         var func = {};
@@ -35,7 +35,7 @@
                     trip_months.push(months[m]);
                 }
                 for(var m = 0; m < m2; m++) {
-                    trip_months.pus(months[m]);
+                    trip_months.push(months[m]);
                 }
             }
             else {
@@ -45,6 +45,34 @@
             }
             return trip_months;
         };
+
+        func.setYear = function() {
+        	var m1 = tripData.start_m;
+	        var m2 = tripData.end_m;
+	        var y1 = tripData.start_y;
+	        var y2 = tripData.end_y;
+	        var months = Object.keys(mnthService);  
+	        mnthService.isLeapYear("February");
+
+        	if (y2 - y1 > 0) {
+                var december = 12; 
+
+                for (var m = m1 - 1; m < december; m++) {
+                    var curr_month = months[m];
+                    mnthService[curr_month].year = y1;
+                }
+                for (var m = 0;m < m2; m++) {
+                    var curr_month = months[m];
+                    mnthService[curr_month].year = y2;
+                }
+            }
+            else {
+                for (var m = m1 - 1; m < m2; m++) {
+                    var curr_month = months[m];                
+                    mnthService[curr_month].year = y1;
+                }
+            }          
+        }
         return func;
     });   
 

@@ -1,0 +1,17 @@
+<div ng-init="buildTrip()">
+    <div ng-repeat="day in trip track by $index"> 
+        <table >
+            <thead>
+                <tr>
+                    <td>{{ getWkday(day) }}</td>
+            </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td> {{ day.getDate() }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

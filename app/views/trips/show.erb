@@ -31,9 +31,9 @@
     <section class="trip--calendar">
       
     <div id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>">
-        <h2>Weekly Calendar</h2>
-        <div ng-controller="WeekCtrl">
-            <%= render 'weekly_calendar' %>
+        <h2>Slider</h2>
+        <div ng-controller="DateCtrl">
+            <%= render 'date_panels' %>
         </div>
         <h2>Monthly Calendar</h2>
         <div ng-controller="CalendarCtrl">
@@ -108,6 +108,7 @@
 
        <button class="btn">Add + </button>
        <div>
+           <%= render 'shared/form_error' %>
            <%= render 'ideas/idea_form' %>
        </div>
         <%#= button_to "Add +", new_idea_path(@trip.url), method: 'get', class: 'btn' %> 

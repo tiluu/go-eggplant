@@ -17,7 +17,7 @@
 //= require_tree .
 
 (function($){
-	var app = angular.module('trip', ['calServices', 'tripServices', 'WeeklyCalendar']);
+	var app = angular.module('trip', ['calServices', 'tripServices', 'datePanels']);
 
 	app.controller('CalendarCtrl', function($scope, mnthService, tripDays, tripData, tripMnths) {  
         // GLOBAL VARIABLES
