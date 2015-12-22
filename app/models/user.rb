@@ -15,9 +15,6 @@ class User < ActiveRecord::Base
                       format: { with: /\A[\w+\-._]+?@[a-z\d\-.]+\.[a-z]+\z/i,
                                 message: "Invalid format for email address" }
     
-    validates :phone, numericality: { only_integer: true },
-                      allow_blank: true
-
     def self.authenticate(email, password)
         user = User.find_by(email: email)
         if user.present? && user.authenticate(password)

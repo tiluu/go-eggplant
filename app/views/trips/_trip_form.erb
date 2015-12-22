@@ -1,5 +1,5 @@
 
-<%= form_for([@user,@trip]) do |f| %>
+<%= form_for([@user,@trip], url: getPath('trips')) do |f| %>
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1"><%= label_tag(:name, "Trip name") %></span>
       <%= f.text_field :name, class: 'form-control'%>
@@ -28,27 +28,6 @@
         <%= f.text_field :country, class: 'form-control'%>
     </div>
 
-<h1 class="page-header"><small>Account information</small></h1>
-    <%= f.fields_for :users do |user| %>
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon5"><%= label_tag(:name, "Your name") %></span>
-             <%= user.text_field :name, class: 'form-control' %>
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon5"><%= user.label :email %></span>
-            <%= user.text_field :email, class: 'form-control' %>
-        </div>
-    <% end %>
-
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon5"> <%= f.label :password %></span>
-        <%= f.password_field :password, class: 'form-control' %>
-    </div>
-   
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon5"><%= f.label :password_confirmation %></span>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
-    </div>
 
     <p><%= f.submit "Submit", class: 'btn' %></p>
 

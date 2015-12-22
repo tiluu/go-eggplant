@@ -25,15 +25,25 @@
 <header> 
     <h1><%= "#{@trip.name} Dashboard" %></h1>
     <p> You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
-    <div>34 days to go</div>
+    
+    <div><%= trip_countdown %> to go</div>
     <p>People on this trip:</p>
+
 </header>
 <div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
-        <div id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>" ng-controller="CalendarCtrl">
+      
+    <div id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>">
+        <h2>Slider</h2>
+        <div ng-controller="DateCtrl">
+            <%= render 'date_panels' %>
+        </div>
+        <h2>Monthly Calendar</h2>
+        <div ng-controller="CalendarCtrl">
             <%= render 'calendar' %> 
         </div>
-    </section>
+    </div>
+            </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
         <h4>Itineary</h4>
                          
@@ -113,8 +123,11 @@
            <li>get form dates to work with pickadate js</li>
        </ol>
        
+       <button class="btn">Add + </button>
+
        <div class="idea--form closed">
-            <span class="idea--form_close">X close</span>
+            <span class="idea--form_close">X close</span>  
+           <%= render 'shared/form_error' %>
            <%= render 'ideas/idea_form' %>
        </div>
     </aside>
