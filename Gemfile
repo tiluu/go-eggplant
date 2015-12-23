@@ -25,13 +25,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # angular
 gem 'angularjs-rails'
-gem 'responders'
 
 gem 'will_paginate'
 
 # APIs
 gem 'yelp', require: 'yelp'
-gem 'trip_advisor'
+
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
