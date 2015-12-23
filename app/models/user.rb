@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
+    ROLES = %i[ADMIN TRAVEL_BUDDY]
     
     has_many :trips
-
+    has_many :travel_groups
     has_many :ideas, through: :trips
     has_secure_password
 

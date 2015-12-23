@@ -26,6 +26,7 @@ class UsersController < ApplicationController
 
     def create
         @user = User.new(user_params)
+        @user.role = "ADMIN"
         if @user.save
             login_user(@user)
             #redirect_to user_path(@user.id)
@@ -35,7 +36,7 @@ class UsersController < ApplicationController
         end
     end
 
-    def show
+  def show
         @current_user = current_user
         @trips = @current_user.trips
     end
@@ -65,7 +66,8 @@ class UsersController < ApplicationController
         def user_params
             params.require(:user).permit(:name, :email,
                                          :password, 
-                                         :password_confirmation)
+                                         :password_confirmation,
+                                         :role)
         end
 
 end

@@ -1,9 +1,9 @@
 class Trip < ActiveRecord::Base
     include ValidDates
     belongs_to :user
-    
+    has_one :travel_group   
     has_many :ideas, dependent: :destroy
-    #accepts_nested_attributes_for :ideas
+    accepts_nested_attributes_for :ideas
 
     validates :name, :city, :country, 
               :state_or_province, presence: true
