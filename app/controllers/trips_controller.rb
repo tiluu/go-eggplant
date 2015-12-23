@@ -1,13 +1,9 @@
 class TripsController < ApplicationController
     before_action :require_login
-   
-    def show
+
+    def find_food
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
-
-        @food = @trip.ideas.where(idea_category_id: 1)
-        @event = @trip.ideas.where(idea_category_id: 3) 
-        @activity = @trip.ideas.where(idea_category_id: 4)
 
         location = @trip.city + @trip.state_or_province + @trip.country
         if !params[:neighborhood] 
@@ -20,6 +16,15 @@ class TripsController < ApplicationController
 
         yelp_api(search_params, 'restaurants', sort)
     end
+   
+    def show
+        @user = current_user
+        @trip = @user.trips.find_by_url(params[:url])
+
+        @food = @trip.ideas.where(idea_category_id: 1)
+        @event = @trip.ideas.where(idea_category_id: 3) 
+        @activity = @trip.ideas.where(idea_category_id: 4)
+    end
 
     def new
         @user = current_user
@@ -29,7 +34,6 @@ class TripsController < ApplicationController
     def create
         @user = current_user
         @trip = @user.trips.build(trip_params)
-        # or have people come up with their own URLs
         @trip.url = SecureRandom.urlsafe_base64
         if @trip.save
             redirect_to trip_path(@trip.url)
