@@ -1,0 +1,10 @@
+<h1><%= @trip.name %></h1>
+People on this trip:
+<%= @inviter.name %>
+<% @trip.friends.each do |friend| %> 
+    <%= friend.name %>
+<% end %>
+
+<%= render 'ideas' %>
+
+<%= render 'ideas/idea_form' %>

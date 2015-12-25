@@ -20,6 +20,10 @@ class UsersController < ApplicationController
         redirect_to root_path
     end
 
+    def join_trip
+        
+    end
+
     def new
         @user = User.new
     end

@@ -14,7 +14,16 @@
             <li class="list-group-item"><%= link_to "Account info", account_path %></li>
 		</ul>
 	</aside>
-	<section>
+    <section>
+        <div class="list-group">
+        <% if current_user.group_trips.present? %> 
+                <h2>Invited Trips</h2>
+                <% current_user.group_trips.each do |group| %>
+                    created by <%= group.user.name %><br>
+                    <%= link_to group.name, group_trip_path(group.url) %>
+            <% end %>
+        <% end %>
+        </div>
 			<div class="list-group">
 				<% @trips.each do |trip| %>
 					<div class="list-group-item clearfix">

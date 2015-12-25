@@ -9,6 +9,9 @@ class TripsController < ApplicationController
     def send_invite
         @trip = current_user.trips.find_by_url(params[:url])
         @invite = @trip.relationships.build(friend_params)
+        @invited = User.find_by(email: @invite.email)
+        @invite.friend_id = @invited.id
+        
         if @invite.save
             flash[:success] = "Friend added!"
             redirect_to trip_path(@trip.url)
@@ -17,6 +20,7 @@ class TripsController < ApplicationController
             render :invite
         end
     end
+
 
     def uninvite
         @trip = current_user.trips.find_by_url(params[:url])
@@ -38,20 +42,19 @@ class TripsController < ApplicationController
 
         yelp_api(search_params, 'restaurants', sort)
     end
-
-    def access_trip
-        # for trip admin, need the trips for which they are the admin [add trip_admin_user to trip, and a role to the user?]
-            # @trip.admin = 1 person
-        # for trip friend, need the trips for which they have access to [add trip_friends as array???]
-            # @trip.friends = all users --> need a separate model which belong to Trip
-        # inviter = whoever created the trip, role of TRIP ADMIN upon trip creation
-        # invited = can access the inviter's trip, role of TRIP FRIEND and becomes an owner of this trip?
+    
+    def show_group
+        @inviter = current_user.group_trips.find_by_url(params[:url]).user
+        @trip = @inviter.trips.find_by_url(params[:url])
+        @friends = @trip.friends 
+        @food = @trip.ideas.where(idea_category_id: 1)
+        @event = @trip.ideas.where(idea_category_id: 3) 
+        @activity = @trip.ideas.where(idea_category_id: 4)
     end
-   
+  
     def show
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
-        @friends = @trip.relationships
 
         @food = @trip.ideas.where(idea_category_id: 1)
         @event = @trip.ideas.where(idea_category_id: 3) 
