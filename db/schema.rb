@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218021653) do
+ActiveRecord::Schema.define(version: 20151224234158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,26 @@ ActiveRecord::Schema.define(version: 20151218021653) do
   add_index "ideas", ["trip_id"], name: "index_ideas_on_trip_id", using: :btree
   add_index "ideas", ["user_id"], name: "index_ideas_on_user_id", using: :btree
 
+  create_table "relationships", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "friend_id"
+    t.integer  "group_trip_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "relationships", ["friend_id", "group_trip_id"], name: "index_relationships_on_friend_id_and_group_trip_id", unique: true, using: :btree
+  add_index "relationships", ["friend_id"], name: "index_relationships_on_friend_id", using: :btree
+  add_index "relationships", ["group_trip_id"], name: "index_relationships_on_group_trip_id", using: :btree
+
+  create_table "travel_groups", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "trip_id"
+  end
+
+  add_index "travel_groups", ["trip_id"], name: "index_travel_groups_on_trip_id", using: :btree
+  add_index "travel_groups", ["user_id"], name: "index_travel_groups_on_user_id", using: :btree
+
   create_table "trips", force: :cascade do |t|
     t.string   "name"
     t.string   "city"
@@ -64,6 +84,7 @@ ActiveRecord::Schema.define(version: 20151218021653) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
+    t.string   "role"
   end
 
 end

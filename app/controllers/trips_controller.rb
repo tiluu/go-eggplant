@@ -1,6 +1,28 @@
 class TripsController < ApplicationController
     before_action :require_login
 
+    def invite
+        @trip = current_user.trips.find_by_url(params[:url])
+        @invite = @trip.relationships.build
+    end
+
+    def send_invite
+        @trip = current_user.trips.find_by_url(params[:url])
+        @invite = @trip.relationships.build(friend_params)
+        if @invite.save
+            flash[:success] = "Friend added!"
+            redirect_to trip_path(@trip.url)
+        else
+            @errors = @invite.errors
+            render :invite
+        end
+    end
+
+    def uninvite
+        @trip = current_user.trips.find_by_url(params[:url])
+        @trip.relationships.find_by(friend_id: params[:friend_id]).destroy
+    end   
+
     def find_food
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
@@ -16,10 +38,20 @@ class TripsController < ApplicationController
 
         yelp_api(search_params, 'restaurants', sort)
     end
+
+    def access_trip
+        # for trip admin, need the trips for which they are the admin [add trip_admin_user to trip, and a role to the user?]
+            # @trip.admin = 1 person
+        # for trip friend, need the trips for which they have access to [add trip_friends as array???]
+            # @trip.friends = all users --> need a separate model which belong to Trip
+        # inviter = whoever created the trip, role of TRIP ADMIN upon trip creation
+        # invited = can access the inviter's trip, role of TRIP FRIEND and becomes an owner of this trip?
+    end
    
     def show
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
+        @friends = @trip.relationships
 
         @food = @trip.ideas.where(idea_category_id: 1)
         @event = @trip.ideas.where(idea_category_id: 3) 
@@ -72,11 +104,6 @@ class TripsController < ApplicationController
         redirect_to dashboard_path
     end
 
-#    def show_by_url
-#        @trip = Trip.find_by_url(params[:url])
-#        render :show
-#    end
-
     private
         def trip_params
             params.require(:trip).permit(:name, :url, :start_date,
@@ -85,4 +112,7 @@ class TripsController < ApplicationController
                                          :country)
         end 
 
+        def friend_params
+            params.require(:relationship).permit(:email, :group_trip_id, :friend_id)
+        end
 end

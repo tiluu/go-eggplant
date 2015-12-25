@@ -1,8 +1,12 @@
 class User < ActiveRecord::Base
     
     has_many :trips
-
     has_many :ideas, through: :trips
+
+    has_many :relationships, foreign_key: "friend_id",
+                             dependent: :destroy
+    has_many :group_trips, through: :relationships
+     
     has_secure_password
 
     validates :name, :email, :password, :password_confirmation, presence: true, on: :create

@@ -11,7 +11,7 @@
             <ul class="dropdown-menu">
                 <li> <%= link_to 'New trip', new_trip_path %></li>
                 <li><%= link_to 'Edit trip', edit_trip_path(@trip.url) %></li>
-                <li> <%= link_to 'Invite', new_user_trip_path(@trip.id) %></li>
+                <li> <%= link_to 'Invite', invite_friend_path(@trip.url) %></li>
             </ul>
         </li>
         <li><a href="#"class="dropdown-toggle" data-toggle="dropdown" >Discover<span class="caret"></span></a>
@@ -24,10 +24,17 @@
 </nav>
 <header> 
     <h1><%= "#{@trip.name} Dashboard" %></h1>
+
+    <%= render 'shared/flash_msg' %>
     <p> You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
     
     <div><%= trip_countdown %> to go</div>
-    <p>People on this trip:</p>
+    <p>People on this trip: <br>
+    <%= current_user.name %><br>
+    <% @friends.each do |friend| %>
+        <%= getName(friend.email) %><br>
+    <%end%>
+    </p>
 
 </header>
 <div class="content clearfix" ng-app="trip">

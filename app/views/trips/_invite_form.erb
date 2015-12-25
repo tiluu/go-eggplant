@@ -1,0 +1,9 @@
+<%= form_for(:relationship, url: {controller: 'trips', action: 'send_invite'}) do |f| %>                     
+                                  
+    <%= label_tag(:email, "Friend email")%><br>
+    <%= f.text_field :email %>
+
+    <p><%= f.submit "Send", class: 'btn' %></p>
+
+<% end %>
+

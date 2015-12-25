@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
-  
+  get 'user/trip-:url/invite' => 'trips#invite', as: :invite_friend
+  post 'user/trip-:url/invite' => 'trips#send_invite'
+
   get 'user/trip-:url/find_food' => 'trips#find_food', as: :find_food
   get 'user/trip-:url' => 'trips#show', as: :trip
   get 'user/trip-:url/edit' => 'trips#edit', as: :edit_trip
