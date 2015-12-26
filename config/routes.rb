@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
-  get 'trip-:url/invite' => 'trips#invite', as: :invite_friend
-  post 'trip-:url/invite' => 'trips#send_invite'
-  get 'group-:url' => 'trips#show_group', as: :group_trip
-  delete 'group-:url/leave' => 'trips#leave_trip', as: :leave_trip
-  delete 'trip-:url/uninvite-:email' => 'trips#uninvite', as: :uninvite
+  get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
+  post 'trip-:url/invite' => 'group_trips#send_invite'
+  get 'group-:url' => 'group_trips#show_group', as: :group_trip
+  delete 'group-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
+  delete 'trip-:url/uninvite-:email' => 'group_trips#uninvite', as: :uninvite
 
   get 'trip-:url/find_food' => 'trips#find_food', as: :find_food
   get 'trip-:url' => 'trips#show', as: :trip
@@ -13,9 +13,9 @@ Rails.application.routes.draw do
   get 'trips/new' => 'trips#new', as: :new_trip
   post 'trips/new' => 'trips#create'
   
-  get 'user/dashboard' => 'users#show', as: :dashboard
-  get 'user/account' => 'users#edit', as: :account
-  patch 'user/account' => 'users#update'
+  get 'dashboard' => 'users#show', as: :dashboard
+  get 'account' => 'users#edit', as: :account
+  patch 'account' => 'users#update'
   
   #get 'user/trip-:url/ideas/new' => 'ideas#new'
   post 'trip-:url' => 'ideas#create', as: :new_idea
@@ -30,11 +30,13 @@ Rails.application.routes.draw do
   delete 'logout' => 'users#logout', as: :logout
  
 
-  resources :users do
-    resources :trips, except: :index do
-        resources :ideas, except: [:index, :new, :create]
+  resources :users do 
+    resources :trips, only: [:show, :delete] do 
+      resources :ideas, only: [:show, :delete]
     end
   end
+
+
   root 'home_pages#home'
 
   # Example of regular route:

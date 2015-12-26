@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+    include ValidEmails
     
     has_many :trips
     has_many :ideas, through: :trips
@@ -16,15 +17,18 @@ class User < ActiveRecord::Base
                          length: { in: 6..15 },
                          allow_nil: true
 
-    validates :email, uniqueness: true, 
-                      format: { with: /\A[\w+\-._]+?@[a-z\d\-.]+\.[a-z]+\z/i,
-                                message: "Invalid format for email address" }
+    validates :email, uniqueness: true
     
     def self.authenticate(email, password)
         user = User.find_by(email: email)
         if user.present? && user.authenticate(password)
             user
         end
+    end
+
+    def self.registered?(user)
+        user = User.find_by(email: user.email)
+        user.present?
     end
 
 end

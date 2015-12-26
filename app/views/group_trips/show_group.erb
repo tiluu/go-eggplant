@@ -1,4 +1,4 @@
-<%= render 'navbar' %>
+<%= render 'trips/navbar' %>
 
 <header> 
     <h1><%= "#{@trip.name} Dashboard" %></h1>
@@ -6,9 +6,9 @@
      <%= render 'shared/flash_msg' %>
     <p> You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
 
- 	<div><%= trip_countdown %> to go</div>
+ 	<div><%= trip_countdown %></div>
     <p>People on this trip: <br>
-		<%= @inviter.name %> 
+		<%= @inviter.name %> (Created the trip)<br>
 		<% @trip.friends.each do |friend| %> 
 		    <%= friend.name %>
 		<% end %>
@@ -18,12 +18,12 @@
 <div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
         <div ng-controller="DateCtrl"  id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>">
-            <%= render 'date_panels' %>
+            <%= render 'trips/date_panels' %>
         </div>
         <div class="calendar closed">
             <h2>Monthly Calendar</h2>
             <div ng-controller="CalendarCtrl">
-                <%= render 'calendar' %> 
+                <%= render 'trips/calendar' %> 
             </div>
         </div>
     </section>

@@ -7,9 +7,5 @@ module UserHelper
     end
  end 
  
- def getPath(ctrl, action)
-    {controller: ctrl, action: action}   
- end
-
 end
 

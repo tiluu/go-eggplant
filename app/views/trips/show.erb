@@ -2,11 +2,10 @@
 
 <header> 
     <h1><%= "#{@trip.name} Dashboard" %></h1>
-
     <%= render 'shared/flash_msg' %>
     <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
     
-    <div><%= trip_countdown %> to go</div>
+    <div><%= trip_countdown %></div>
     <p>People on this trip: <br>
     <%= current_user.name %> (Created the trip)<br> 
     <% @trip.friends.each do |friend| %>
@@ -42,6 +41,7 @@
            </li>
            <li> Todo
             <li> thinking of putting edit form on this page as well</li>
+            <li> see list of pending invites</li>
             </li>
        </ol>
 
