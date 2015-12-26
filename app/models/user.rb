@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
     validates :name, length: { maximum: 50 }
     
     validates :password, confirmation: true, 
-                         length: { in: 6..15 }
+                         length: { in: 6..15 },
+                         allow_nil: true
 
     validates :email, uniqueness: true, 
                       format: { with: /\A[\w+\-._]+?@[a-z\d\-.]+\.[a-z]+\z/i,
