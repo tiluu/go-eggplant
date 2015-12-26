@@ -13,5 +13,8 @@ class Trip < ActiveRecord::Base
     
     validates :name, length: { maximum: 50 }
 
-    
+    def get_friend_id(group)
+        friend = User.find_by(email: group.email)
+        group.friend_id = friend.id
+    end
    end

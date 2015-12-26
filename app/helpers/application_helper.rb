@@ -1,9 +1,5 @@
 module ApplicationHelper
-    def trip_countdown
-       days = (@trip.start_date - Time.now)/86400
-       pluralize(days.ceil, "day") 
-    end
-    
+   
     def format_time(time)
         time.nil? ? "" : time.strftime("%I: %M %p")    
     end

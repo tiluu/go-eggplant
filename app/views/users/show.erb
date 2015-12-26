@@ -6,6 +6,7 @@
     </nav>
 	<h1>Hello <%= current_user.name %>!</h1>
 </header>
+<%= render 'shared/flash_msg' %>
 <div class="user-profile content clearfix">
 	<aside>
 		<ul class="list-group">
@@ -17,27 +18,31 @@
     <section>
         <div class="list-group">
         <% if current_user.group_trips.present? %> 
-                <h2>Invited Trips</h2>
-                <% current_user.group_trips.each do |group| %>
-                    created by <%= group.user.name %><br>
-                    <%= link_to group.name, group_trip_path(group.url) %>
+            <h2>Invited Trips</h2>
+            <% current_user.group_trips.each do |group| %>
+                <h3><%= link_to group.name, group_trip_path(group.url) %></h3> created by <%= group.user.name %>
+                <br><%= headcount(group) %> going |
+                <%= link_to 'leave the trip', leave_trip_path(group.url), method: :delete, data: {confirm: "You sure?"} %>
             <% end %>
         <% end %>
-        </div>
-			<div class="list-group">
+       </div>
+
+       <div class="list-group">
+           <h2>Your Trips</h2>
 				<% @trips.each do |trip| %>
 					<div class="list-group-item clearfix">
 						<figure><a href="<%= trip_path(trip.url) %>"><img src="http://loremflickr.com/320/240"/></a></figure>
 				    <h2><%= link_to "#{trip.name}", trip_path(trip.url) %> </h2>
 				    <div><%= "#{format_date(trip.start_date)} to #{format_date(trip.end_date)} to #{trip.city},#{trip.country} " %>
-					    invite people | 
+                    <%= link_to 'invite people', invite_friend_path(trip.url) %> | 
+                    <%= headcount(trip) %> going |
 					    <%= link_to 'edit', edit_trip_path(trip.url) %> | 
 					    <%= link_to 'delete', [current_user, trip], method: :delete, data: {confirm: 'You sure?'} %>
 					   </div>
 				  </div>
 				<% end %>
 			</div>
-			<p><%= link_to 'Add trip', new_user_trip_path(current_user.id) %> </p>
+			<p><%= link_to 'Add trip', new_trip_path %> </p>
 	</section>
 
 </div>

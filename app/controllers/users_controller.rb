@@ -19,17 +19,15 @@ class UsersController < ApplicationController
         flash[:success] = "Logged out successfully"
         redirect_to root_path
     end
-
-    def join_trip
-        
-    end
-
+ 
     def new
         @user = User.new
+        @action = 'new' # getPath helper
     end
 
     def create
         @user = User.new(user_params)
+        @action = 'create'
         if @user.save
             login_user(@user)
             #redirect_to user_path(@user.id)
@@ -46,10 +44,12 @@ class UsersController < ApplicationController
 
     def edit
         @current_user = current_user
+        @action = 'edit'
     end
 
     def update
         @current_user = current_user
+        @action = 'update'
         if @current_user.update_attributes(user_params)
             flash[:success] = "Profile updated"
             redirect_to dashboard_path

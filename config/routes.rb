@@ -1,24 +1,27 @@
 Rails.application.routes.draw do
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
-  get 'user/trip-:url/invite' => 'trips#invite', as: :invite_friend
-  post 'user/trip-:url/invite' => 'trips#send_invite'
-  get 'group/trip-:url' => 'trips#show_group', as: :group_trip
+  get 'trip-:url/invite' => 'trips#invite', as: :invite_friend
+  post 'trip-:url/invite' => 'trips#send_invite'
+  get 'group-:url' => 'trips#show_group', as: :group_trip
+  delete 'group-:url/leave' => 'trips#leave_trip', as: :leave_trip
+  delete 'trip-:url/uninvite-:email' => 'trips#uninvite', as: :uninvite
 
-  get 'user/trip-:url/find_food' => 'trips#find_food', as: :find_food
-  get 'user/trip-:url' => 'trips#show', as: :trip
-  get 'user/trip-:url/edit' => 'trips#edit', as: :edit_trip
-  patch 'user/trip-:url/edit' => 'trips#update'
-  get 'user/trips/new' => 'trips#new', as: :new_trip
+  get 'trip-:url/find_food' => 'trips#find_food', as: :find_food
+  get 'trip-:url' => 'trips#show', as: :trip
+  get 'trip-:url/edit' => 'trips#edit', as: :edit_trip
+  patch 'trip-:url/edit' => 'trips#update'
+  get 'trips/new' => 'trips#new', as: :new_trip
+  post 'trips/new' => 'trips#create'
   
   get 'user/dashboard' => 'users#show', as: :dashboard
   get 'user/account' => 'users#edit', as: :account
   patch 'user/account' => 'users#update'
   
-  get 'user/trip-:url/ideas/new' => 'ideas#new'
-  post 'user/trip-:url' => 'ideas#create'
-  get 'user/trip-:url/idea-:id' => 'ideas#show', as: :idea
-  get 'user/trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
-  patch 'user/trip-:url/idea-:id/edit' => 'ideas#update'
+  #get 'user/trip-:url/ideas/new' => 'ideas#new'
+  post 'trip-:url' => 'ideas#create', as: :new_idea
+  get 'trip-:url/idea-:id' => 'ideas#show', as: :idea
+  get 'trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
+  post 'trip-:url/idea-:id/edit' => 'ideas#update'
 
   get 'signup' => 'users#new', as: :signup
   post 'signup' => 'users#create'

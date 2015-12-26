@@ -1,38 +1,16 @@
-<nav class="navbar navbar-default">
-    <ul class="nav navbar-nav">
-        <li>
-            <a href="#"class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
-            <ul class="dropdown-menu"> 
-                <li><%= link_to 'Me', dashboard_path %></li>
-                <li><%= link_to 'Log out', logout_path, method: :delete %></li>
-            </ul>
-        <li>
-            <a href="#"class="dropdown-toggle" data-toggle="dropdown">Trip<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li> <%= link_to 'New trip', new_trip_path %></li>
-                <li><%= link_to 'Edit trip', edit_trip_path(@trip.url) %></li>
-                <li> <%= link_to 'Invite', invite_friend_path(@trip.url) %></li>
-            </ul>
-        </li>
-        <li><a href="#"class="dropdown-toggle" data-toggle="dropdown" >Discover<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><%= link_to 'Restaurants', find_food_path %></li>
-                <li>Hotels</li>
-            </ul>
-        </li>
-    </ul>
-</nav>
+<%= render 'navbar' %>
+
 <header> 
     <h1><%= "#{@trip.name} Dashboard" %></h1>
 
     <%= render 'shared/flash_msg' %>
-    <p> You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
+    <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
     
     <div><%= trip_countdown %> to go</div>
     <p>People on this trip: <br>
-    <%= current_user.name %><br>
-    <% @friends.each do |friend| %>
-        <%= getName(friend.email) %><br>
+    <%= current_user.name %> (Created the trip)<br> 
+    <% @trip.friends.each do |friend| %>
+        <%= friend.name %> | <%= link_to 'uninvite', uninvite_path(@trip.url, friend.email), method: :delete, data: {confirm: "You sure?"} %><br>
     <%end%>
     </p>
 
@@ -51,26 +29,20 @@
     </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
         <h4>Itineary</h4>
-                         
-        <div class="trip--fav_action" role="group" aria-label="...">
-            <ul  class="nav nav-tabs nav-justified">
-                <li ng-class="{'active':tab.isSet(1)}">
-                    <a href ng-click="tab.setTab(1)">Food</a></li>
-                <li ng-class="{'active':tab.isSet(2)}">
-                    <a href ng-click="tab.setTab(2)">Activities</a></li>
-                <li ng-class="{'active':tab.isSet(3)}">
-                    <a href ng-click="tab.setTab(3)">Events</a></li>
-            </ul>
-        </div>
 
-        <%= render 'ideas' %>
+        <%= render 'ideas/ideas' %>
 
 
        <button class="idea--form_action btn">Add + </button>
 
        <ol>
-           <li> list of ideas moved to its own partial (_ideas.erb) for easier access</li>
-           <li>once form has been edited it should return to this page. thinking of putting edit form on this page as well</li>
+           <li> Changes
+             <li> navbar & list of ideas moved to their own partials (shared/_navbar.erb, ideas/_ideas.erb) for easier access & resuability</li>
+             <li> yelp API stuff finally moved to its own page (find_food.erb)
+           </li>
+           <li> Todo
+            <li> thinking of putting edit form on this page as well</li>
+            </li>
        </ol>
 
        <div class="idea--form closed">

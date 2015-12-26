@@ -1,3 +1,14 @@
+<div class="trip--fav_action" role="group" aria-label="...">
+    <ul  class="nav nav-tabs nav-justified">
+        <li ng-class="{'active':tab.isSet(1)}">
+            <a href ng-click="tab.setTab(1)">Food</a></li>
+        <li ng-class="{'active':tab.isSet(2)}">
+            <a href ng-click="tab.setTab(2)">Activities</a></li>
+        <li ng-class="{'active':tab.isSet(3)}">
+            <a href ng-click="tab.setTab(3)">Events</a></li>
+    </ul>
+</div>
+
 <div class="trip--list">           
     <div class="list-group" ng-show="tab.isSet(1)">  
         <% if !@food.empty? %>             

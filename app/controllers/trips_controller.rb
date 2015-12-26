@@ -1,17 +1,18 @@
 class TripsController < ApplicationController
+    #include GroupTrips
     before_action :require_login
+    before_action :check_friend, only: [:show_group, :leave_trip]
 
     def invite
-        @trip = current_user.trips.find_by_url(params[:url])
+        @trip = current_trips.find_by_url(params[:url])
         @invite = @trip.relationships.build
     end
 
     def send_invite
-        @trip = current_user.trips.find_by_url(params[:url])
+        @trip = current_trips.find_by_url(params[:url])
         @invite = @trip.relationships.build(friend_params)
-        @invited = User.find_by(email: @invite.email)
-        @invite.friend_id = @invited.id
-        
+        @trip.get_friend_id(@invite)
+
         if @invite.save
             flash[:success] = "Friend added!"
             redirect_to trip_path(@trip.url)
@@ -20,16 +21,25 @@ class TripsController < ApplicationController
             render :invite
         end
     end
-
-
+    
     def uninvite
-        @trip = current_user.trips.find_by_url(params[:url])
-        @trip.relationships.find_by(friend_id: params[:friend_id]).destroy
+        @trip = current_trips.find_by_url(params[:url])
+        email = params[:email] + params[:format]
+        @trip.relationships.find_by(email: email).destroy
+        flash[:success] = "Friend uninvited"
+        redirect_to dashboard_path        
+    end
+
+    def leave_trip
+        @inviter = current_user.group_trips.find_by_url(params[:url]).user
+        @trip = @inviter.trips.find_by_url(params[:url])
+        @trip.relationships.find_by(friend_id: current_user).destroy
+        flash[:success] = "Successfully left the trip"
+        redirect_to dashboard_path
     end   
 
     def find_food
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
+        @trip = current_trips.find_by_url(params[:url])
 
         location = @trip.city + @trip.state_or_province + @trip.country
         if !params[:neighborhood] 
@@ -44,9 +54,9 @@ class TripsController < ApplicationController
     end
     
     def show_group
+        @action = 'create'
         @inviter = current_user.group_trips.find_by_url(params[:url]).user
         @trip = @inviter.trips.find_by_url(params[:url])
-        @friends = @trip.friends 
         @food = @trip.ideas.where(idea_category_id: 1)
         @event = @trip.ideas.where(idea_category_id: 3) 
         @activity = @trip.ideas.where(idea_category_id: 4)
@@ -55,6 +65,7 @@ class TripsController < ApplicationController
     def show
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
+        @action = 'create' 
 
         @food = @trip.ideas.where(idea_category_id: 1)
         @event = @trip.ideas.where(idea_category_id: 3) 
@@ -64,11 +75,13 @@ class TripsController < ApplicationController
     def new
         @user = current_user
         @trip = @user.trips.build
+        @action = 'new' # for getPath helper
     end
 
     def create
         @user = current_user
         @trip = @user.trips.build(trip_params)
+        @action = 'create'
         @trip.url = SecureRandom.urlsafe_base64
         if @trip.save
             redirect_to trip_path(@trip.url)
@@ -81,11 +94,13 @@ class TripsController < ApplicationController
     def edit
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
+        @action = 'edit'
     end
 
     def update
         @user = current_user
         @trip = @user.trips.find_by_url(params[:url])
+        @action = 'update'
         if @trip.update_attributes(trip_params)
             redirect_to trip_path(@trip.url)
         else
@@ -94,12 +109,12 @@ class TripsController < ApplicationController
         end
     end
 
-    def yelp_results
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
-        search_params = @trip.city + @trip.state_or_province + @trip.country
-        yelp_api(search_params, 'restaurants', 20)
-    end
+#    def yelp_results
+#        @user = current_user
+#        @trip = @user.trips.find_by_url(params[:url])
+#        search_params = @trip.city + @trip.state_or_province + @trip.country
+#        yelp_api(search_params, 'restaurants', 20)
+#    end
 
     def destroy
         @user = current_user
@@ -117,5 +132,15 @@ class TripsController < ApplicationController
 
         def friend_params
             params.require(:relationship).permit(:email, :group_trip_id, :friend_id)
+        end
+
+        def check_friend
+            trip = Trip.find_by_url(params[:url])
+            find_friend = Relationship.find_by(group_trip_id: trip.id, friend_id: current_user.id)
+            if !find_friend 
+                flash[:danger] = "You do not have access to the page."
+                redirect_to dashboard_path
+            end
+            
         end
 end
