@@ -2,14 +2,15 @@ class CreateRelationships < ActiveRecord::Migration
   def change
     create_table :relationships do |t|
       t.string :email
-      t.integer :friend_id
-      t.integer :group_trip_id
+      t.string :rsvp
+      t.integer :user_tag
+      t.integer :user_id
+      t.integer :sender
+      t.integer :trip_id
 
       t.timestamps null: false
     end
 
-    add_index :relationships, :friend_id
-    add_index :relationships, :group_trip_id
-    add_index :relationships, [:friend_id, :group_trip_id], unique: true
+    add_index :relationships, [:user_id, :trip_id], unique: true
   end
 end

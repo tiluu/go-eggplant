@@ -1,12 +1,21 @@
 class User < ActiveRecord::Base
     include ValidEmails
     
-    has_many :trips
-    has_many :ideas, through: :trips
+    has_many :invites, class_name: "Relationship",
+                        foreign_key: "user_id",
+                        dependent: :destroy
+    has_many :trips, through: :invites
 
-    has_many :relationships, foreign_key: "friend_id",
-                             dependent: :destroy
-    has_many :group_trips, through: :relationships
+    has_many :ideas, through: :trips
+    # has_many :trip_invites, class_name: "Relationship", 
+    #                          foreign_key: "invite_id", 
+    #                          dependent: :destroy
+
+    # has_many :relationships, foreign_key: "friend_id",
+    #                          dependent: :destroy
+
+    # has_many :invited_trips, through: :trip_invites
+    # has_many :group_trips, through: :relationships
      
     has_secure_password
 
@@ -17,7 +26,19 @@ class User < ActiveRecord::Base
                          length: { in: 6..15 },
                          allow_nil: true
 
-    validates :email, uniqueness: true
+    validates :email, :tag, uniqueness: true
+
+    after_create :gen_user_tag
+
+    def gen_user_tag
+        num = User.count * 9999
+        update_column :tag, SecureRandom.random_number(num)
+        retries = 5
+    rescue ActiveRecord::RecordNotUnique => e
+        retries -= 1
+        retry if retries > 0
+        raise e, "An error has occurred, try again later"
+    end
     
     def self.authenticate(email, password)
         user = User.find_by(email: email)
@@ -30,5 +51,4 @@ class User < ActiveRecord::Base
         user = User.find_by(email: user.email)
         user.present?
     end
-
 end

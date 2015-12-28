@@ -31,7 +31,6 @@ class UsersController < ApplicationController
         @action = 'create'
         if @user.save
             login_user(@user)
-            #redirect_to user_path(@user.id)
         else
             @errors = @user.errors
             render :new
@@ -41,6 +40,7 @@ class UsersController < ApplicationController
     def show
         @current_user = current_user
         @trips = @current_user.trips
+        @trip = @trips.find_by(url: params[:url])
     end
 
     def edit
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
     private
         def user_params
             params.require(:user).permit(:name, :email,
-                                         :password, 
+                                         :password, :tag,
                                          :password_confirmation)
         end
 

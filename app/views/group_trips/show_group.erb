@@ -7,6 +7,14 @@
     <p> You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
 
  	<div><%= trip_countdown %></div>
+    <p>People invited:<br>
+        <% @trip.invites.each do |invite| %>
+            <% if invite.rsvped? %>
+                <%= invite.email %><br>
+            <% end %>
+        <% end %>
+    </p>
+
     <p>People on this trip: <br>
 		<%= @inviter.name %> (Created the trip)<br>
 		<% @trip.friends.each do |friend| %> 

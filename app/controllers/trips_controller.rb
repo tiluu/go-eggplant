@@ -17,8 +17,7 @@ class TripsController < ApplicationController
     end
   
     def show
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
+        @trip = current_trips.find_by_url(params[:url])
         @action = 'create' 
 
         @food = @trip.ideas.where(idea_category_id: 1)
@@ -27,17 +26,26 @@ class TripsController < ApplicationController
     end
 
     def new
-        @user = current_user
-        @trip = @user.trips.build
+        @trip = current_trips.build
+        @invite = @trip.invites.build
         @action = 'new' # for getPath helper
     end
 
     def create
-        @user = current_user
-        @trip = @user.trips.build(trip_params)
+        @trip = current_trips.build(trip_params)
+        @trip.creator = current_user.id
         @action = 'create'
         if @trip.save
-            redirect_to trip_path(@trip.url)
+            @invite = @trip.invites.create(user_id: current_user.id,
+                                           email: current_user.email,
+                                           user_tag: current_user.tag,
+                                           rsvp: 'YES')
+            if @invite.present?
+                redirect_to trip_path(@trip.url)
+            else
+                flash[:danger].now = "error"
+                render :new
+            end
         else
             @errors = @trip.errors
             render :new
@@ -45,14 +53,12 @@ class TripsController < ApplicationController
     end
 
     def edit
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
+        @trip = current_trips.find_by_url(params[:url])
         @action = 'edit'
     end
 
     def update
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
+        @trip = current_trips.find_by_url(params[:url])
         @action = 'update'
         if @trip.update_attributes(trip_params)
             redirect_to trip_path(@trip.url)
@@ -80,6 +86,7 @@ class TripsController < ApplicationController
             params.require(:trip).permit(:name, :url, :start_date,
                                          :end_date, :city, 
                                          :state_or_province,
-                                         :country)
+                                         :country, :creator)
         end 
+
 end

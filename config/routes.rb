@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
   post 'trip-:url/invite' => 'group_trips#send_invite'
   get 'group-:url' => 'group_trips#show_group', as: :group_trip
-  delete 'group-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
-  delete 'trip-:url/uninvite-:email' => 'group_trips#uninvite', as: :uninvite
+  post 'group-:url' => 'group_trips#rsvp_yes', as: :say_yes
+
+  delete 'trip-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
+  delete 'trip-:url/uninvite-:tag' => 'group_trips#uninvite', as: :uninvite
 
   get 'trip-:url/find_food' => 'trips#find_food', as: :find_food
   get 'trip-:url' => 'trips#show', as: :trip

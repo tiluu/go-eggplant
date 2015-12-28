@@ -1,4 +1,4 @@
-<%= form_for(:relationship, url: getPath('group_trips', @action)) do |f| %>                     
+<%= form_for(:invite, url: getPath('group_trips', @action)) do |f| %>                     
                                   
     <%= label_tag(:email, "Friend email")%><br>
     <%= f.text_field :email %>

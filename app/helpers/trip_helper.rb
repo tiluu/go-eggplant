@@ -19,7 +19,12 @@ module TripHelper
     end
 
     def headcount(trip)
-        count = trip.friends.count + 1
+        count = 0
+        trip.invites.each do |invite|
+            if invite.rsvp === 'YES'
+                count+= 1
+            end
+        end
         pluralize(count, 'person')
     end
 

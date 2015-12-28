@@ -6,11 +6,25 @@
     <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
     
     <div><%= trip_countdown %></div>
+    <% if current_user.id === @trip.creator && @trip.invites.length > 1 %>
+       <p>People invited:<br>
+      <% @trip.invites.each do |invite| %>
+        <% if invite.rsvp === 'PENDING' %>
+         <%= invite.email %> 
+          | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), method: :delete, data: {confirm: 'you sure?'} %><br>
+          <% end %>
+        <% end %>
+    <% end %>
+    </p>
+    
     <p>People on this trip: <br>
-    <%= current_user.name %> (Created the trip)<br> 
-    <% @trip.friends.each do |friend| %>
-        <%= friend.name %> | <%= link_to 'uninvite', uninvite_path(@trip.url, friend.email), method: :delete, data: {confirm: "You sure?"} %><br>
-    <%end%>
+    <%= User.find(@trip.creator).name %> (Created the trip)<br> 
+    <% @trip.invites.each do |invite| %>
+      <% if invite.rsvp === 'YES' %>
+        <%= User.find(invite.user_id).name %>
+      <% end %>
+    <% end %>
+
     </p>
 
 </header>

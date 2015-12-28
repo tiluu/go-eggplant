@@ -5,7 +5,7 @@ module UserHelper
     elsif current_page?(action: 'new') || @user.errors
         @user
     end
- end 
+ end
  
 end
 
