@@ -1,7 +1,9 @@
-<div class="calendar--slider" ng-init="buildTrip()">
-    <div class="calendar--day" ng-repeat="day in trip track by $index"> 
-        <div>{{ getWkday(day) }}</div>
-        <div> {{ day.getDate() }}</div>
+<div class="calendar--short" ng-init="buildTrip()">
+    <div class="calendar--slider" slick-slider="{infinite: false,slidesToShow: 3,centerMode: true,focusOnSelect: true,centerPadding: '60px'}">
+        <div class="calendar--day" ng-repeat="day in trip track by $index" > 
+            <span>{{ getWkday(day) }}</span>
+            <span> {{ day.getDate() }}</span>
+        </div>
     </div>
     <div class="todays--events"></div>
 </div>

@@ -17,3 +17,5 @@ Gemfile.lock
 config/secrets.yml
 .rspec
 
+.DS_Store
+

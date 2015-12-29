@@ -123,6 +123,8 @@
     };
 });
 
+
+
     $('.idea--form_action').on('click', function(){
         $(this).addClass('closed');
         $('.idea--form').removeClass('closed');
@@ -137,13 +139,5 @@
     });
 
     $('.time-picker').pickatime();
-
-
-    $('.calendar--slider').slick({
-        arrows: true,
-        infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 3
-    });
 
 })(jQuery, this, this.document);
