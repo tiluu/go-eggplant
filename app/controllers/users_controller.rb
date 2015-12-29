@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     before_action :require_login, only: [:edit, :update, :destroy, :show]
+    before_action :require_logout, only: [:new, :create]
 
     def login
     end
@@ -19,17 +20,17 @@ class UsersController < ApplicationController
         flash[:success] = "Logged out successfully"
         redirect_to root_path
     end
-
+ 
     def new
         @user = User.new
+        @action = 'new' # getPath helper
     end
 
     def create
         @user = User.new(user_params)
-        @user.role = "ADMIN"
+        @action = 'create'
         if @user.save
             login_user(@user)
-            #redirect_to user_path(@user.id)
         else
             @errors = @user.errors
             render :new
@@ -43,10 +44,12 @@ class UsersController < ApplicationController
 
     def edit
         @current_user = current_user
+        @action = 'edit'
     end
 
     def update
         @current_user = current_user
+        @action = 'update'
         if @current_user.update_attributes(user_params)
             flash[:success] = "Profile updated"
             redirect_to dashboard_path
@@ -58,16 +61,14 @@ class UsersController < ApplicationController
     
     def destroy
         current_user.destroy
-        #@user = User.find(params[:id]).destroy
         redirect_to root_path
     end
 
     private
         def user_params
             params.require(:user).permit(:name, :email,
-                                         :password, 
-                                         :password_confirmation,
-                                         :role)
+                                         :password, :tag,
+                                         :password_confirmation)
         end
 
 end

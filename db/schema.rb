@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221212424) do
+
+ActiveRecord::Schema.define(version: 20151228214428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,13 +43,20 @@ ActiveRecord::Schema.define(version: 20151221212424) do
   add_index "ideas", ["trip_id"], name: "index_ideas_on_trip_id", using: :btree
   add_index "ideas", ["user_id"], name: "index_ideas_on_user_id", using: :btree
 
-  create_table "travel_groups", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "trip_id"
+  create_table "relationships", force: :cascade do |t|
+    t.string   "email"
+    t.boolean  "rsvped?"
+    t.boolean  "going?"
+    t.boolean  "maybe?"
+    t.integer  "user_tag"
+    t.integer  "user_id"
+    t.integer  "sender"
+    t.integer  "trip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "travel_groups", ["trip_id"], name: "index_travel_groups_on_trip_id", using: :btree
-  add_index "travel_groups", ["user_id"], name: "index_travel_groups_on_user_id", using: :btree
+  add_index "relationships", ["user_id", "trip_id"], name: "index_relationships_on_user_id_and_trip_id", unique: true, using: :btree
 
   create_table "trips", force: :cascade do |t|
     t.string   "name"
@@ -61,18 +69,21 @@ ActiveRecord::Schema.define(version: 20151221212424) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "user_id"
+    t.integer  "creator"
   end
 
+  add_index "trips", ["url"], name: "index_trips_on_url", unique: true, using: :btree
   add_index "trips", ["user_id"], name: "index_trips_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "slug"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
-    t.string   "role"
+    t.integer  "tag"
   end
+
+  add_index "users", ["tag"], name: "index_users_on_tag", unique: true, using: :btree
 
 end

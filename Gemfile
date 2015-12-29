@@ -27,12 +27,11 @@ gem 'cancancan'
 
 # angular
 gem 'angularjs-rails'
-gem 'responders'
 
 
 # APIs
 gem 'yelp', require: 'yelp'
-gem 'trip_advisor'
+
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'

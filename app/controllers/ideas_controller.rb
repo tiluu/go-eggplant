@@ -10,7 +10,7 @@ class IdeasController < ApplicationController
     def create
         @trip = current_trips.find_by_url(params[:url])
         @idea = @trip.ideas.build(idea_params)
-        
+        @action = 'create'       
         if @idea.save
             redirect_to trip_path(@trip.url)
         else
@@ -27,11 +27,13 @@ class IdeasController < ApplicationController
     def edit
         @trip = current_trips.find_by_url(params[:url])
         @idea = @trip.ideas.find(params[:id])
+        @action = 'edit'
     end
 
     def update
         @trip = current_trips.find_by_url(params[:url])
         @idea = @trip.ideas.find(params[:id])
+        @action = 'update'
 
         if @idea.update_attributes(idea_params)
             redirect_to idea_path(@trip.url, params[:id])
