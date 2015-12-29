@@ -10,9 +10,7 @@
             <a href="#"class="dropdown-toggle" data-toggle="dropdown">Trip<span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li> <%= link_to 'New trip', new_trip_path %></li>
-                <% if can? :update, @trip %>
-                    <li><%= link_to 'Edit trip', edit_trip_path(@trip.url) %></li>
-                <% end %>
+                <li><%= link_to 'Edit trip', edit_trip_path(@trip.url) %></li>
                 <li> <%= link_to 'Invite', invite_friend_path(@trip.url, @group.id) %></li>
             </ul>
         </li>
@@ -27,7 +25,10 @@
 <header> 
     <h1><%= "#{@trip.name} Dashboard" %></h1>
     <p> You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
+    
     <div><%= trip_countdown %> to go</div>
+    <p>People on this trip:</p>
+
 </header>
 <div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
@@ -44,13 +45,10 @@
     </div>
             </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
-        <p>People on this trip:</p>
-        <ul>
-        </ul>
-        <h4>Calendar</h4>
+        <h4>Itineary</h4>
                          
         <div class="trip--fav_action" role="group" aria-label="...">
-        <ul  class="nav nav-pills">
+        <ul  class="nav nav-tabs nav-justified">
             <li ng-class="{'active':tab.isSet(1)}">
                 <a href ng-click="tab.setTab(1)">Food</a></li>
             <li ng-class="{'active':tab.isSet(2)}">
@@ -74,7 +72,7 @@
             <% else %>
                 <li>Nothing planned. Add your idea</li>
             <% end %>
-        </ul>
+        </div>
 
         <ul class="list-group" ng-show="tab.isSet(2)">
             <% if @activity.empty? === false %>
@@ -87,7 +85,7 @@
                     </li>
                 <% end %>
             <% else %>
-                <li>Nothing planned. Add your idea</li>
+                <li style="padding:10px 15px">Nothing planned. Add your idea</li>
             <% end %>
         </ul>
                  
@@ -102,18 +100,28 @@
                     </li>
                 <% end %>
             <% else %>
-                <li>Nothing planned. Add your idea</li>
+                <li  style="padding:10px 15px">Nothing planned. Add your idea</li>
            <% end %>
        </ul>
            
        </div>
 
+       <button class="idea--form_action btn">Add + </button>
+
+       <ol>
+           <li>fix form to work on this page</li>
+           <li>once form has been editted it should return to this page. thinking of putting edit form on this page as well</li>
+           <li>user id needs to show name</li>
+           <li>get form dates to work with pickadate js</li>
+       </ol>
+       
        <button class="btn">Add + </button>
-       <div>
+
+       <div class="idea--form closed">
+            <span class="idea--form_close">X close</span>  
            <%= render 'shared/form_error' %>
            <%= render 'ideas/idea_form' %>
        </div>
-        <%#= button_to "Add +", new_idea_path(@trip.url), method: 'get', class: 'btn' %> 
     </aside>
 </div>
 

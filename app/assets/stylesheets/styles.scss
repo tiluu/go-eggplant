@@ -5,7 +5,7 @@ GLOBAL
 ***********/
 
 html { font-size: 16px;}
-body { background-color: #f8f8f8; }
+body {}
 
 h1, h1, h3, h4 { margin: 0;}
 
@@ -19,7 +19,20 @@ img { width: 100%;}
 
 .navbar { 
 	margin: 0;
+	background-color: #fff;
 }
+
+a { color: #469047;}
+
+.input-group {
+	margin: 0.5rem 0;
+}
+
+.btn { 
+	background-color: white;
+	border: 1px solid rgb(221, 221, 221);
+}
+
  
 /*********
 
