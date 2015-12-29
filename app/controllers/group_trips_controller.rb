@@ -1,6 +1,6 @@
 class GroupTripsController < ApplicationController
 	before_action :require_login
-    before_action :check_friend, only: [:show_group, :leave_trip]
+    before_action :check_friend, only: [:show_group]
 
 	def invite
         @trip = current_trips.find_by_url(params[:url])
@@ -53,7 +53,12 @@ class GroupTripsController < ApplicationController
         @invite.update_attribute(:going?, false)
        end
        @invite.update_attribute(:rsvped?, true)
-       redirect_to trip_path(@trip.url)
+       if resp === 'no'
+            flash[:info] = "RSVP updated."
+            redirect_to dashboard_path
+        else
+            redirect_to trip_path(@trip.url)
+        end
     end  
 
     def invites

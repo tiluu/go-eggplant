@@ -37,7 +37,7 @@
 
 <div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
-        <div ng-controller="DateCtrl"  id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>">
+        <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>">
             <%= render 'date_panels' %>
         </div>
         <div class="calendar closed">
@@ -73,5 +73,3 @@
        </div>
     </aside>
 </div>
-
-

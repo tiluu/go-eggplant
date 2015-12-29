@@ -3,11 +3,13 @@
 	var services = angular.module("tripServices", ["calServices"]);
 
 	services.factory("tripData", function() {
-        var div = document.getElementById('calendar-dates');
+        var div = document.getElementById('trip-data');
         var start_date = div.getAttribute("start_date");
         var end_date = div.getAttribute("end_date")
         var start = new Date(start_date);
         var end = new Date(end_date);
+
+        var ideas = div.getAttribute("ideas");
 
         var data = {
             start: start,
@@ -17,7 +19,9 @@
             start_d: start.getDate(),
             end_y: end.getFullYear(),
             end_m: end.getMonth() + 1,
-            end_d: end.getDate()
+            end_d: end.getDate(),
+
+            ideas: ideas
                
         };
         return data;

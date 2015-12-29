@@ -7,16 +7,7 @@ class User < ActiveRecord::Base
     has_many :trips, through: :invites
 
     has_many :ideas, through: :trips
-    # has_many :trip_invites, class_name: "Relationship", 
-    #                          foreign_key: "invite_id", 
-    #                          dependent: :destroy
-
-    # has_many :relationships, foreign_key: "friend_id",
-    #                          dependent: :destroy
-
-    # has_many :invited_trips, through: :trip_invites
-    # has_many :group_trips, through: :relationships
-     
+  
     has_secure_password
 
     validates :name, :email, :password, :password_confirmation, presence: true, on: :create

@@ -1,5 +1,6 @@
 class IdeasController < ApplicationController
     before_action :require_login
+    load_and_authorize_resource
 
     def new
         @trip = current_trips.find_by_url(params[:url])
@@ -54,7 +55,7 @@ class IdeasController < ApplicationController
                                          :end_date, :start_time,
                                          :end_time, :location,
                                          :notes, :idea_category_id,
-                                         :user_id, :trip_id)
+                                         :user_id, :trip_id, :category)
         end
        
 end

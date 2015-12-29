@@ -89,5 +89,4 @@ class TripsController < ApplicationController
                                          :state_or_province,
                                          :country, :creator)
         end 
-
 end

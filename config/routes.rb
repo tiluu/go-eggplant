@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'trip-:url/find_food' => 'trips#find_food', as: :find_food
   get 'trip-:url' => 'trips#show', as: :trip
   get 'trip-:url/edit' => 'trips#edit', as: :edit_trip
-  patch 'trip-:url/edit' => 'trips#update'
+  post 'trip-:url/edit' => 'trips#update'
   get 'trips/new' => 'trips#new', as: :new_trip
   post 'trips/new' => 'trips#create'
   

@@ -1,21 +1,10 @@
 class Trip < ActiveRecord::Base
     include ValidDates
-    ######## NEW SET UP #######
+
     has_many :invites, class_name: "Relationship",
                      foreign_key: "trip_id",
                      dependent: :destroy
     has_many :users, through: :invites
-
-    ######## OLD SET UP #########
-
-    # has_many :relationships, foreign_key: "group_trip_id",
-    #                          dependent: :destroy
-    # has_many :trip_invites, class_name: "Relationship",
-    #                         foreign_key: "invited_trip_id",
-    #                         dependent: :destroy
-
-    # has_many :friends, through: :relationships   
-    # has_many :invites, through: :trip_invites
 
     has_many :ideas, dependent: :destroy
 
