@@ -46,9 +46,6 @@
     });
 
     $('.time-picker').pickatime();
-<<<<<<< HEAD
-=======
-
 
     $('.calendar--slider').slick({
         arrows: true,
@@ -56,6 +53,5 @@
         slidesToShow: 3,
         slidesToScroll: 3
     });
->>>>>>> master
 
 })(jQuery, this, this.document);
