@@ -1,14 +1,6 @@
 <%= render 'navbar' %>
 
 <header> 
-<<<<<<< HEAD
-    <h1><%= "#{@trip.name} Dashboard" %></h1>
-    <p> You are going to <strong><%= "#{@trip.city}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
-    
-    <div><%= trip_countdown %> to go</div>
-    <p>People on this trip:</p>
-
-=======
   <h1><%= "#{@trip.name} Dashboard" %></h1>
   <%= render 'shared/flash_msg' %>
   <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> 
@@ -41,7 +33,6 @@
     </p>
   </p>
   <% end %>
->>>>>>> master
 </header>
 
 <div class="content clearfix" ng-app="trip">
@@ -58,87 +49,6 @@
     </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
         <h4>Itineary</h4>
-<<<<<<< HEAD
-                         
-        <div class="trip--fav_action" role="group" aria-label="...">
-        <ul  class="nav nav-tabs nav-justified">
-            <li ng-class="{'active':tab.isSet(1)}">
-                <a href ng-click="tab.setTab(1)">Food</a></li>
-            <li ng-class="{'active':tab.isSet(2)}">
-                <a href ng-click="tab.setTab(2)">Activities</a></li>
-            <li ng-class="{'active':tab.isSet(3)}">
-                <a href ng-click="tab.setTab(3)">Events</a></li>
-        </ul>
-        </div>
-        <div class="trip--list">
-           
-        <div class="list-group" ng-show="tab.isSet(1)">  
-            <% if @food.ideas.empty? === false %>             
-                <% @food.ideas.each do |idea| %>
-                    <div class="list-group-item">
-                    <h4 class="list-group-item-heading"><%= idea.title %></h4>
-                    <span class="badge"><%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %></span>
-                    <span class="badge"><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>
-                    <p class="list-group-item-text">
-                    When: <%= format_date(idea.start_date) %> -  <%= format_date(idea.end_date) %><br>
-                    Where: <%= idea.location%> <br>
-                    Suggested by: <%= idea.user_id%></p>
-                    </div>
-                <% end %>
-            <% else %>
-                <li>Nothing planned. Add your idea</li>
-            <% end %>
-        </div>
-
-        <ul class="list-group" ng-show="tab.isSet(2)">
-            <% if @activity.ideas.empty? === false %>
-                <% @activity.ideas.each do |idea| %>
-                    <div class="list-group-item">
-                    <h4 class="list-group-item-heading"><%= idea.title %></h4>
-                    <span class="badge"><%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %></span>
-                    <span class="badge"><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>
-                    <p class="list-group-item-text">
-                    When: <%= format_date(idea.start_date) %> -  <%= format_date(idea.end_date) %><br>
-                    Where: <%= idea.location%> <br>
-                    Suggested by: <%= idea.user_id%></p>
-                    </li>
-                <% end %>
-            <% else %>
-                <li style="padding:10px 15px">Nothing planned. Add your idea</li>
-            <% end %>
-        </ul>
-                 
-        <ul class="list-group" ng-show="tab.isSet(3)">
-            <% if @event.ideas.empty? === false %>
-                 <% @event.ideas.each do |idea| %>
-                     <div class="list-group-item">
-                    <h4 class="list-group-item-heading"><%= idea.title %></h4>
-                    <span class="badge"><%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %></span>
-                    <span class="badge"><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>
-                    <p class="list-group-item-text">
-                    When: <%= format_date(idea.start_date) %> -  <%= format_date(idea.end_date) %><br>
-                    Where: <%= idea.location%> <br>
-                    Suggested by: <%= idea.user_id%></p>
-                <% end %>
-            <% else %>
-                <li  style="padding:10px 15px">Nothing planned. Add your idea</li>
-           <% end %>
-       </ul>
-           
-       </div>
-
-       <button class="idea--form_action btn">Add + </button>
-
-       <ol>
-           <li>fix form to work on this page</li>
-           <li>once form has been editted it should return to this page. thinking of putting edit form on this page as well</li>
-           <li>user id needs to show name</li>
-           <li>get form dates to work with pickadate js</li>
-       </ol>
-       
-       <button class="btn">Add + </button>
-
-=======
 
         <%= render 'ideas/ideas' %>
 
@@ -156,7 +66,6 @@
             </li>
        </ol>
 
->>>>>>> master
        <div class="idea--form closed">
             <span class="idea--form_close">X close</span>  
            <%= render 'shared/form_error' %>
