@@ -1,6 +1,17 @@
 (function() {
 	var date = angular.module("datePanels", ['calServices', 'tripServices']);
 
+    date.directive('slickSlider',function($timeout){
+         return {
+           restrict: 'A',
+           link: function(scope,element,attrs) {
+             $timeout(function() {
+                 $(element).slick(scope.$eval(attrs.slickSlider));
+             });
+           }
+         }
+        }); 
+
 	date.controller('DateCtrl', function($scope, mnthService, tripDays, tripData, tripMnths) {
         // GLOBAL VARIABLES
         var m = mnthService;

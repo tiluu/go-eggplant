@@ -32,6 +32,8 @@
     };
 });
 
+
+
     $('.idea--form_action').on('click', function(){
         $(this).addClass('closed');
         $('.idea--form').removeClass('closed');
