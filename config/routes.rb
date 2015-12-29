@@ -1,19 +1,29 @@
 Rails.application.routes.draw do
-  get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
-  get 'user/trip-:url' => 'trips#show', as: :trip
-  get 'user/trip-:url/edit' => 'trips#edit', as: :edit_trip
-  patch 'user/trip-:url/edit' => 'trips#update'
-  get 'user/trips/new' => 'trips#new', as: :new_trip
+  #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
+  get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
+  post 'trip-:url/invite' => 'group_trips#send_invite'
+  #get 'trip-:url' => 'group_trips#show_group', as: :group_trip
+  patch 'trip-:url/:response' => 'group_trips#rsvp', as: :rsvp
+
+  delete 'trip-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
+  delete 'trip-:url/uninvite-:tag' => 'group_trips#uninvite', as: :uninvite
+
+  get 'trip-:url/find_food' => 'trips#find_food', as: :find_food
+  get 'trip-:url' => 'trips#show', as: :trip
+  get 'trip-:url/edit' => 'trips#edit', as: :edit_trip
+  post 'trip-:url/edit' => 'trips#update'
+  get 'trips/new' => 'trips#new', as: :new_trip
+  post 'trips/new' => 'trips#create'
   
-  get 'user/dashboard' => 'users#show', as: :dashboard
-  get 'user/account' => 'users#edit', as: :account
-  patch 'user/account' => 'users#update'
+  get 'dashboard' => 'users#show', as: :dashboard
+  get 'account' => 'users#edit', as: :account
+  patch 'account' => 'users#update'
   
-  get 'user/trip-:url/ideas/new' => 'ideas#new'
-  post 'user/trip-:url' => 'ideas#create'
-  get 'user/trip-:url/idea-:id' => 'ideas#show', as: :idea
-  get 'user/trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
-  patch 'user/trip-:url/idea-:id/edit' => 'ideas#update'
+  #get 'user/trip-:url/ideas/new' => 'ideas#new'
+  post 'trip-:url' => 'ideas#create', as: :new_idea
+  get 'trip-:url/idea-:id' => 'ideas#show', as: :idea
+  get 'trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
+  post 'trip-:url/idea-:id/edit' => 'ideas#update'
 
   get 'signup' => 'users#new', as: :signup
   post 'signup' => 'users#create'
@@ -22,11 +32,13 @@ Rails.application.routes.draw do
   delete 'logout' => 'users#logout', as: :logout
  
 
-  resources :users do
-    resources :trips, except: :index do
-        resources :ideas, except: [:index, :new, :create]
+  resources :users do 
+    resources :trips, only: [:show, :delete] do 
+      resources :ideas, only: [:show, :delete]
     end
   end
+
+
   root 'home_pages#home'
 
   # Example of regular route:

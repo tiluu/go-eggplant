@@ -1,17 +1,7 @@
-<div ng-init="buildTrip()">
-    <div ng-repeat="day in trip track by $index"> 
-        <table >
-            <thead>
-                <tr>
-                    <td>{{ getWkday(day) }}</td>
-            </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td> {{ day.getDate() }} </td>
-                </tr>
-            </tbody>
-        </table>
+<div class="calendar--slider" ng-init="buildTrip()">
+    <div class="calendar--day" ng-repeat="day in trip track by $index"> 
+        <div>{{ getWkday(day) }}</div>
+        <div> {{ day.getDate() }}</div>
     </div>
+    <div class="todays--events"></div>
 </div>

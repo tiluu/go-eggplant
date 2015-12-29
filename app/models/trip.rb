@@ -1,12 +1,29 @@
 class Trip < ActiveRecord::Base
     include ValidDates
-    belongs_to :user
-    
+
+    has_many :invites, class_name: "Relationship",
+                     foreign_key: "trip_id",
+                     dependent: :destroy
+    has_many :users, through: :invites
+
     has_many :ideas, dependent: :destroy
-    #accepts_nested_attributes_for :ideas
 
     validates :name, :city, :country, 
               :state_or_province, presence: true
     
     validates :name, length: { maximum: 50 }
-   end
+    validates_uniqueness_of :url
+
+    after_create :gen_trip_url
+
+   
+    def gen_trip_url 
+        update_column :url, SecureRandom.urlsafe_base64
+        retries = 5
+    rescue ActiveRecord::RecordNotUnique => e
+        retries -= 1
+        retry if retries > 0
+        raise e, "An error has occurred, try again later"
+    end
+
+end
