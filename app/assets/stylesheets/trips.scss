@@ -71,5 +71,18 @@ CALENDAR
 	.calendar--date { padding: 12px;}
 }
 
+.calendar--short { outline: 1px solid blue;}
+
+.todays--events { height: 200px; background-color: white; outline: 1px solid black;}
+.slick-prev:before, .slick-next:before { 
+    color:red !important;
+}
+
+.slick-center { font-size: 1rem; font-weight: 600;}
+
+.calendar--short { margin: auto;
+    padding: 20px;
+    width: 80%;}
+
 
     
