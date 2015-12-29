@@ -1,20 +1,28 @@
 <%= form_for(getUser, url: getPath('users', @action)) do |f| %>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %><br>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1"><%= f.label :name %></span>
+      <%= f.text_field :name, class: 'form-control'%>
+    </div>
 
-    <%= f.label :email %><br>
-    <%= f.text_field :email %><br>
-   
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon2"><%= f.label :email %></span>
+      <%= f.text_field :email, class: 'form-control'%>
+    </div>
+    
     <% if @action === 'new' || @action === 'create' %>
-        <%= f.label :password %><br>
-        <%= f.password_field :password %><br>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon3"><%= f.label :password %></span>
+          <%= f.password_field :password, class: 'form-control'%>
+        </div>
 
-        <%= f.label :password_confirmation %><br>
-        <%= f.password_field :password_confirmation %>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon4"> <%= f.label :password_confirmation %></span>
+          <%= f.password_field :password_confirmation, class: 'form-control' %>
+        </div>
 
-        <p><%= f.submit "Sign up" %></p>
+        <p><%= f.submit "Sign up" , class: 'btn' %></p>
     <% else %>
-        <p><%= f.submit "Update info" %></p>
+        <p><%= f.submit "Update info" , class: 'btn' %></p>
     <% end %>
 <% end %> 
 
@@ -23,13 +31,18 @@
        <h2>Change Password</h2>
 
         <%= form_for(getUser, url: getPath('users', @action)) do |f| %>
-        <%= f.label :password %><br>
-        <%= f.password_field :password %><br>
 
-        <%= f.label :password_confirmation %><br>
-        <%= f.password_field :password_confirmation %>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon5"><%= f.label :password %></span>
+          <%= f.password_field :password, class: 'form-control' %>
+        </div>
 
-        <p><%= f.submit "Change Password" %></p>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon6"> <%= f.label :password_confirmation %></span>
+          <%= f.password_field :password_confirmation, class: 'form-control' %>
+        </div>
+
+        <p><%= f.submit "Change Password" , class: 'btn' %></p>
     <% end %>
 
     <p>

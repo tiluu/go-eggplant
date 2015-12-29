@@ -14,7 +14,7 @@
         <% if !@food.empty? %>             
             <% @food.each do |idea| %>
                 <div class="list-group-item">
-                <h4 class="list-group-item-heading"><%= idea.title %></h4>
+                    <h4 class="list-group-item-heading"><%= idea.title %></h4>
                 <span class="badge"><%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %></span>
                 <span class="badge"><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>
                 <p class="list-group-item-text">
@@ -24,42 +24,43 @@
                 </div>
             <% end %>
         <% else %>
-            <li>Nothing planned. Add your idea</li>
+            <p style="padding:10px 15px">Nothing planned. Add your idea</p>
         <% end %>
     </div>
 
-    <ul class="list-group" ng-show="tab.isSet(2)">
+    <div class="list-group" ng-show="tab.isSet(2)">
         <% if !@activity.empty? %>
             <% @activity.each do |idea| %>
                 <div class="list-group-item">
-                <h4 class="list-group-item-heading"><%= idea.title %></h4>
+                    <h4 class="list-group-item-heading"><%= idea.title %></h4>
                 <span class="badge"><%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %></span>
                 <span class="badge"><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>
                 <p class="list-group-item-text">
                 When: <%= format_date(idea.start_date) %> -  <%= format_date(idea.end_date) %><br>
                 Where: <%= idea.location%> <br>
                 Suggested by: <%= idea_user(idea) %></p>
-                </li>
+                </div>
             <% end %>
         <% else %>
-            <li style="padding:10px 15px">Nothing planned. Add your idea</li>
+            <p style="padding:10px 15px">Nothing planned. Add your idea</p>
         <% end %>
-    </ul>
+    </div>
              
-    <ul class="list-group" ng-show="tab.isSet(3)">
+    <div class="list-group" ng-show="tab.isSet(3)">
         <% if !@event.empty? %>
              <% @event.each do |idea| %>
-                 <div class="list-group-item">
-                <h4 class="list-group-item-heading"><%= idea.title %></h4>
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading"><%= idea.title %></h4>
                 <span class="badge"><%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %></span>
                 <span class="badge"><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>
                 <p class="list-group-item-text">
                 When: <%= format_date(idea.start_date) %> -  <%= format_date(idea.end_date) %><br>
                 Where: <%= idea.location%> <br>
                 Suggested by: <%= idea_user(idea) %></p>
+                </div>
             <% end %>
         <% else %>
-            <li  style="padding:10px 15px">Nothing planned. Add your idea</li>
+            <p style="padding:10px 15px">Nothing planned. Add your idea</p>
        <% end %>
-    </ul>
+    </div>
 </div>
