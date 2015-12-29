@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
   get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
   post 'trip-:url/invite' => 'group_trips#send_invite'
@@ -12,7 +11,7 @@ Rails.application.routes.draw do
   get 'trip-:url/find_food' => 'trips#find_food', as: :find_food
   get 'trip-:url' => 'trips#show', as: :trip
   get 'trip-:url/edit' => 'trips#edit', as: :edit_trip
-  patch 'trip-:url/edit' => 'trips#update'
+  post 'trip-:url/edit' => 'trips#update'
   get 'trips/new' => 'trips#new', as: :new_trip
   post 'trips/new' => 'trips#create'
   
@@ -25,9 +24,6 @@ Rails.application.routes.draw do
   get 'trip-:url/idea-:id' => 'ideas#show', as: :idea
   get 'trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
   post 'trip-:url/idea-:id/edit' => 'ideas#update'
-
-  get 'user/trip-:url/invite/:id' => 'trips#invite', as: :invite_friend
-  post 'user/trip-:url' => 'trips#send_invite'
 
   get 'signup' => 'users#new', as: :signup
   post 'signup' => 'users#create'

@@ -1,4 +1,3 @@
-
 <%= render 'navbar' %>
 
 <header> 
@@ -38,8 +37,7 @@
 
 <div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
-
-        <div ng-controller="DateCtrl"  id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>">
+        <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>">
             <%= render 'date_panels' %>
         </div>
         <div class="calendar closed">
@@ -51,7 +49,9 @@
     </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
         <h4>Itineary</h4>
+
         <%= render 'ideas/ideas' %>
+
 
        <button class="idea--form_action btn">Add + </button>
 
@@ -62,7 +62,7 @@
            </li>
            <li> Todo
             <li> thinking of putting edit form on this page as well</li>
-            <li> <strong>time picker:</strong> the wrong date shows up in the start & end time fields when editing ideas
+            <li> see list of pending invites</li>
             </li>
        </ol>
 
@@ -73,5 +73,3 @@
        </div>
     </aside>
 </div>
-
-
