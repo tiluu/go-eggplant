@@ -1,4 +1,4 @@
-<%= form_for(getUser, url: getPath('users', @action)) do |f| %>
+<%= form_for(which_user, url: getPath('users', @action)) do |f| %>
     <%= f.label :name %><br>
     <%= f.text_field :name %><br>
 
@@ -22,7 +22,7 @@
     <% if @action === 'edit' || @action === 'update' %>
        <h2>Change Password</h2>
 
-        <%= form_for(getUser, url: getPath('users', @action)) do |f| %>
+        <%= form_for(which_user, url: getPath('users', @action)) do |f| %>
         <%= f.label :password %><br>
         <%= f.password_field :password %><br>
 

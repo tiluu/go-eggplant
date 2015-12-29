@@ -40,6 +40,7 @@ class UsersController < ApplicationController
   def show
         @current_user = current_user
         @trips = @current_user.trips
+        @invites = @current_user.invites
     end
 
     def edit

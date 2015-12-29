@@ -19,7 +19,7 @@ class TripsController < ApplicationController
     def show
         @trip = current_trips.find_by_url(params[:url])
         @action = 'create' 
-        @invite = @trip.invites 
+        @pending = @trip.invites.where(rsvped?: nil)
 
         @food = @trip.ideas.where(idea_category_id: 1)
         @event = @trip.ideas.where(idea_category_id: 3) 

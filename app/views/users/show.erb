@@ -18,7 +18,7 @@
     <section>
     	<div class="list-group">
             <h2>Invites</h2>
-            <% @current_user.invites.each do |invite| %>
+            <% @invites.each do |invite| %>
                 <% if !invite.rsvped? %>
                     <%= getTrip(invite).name %> invited by <%= User.find(invite.sender).name %>
                     <br><%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
@@ -30,7 +30,7 @@
         <div class="list-group">
             
             <h2>Invited Trips</h2>
-            <% @current_user.invites.each do |invite| %>
+            <% @invites.each do |invite| %>
                 <% if getTrip(invite).creator != current_user.id && invite.going? || invite.maybe? %>
                     <%= link_to getTrip(invite).name, trip_path(getTrip(invite).url) %> <br>
                     Change RSVP: <%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> |
@@ -44,7 +44,7 @@
        <div class="list-group">
         <h2>Your Trips</h2>
 				<% @trips.each do |trip| %>
-                    <% if current_user.id === trip.creator %>
+                    <% if current_user === creator(trip) %>
     					<div class="list-group-item clearfix">
     						<figure><a href="<%= trip_path(trip.url) %>"><img src="http://loremflickr.com/320/240"/></a></figure>
     				    <h2><%= link_to "#{trip.name}", trip_path(trip.url) %> </h2>

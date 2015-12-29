@@ -1,6 +1,5 @@
 class IdeasController < ApplicationController
     before_action :require_login
-    load_and_authorize_resource
 
     def new
         @trip = current_trips.find_by_url(params[:url])

@@ -3,6 +3,10 @@ module TripHelper
         Trip.find(invite.trip_id)
     end
 
+    def creator(trip)
+        User.find(trip.creator)
+    end
+
     def trip_countdown
         days_left = ( (@trip.start_date - Time.now)/86400 ).ceil
         trip_duration = -( (@trip.end_date - @trip.start_date)/86400 ).ceil

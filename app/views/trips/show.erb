@@ -7,28 +7,30 @@
   on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
   
   <div><%= trip_countdown %></div>
-  <% if current_user.id === @trip.creator && @trip.invites.length > 1 %>
+
+  <p>
+  <% if current_user === creator(@trip) && !@pending.empty? %>
      <p>People invited:<br>
-    <% @trip.invites.each do |invite| %>
-      <% if !invite.rsvped? %>
-       <%= invite.email %> 
-        | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
-          method: :delete, data: {confirm: 'you sure?'} %><br>
+      <% @pending.each do |invite| %>
+         <%= invite.email %> 
+          | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
+            method: :delete, data: {confirm: 'you sure?'} %><br>
         <% end %>
-      <% end %>
+  <% else %>
+    <%= link_to 'invite friends', invite_friend_path(@trip.url) %>
   <% end %>
   </p>
-  
-  <p>People on this trip: <br>
-  <%= User.find(@trip.creator).name %> (Created the trip)<br> 
-  <% @trip.invites.each do |invite| %>
-    <% if invite.going? %>
-        <%= User.find(invite.user_id).name %>
-    <% end %>
 
+  <p>
+  People on this trip: <br>
+  <%= creator(@trip).name %> (Created the trip)<br> 
+  <% @trip.invites.each do |invite| %>
+    <% if invite.going? && getUser(invite) != creator(@trip) %>
+        <%= getUser(invite).name %>
+    <% end %>
     <p>
       <% if invite.maybe? %>
-        <%= User.find(invite.user_id).name %> [maybe]
+        <%= getUser(invite).name %> [maybe]
       <% end %>
     </p>
   </p>
