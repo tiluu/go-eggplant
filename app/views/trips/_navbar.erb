@@ -10,7 +10,9 @@
             <a href="#"class="dropdown-toggle" data-toggle="dropdown">Trip<span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li> <%= link_to 'New trip', new_trip_path %></li>
-                <li><%= link_to 'Edit trip', edit_trip_path(@trip.url) %></li>
+                <% if current_user.id === @trip.creator %>
+                    <li><%= link_to 'Edit trip', edit_trip_path(@trip.url) %></li>
+                <% end %>
                 <li> <%= link_to 'Invite', invite_friend_path(@trip.url) %></li>
             </ul>
         </li>

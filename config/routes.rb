@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
   get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
   post 'trip-:url/invite' => 'group_trips#send_invite'
-  get 'group-:url' => 'group_trips#show_group', as: :group_trip
-  post 'group-:url' => 'group_trips#rsvp_yes', as: :say_yes
+  #get 'trip-:url' => 'group_trips#show_group', as: :group_trip
+  patch 'trip-:url/:response' => 'group_trips#rsvp', as: :rsvp
 
   delete 'trip-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
   delete 'trip-:url/uninvite-:tag' => 'group_trips#uninvite', as: :uninvite

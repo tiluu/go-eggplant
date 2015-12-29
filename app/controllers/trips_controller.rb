@@ -19,6 +19,7 @@ class TripsController < ApplicationController
     def show
         @trip = current_trips.find_by_url(params[:url])
         @action = 'create' 
+        @invite = @trip.invites 
 
         @food = @trip.ideas.where(idea_category_id: 1)
         @event = @trip.ideas.where(idea_category_id: 3) 
@@ -39,7 +40,7 @@ class TripsController < ApplicationController
             @invite = @trip.invites.create(user_id: current_user.id,
                                            email: current_user.email,
                                            user_tag: current_user.tag,
-                                           rsvp: 'YES')
+                                           rsvped?: true, going?: true)
             if @invite.present?
                 redirect_to trip_path(@trip.url)
             else

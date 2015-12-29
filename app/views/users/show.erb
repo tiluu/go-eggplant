@@ -19,9 +19,11 @@
     	<div class="list-group">
             <h2>Invites</h2>
             <% @current_user.invites.each do |invite| %>
-                <% if invite.rsvp === 'PENDING' %>
-                    <%= Trip.find(invite.trip_id).name %> invited by <%= User.find(invite.sender).name %>
-                    <br>YES | <%= link_to 'NO', leave_trip_path(Trip.find(invite.trip_id).url), method: :delete, data: {confirm: 'You sure?'} %> | MAYBE <br>
+                <% if !invite.rsvped? %>
+                    <%= getTrip(invite).name %> invited by <%= User.find(invite.sender).name %>
+                    <br><%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
+                    <%= link_to 'NO', rsvp_path(getTrip(invite).url, 'no'), method: :patch %> | 
+                    <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %><br>
                 <% end %>
             <% end %>
     	</div>
@@ -29,8 +31,12 @@
             
             <h2>Invited Trips</h2>
             <% @current_user.invites.each do |invite| %>
-                <% if Trip.find(invite.trip_id).creator != current_user.id && invite.rsvp === 'YES' || invite.rsvp === 'MAYBE' %>
-                    <%= Trip.find(invite.trip_id).name %> 
+                <% if getTrip(invite).creator != current_user.id && invite.going? || invite.maybe? %>
+                    <%= link_to getTrip(invite).name, trip_path(getTrip(invite).url) %> <br>
+                    Change RSVP: <%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> |
+                    <%= link_to 'NO', rsvp_path(getTrip(invite).url, 'no'), method: :patch %> | 
+                    <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %> |
+                    <%= link_to 'leave trip', leave_trip_path(getTrip(invite).url), method: :delete, data: {confirm: 'You sure?'} %>
                 <% end %>
             <% end %>
        </div>

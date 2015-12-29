@@ -44,7 +44,9 @@ ActiveRecord::Schema.define(version: 20151228214428) do
 
   create_table "relationships", force: :cascade do |t|
     t.string   "email"
-    t.string   "rsvp"
+    t.boolean  "rsvped?"
+    t.boolean  "going?"
+    t.boolean  "maybe?"
     t.integer  "user_tag"
     t.integer  "user_id"
     t.integer  "sender"
@@ -86,7 +88,6 @@ ActiveRecord::Schema.define(version: 20151228214428) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
-    t.string   "role"
     t.integer  "tag"
   end
 

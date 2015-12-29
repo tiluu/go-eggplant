@@ -1,4 +1,8 @@
 module TripHelper
+    def getTrip(invite)
+        Trip.find(invite.trip_id)
+    end
+
     def trip_countdown
         days_left = ( (@trip.start_date - Time.now)/86400 ).ceil
         trip_duration = -( (@trip.end_date - @trip.start_date)/86400 ).ceil
@@ -21,7 +25,7 @@ module TripHelper
     def headcount(trip)
         count = 0
         trip.invites.each do |invite|
-            if invite.rsvp === 'YES'
+            if invite.going?
                 count+= 1
             end
         end

@@ -1,33 +1,40 @@
 <%= render 'navbar' %>
 
 <header> 
-    <h1><%= "#{@trip.name} Dashboard" %></h1>
-    <%= render 'shared/flash_msg' %>
-    <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
-    
-    <div><%= trip_countdown %></div>
-    <% if current_user.id === @trip.creator && @trip.invites.length > 1 %>
-       <p>People invited:<br>
-      <% @trip.invites.each do |invite| %>
-        <% if invite.rsvp === 'PENDING' %>
-         <%= invite.email %> 
-          | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), method: :delete, data: {confirm: 'you sure?'} %><br>
-          <% end %>
-        <% end %>
-    <% end %>
-    </p>
-    
-    <p>People on this trip: <br>
-    <%= User.find(@trip.creator).name %> (Created the trip)<br> 
+  <h1><%= "#{@trip.name} Dashboard" %></h1>
+  <%= render 'shared/flash_msg' %>
+  <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> 
+  on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
+  
+  <div><%= trip_countdown %></div>
+  <% if current_user.id === @trip.creator && @trip.invites.length > 1 %>
+     <p>People invited:<br>
     <% @trip.invites.each do |invite| %>
-      <% if invite.rsvp === 'YES' %>
-        <%= User.find(invite.user_id).name %>
+      <% if !invite.rsvped? %>
+       <%= invite.email %> 
+        | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
+          method: :delete, data: {confirm: 'you sure?'} %><br>
+        <% end %>
       <% end %>
+  <% end %>
+  </p>
+  
+  <p>People on this trip: <br>
+  <%= User.find(@trip.creator).name %> (Created the trip)<br> 
+  <% @trip.invites.each do |invite| %>
+    <% if invite.going? %>
+        <%= User.find(invite.user_id).name %>
     <% end %>
 
+    <p>
+      <% if invite.maybe? %>
+        <%= User.find(invite.user_id).name %> [maybe]
+      <% end %>
     </p>
-
+  </p>
+  <% end %>
 </header>
+
 <div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
         <div ng-controller="DateCtrl"  id="calendar-dates" start_date="<%= start_d %>" end_date="<%= end_d %>">

@@ -13,7 +13,6 @@ class GroupTripsController < ApplicationController
         @trip = current_trips.find_by_url(params[:url])
         @invite = @trip.invites.build(invite_params)
         @invite.sender = current_user.id
-        @invite.rsvp = 'PENDING'
         if @invite.save
             Relationship.get_user_id(@invite)
             if !User.registered?(@invite) 
@@ -41,26 +40,21 @@ class GroupTripsController < ApplicationController
         redirect_to dashboard_path
     end   
 
-    def rsvp_yes
-       @invited_trip = current_user.invited_trips.find_by_url(params[:url]) 
-       @invite = @invited_trip.trip_invites.find_by(friend_id: current_user.id)
-       @invite.update_attribute(:rsvped, 'YES')
-       @friend = @invited_trip.relationships.create(friend_id: current_user.id,
-                                            email: current_user.email)
-       redirect_to group_trip_path(@trip.url)
-    end
-
-    def rsvp_no
-    end
-    
-    def show_group
-        @action = 'create'
-        @inviter = current_user.group_trips.find_by_url(params[:url]).user
-        @trip = @inviter.trips.find_by_url(params[:url])
-        @food = @trip.ideas.where(idea_category_id: 1)
-        @event = @trip.ideas.where(idea_category_id: 3) 
-        @activity = @trip.ideas.where(idea_category_id: 4)
-    end
+    def rsvp
+       @trip = current_trips.find_by_url(params[:url]) 
+       @invite = @trip.invites.where(trip_id: @trip.id, user_id: current_user.id).first
+       resp = params[:response]
+       case resp
+       when 'yes'
+        @invite.update_attribute(:going?, true)
+        @invite.update_attribute(:maybe?, false)
+       when 'maybe'
+        @invite.update_attribute(:maybe?, true)
+        @invite.update_attribute(:going?, false)
+       end
+       @invite.update_attribute(:rsvped?, true)
+       redirect_to trip_path(@trip.url)
+    end  
 
     def invites
         @trip = current_trips.find_by_url(params[:url])
@@ -71,14 +65,15 @@ class GroupTripsController < ApplicationController
     private
     	def invite_params
             params.require(:invite).permit(:email, :user_tag, 
-                                           :rsvp, :trip_id, 
-                                           :sender, :user_id)
+                                           :rsvped?, :trip_id, 
+                                           :sender, :user_id,
+                                           :going?, :maybe?)
         end
 
         def check_friend
             trip = Trip.find_by_url(params[:url])
             find_friend = Relationship.find_by(trip_id: trip.id, user_id: current_user.id)
-            if !find_friend 
+            if !find_friend || current_user.id != trip.creator
                 flash[:danger] = "You do not have access to the page."
                 redirect_to dashboard_path
             end            
