@@ -1,16 +1,40 @@
 
-<%= form_for(getUser, url: getPath('users')) do |f| %>
+<%= form_for(getUser, url: getPath('users', @action)) do |f| %>
     <%= f.label :name %><br>
     <%= f.text_field :name %><br>
 
     <%= f.label :email %><br>
     <%= f.text_field :email %><br>
+   
+    <% if @action === 'new' || @action === 'create' %>
+        <%= f.label :password %><br>
+        <%= f.password_field :password %><br>
 
-    <%= f.label :password %><br>
-    <%= f.password_field :password %><br>
+        <%= f.label :password_confirmation %><br>
+        <%= f.password_field :password_confirmation %>
 
-    <%= f.label :password_confirmation %><br>
-    <%= f.password_field :password_confirmation %><br>
+        <p><%= f.submit "Sign up" %></p>
+    <% else %>
+        <p><%= f.submit "Update info" %></p>
+    <% end %>
+<% end %> 
 
-    <p><%= f.submit "Submit" %></p>
-<% end %>
+<p>
+    <% if @action === 'edit' || @action === 'update' %>
+       <h2>Change Password</h2>
+
+        <%= form_for(getUser, url: getPath('users', @action)) do |f| %>
+        <%= f.label :password %><br>
+        <%= f.password_field :password %><br>
+
+        <%= f.label :password_confirmation %><br>
+        <%= f.password_field :password_confirmation %>
+
+        <p><%= f.submit "Change Password" %></p>
+    <% end %>
+
+    <p>
+        <%= button_to "Delete account", current_user, method: :delete, data: {confirm: "You sure?"}, class: 'btn-danger' %>
+    <% end %>
+    </p>
+</p>

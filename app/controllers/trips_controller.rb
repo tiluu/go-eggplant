@@ -1,12 +1,8 @@
 class TripsController < ApplicationController
     before_action :require_login
-   
-    def show
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
-        @food = IdeaCategory.find_by_name("food")
-        @event = IdeaCategory.find_by_name("event") 
-        @activity = IdeaCategory.find_by_name("activity")
+
+    def find_food
+        @trip = current_trips.find_by_url(params[:url])
 
         location = @trip.city + @trip.state_or_province + @trip.country
         if !params[:neighborhood] 
@@ -19,19 +15,38 @@ class TripsController < ApplicationController
 
         yelp_api(search_params, 'restaurants', sort)
     end
+  
+    def show
+        @trip = current_trips.find_by_url(params[:url])
+        @action = 'create' 
+        @invite = @trip.invites 
+
+        @food = @trip.ideas.where(idea_category_id: 1)
+        @event = @trip.ideas.where(idea_category_id: 3) 
+        @activity = @trip.ideas.where(idea_category_id: 4)
+    end
 
     def new
-        @user = current_user
-        @trip = @user.trips.build
+        @trip = current_trips.build
+        @invite = @trip.invites.build
+        @action = 'new' # for getPath helper
     end
 
     def create
-        @user = current_user
-        @trip = @user.trips.build(trip_params)
-        # or have people come up with their own URLs
-        @trip.url = SecureRandom.urlsafe_base64
+        @trip = current_trips.build(trip_params)
+        @trip.creator = current_user.id
+        @action = 'create'
         if @trip.save
-            redirect_to trip_path(@trip.url)
+            @invite = @trip.invites.create(user_id: current_user.id,
+                                           email: current_user.email,
+                                           user_tag: current_user.tag,
+                                           rsvped?: true, going?: true)
+            if @invite.present?
+                redirect_to trip_path(@trip.url)
+            else
+                flash[:danger].now = "error"
+                render :new
+            end
         else
             @errors = @trip.errors
             render :new
@@ -39,13 +54,13 @@ class TripsController < ApplicationController
     end
 
     def edit
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
+        @trip = current_trips.find_by_url(params[:url])
+        @action = 'edit'
     end
 
     def update
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
+        @trip = current_trips.find_by_url(params[:url])
+        @action = 'update'
         if @trip.update_attributes(trip_params)
             redirect_to trip_path(@trip.url)
         else
@@ -54,12 +69,12 @@ class TripsController < ApplicationController
         end
     end
 
-    def yelp_results
-        @user = current_user
-        @trip = @user.trips.find_by_url(params[:url])
-        search_params = @trip.city + @trip.state_or_province + @trip.country
-        yelp_api(search_params, 'restaurants', 20)
-    end
+#    def yelp_results
+#        @user = current_user
+#        @trip = @user.trips.find_by_url(params[:url])
+#        search_params = @trip.city + @trip.state_or_province + @trip.country
+#        yelp_api(search_params, 'restaurants', 20)
+#    end
 
     def destroy
         @user = current_user
@@ -67,17 +82,12 @@ class TripsController < ApplicationController
         redirect_to dashboard_path
     end
 
-#    def show_by_url
-#        @trip = Trip.find_by_url(params[:url])
-#        render :show
-#    end
-
     private
         def trip_params
             params.require(:trip).permit(:name, :url, :start_date,
                                          :end_date, :city, 
                                          :state_or_province,
-                                         :country)
+                                         :country, :creator)
         end 
 
 end

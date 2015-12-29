@@ -1,5 +1,5 @@
-<%= form_for(:idea) do |f| %>
-    <%#= f.hidden_field :user_id, value: current_user.id %>
+<%= form_for(:idea, url: getPath('ideas', @action)) do |f| %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1"> What</span>
       <%= f.text_field :title, class: 'form-control' %> 
@@ -11,16 +11,12 @@
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon3"> When</span>
     </div>
-    
-    <input class="date-picker" placeholder="Start Date"> </input>
-    <input class="time-picker" placeholder="Time"></input>
-    <%= date_select :idea, :start_date, default: @trip.start_date %>
-    <%= time_select :idea, :start_time %><br>
+
+    <%= f.text_field :start_date, class: 'date-picker', placeholder: 'Start Date' %><br> 
+    <%= f.text_field :start_time, class: 'time-picker', placeolder:'Time' %><br>
     To <br>
-    <input class="date-picker" placeholder="End Date"> </input>
-    <input class="time-picker" placeholder="Time"></input>
-    <%= date_select :idea, :end_date, default: @trip.end_date %>
-    <%= time_select :idea, :end_time %><br>      
+    <%= f.text_field :end_date, class: 'date-picker', placeholder: 'End Date' %><br>
+    <%= f.text_field :end_time, class: 'time-picker', placeholder: 'Time' %> <br>     
 
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon4"> Where</span>

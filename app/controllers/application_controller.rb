@@ -19,6 +19,13 @@ class ApplicationController < ActionController::Base
           redirect_to login_path
       end
   end
+  
+  def require_logout
+      if current_user.present? 
+          flash[:danger] = "Please log out first"
+          redirect_to dashboard_path
+      end
+  end
 
   def login_user(user)
       session[:user_id] = user.id
