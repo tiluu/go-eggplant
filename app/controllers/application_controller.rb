@@ -32,6 +32,13 @@ class ApplicationController < ActionController::Base
       redirect_to dashboard_path
   end
 
+  def getIdeas(trip)
+    @food = trip.ideas.where(idea_category_id: 1)
+    @event = trip.ideas.where(idea_category_id: 3) 
+    @activity = trip.ideas.where(idea_category_id: 4)
+    {food: @food, event: @event, activity: @activity}
+  end
+
   def yelp_api(location, terms, sort=0, category='', offset=0, limit=15, radius=5000) 
      begin
          @result = Yelp.client.search(location, 

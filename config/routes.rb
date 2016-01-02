@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'trip-:url/idea-:id' => 'ideas#show', as: :idea
   get 'trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
   post 'trip-:url/idea-:id/edit' => 'ideas#update'
+  get 'trip-:url/ideas' => 'ideas#index'
 
   get 'signup' => 'users#new', as: :signup
   post 'signup' => 'users#create'

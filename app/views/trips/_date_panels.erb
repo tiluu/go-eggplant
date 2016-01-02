@@ -1,9 +1,31 @@
 <div class="calendar--short" ng-init="buildTrip()">
     <div class="calendar--slider" slick-slider="{infinite: false,slidesToShow: 3,centerMode: true,focusOnSelect: true,centerPadding: '60px'}">
-        <div class="calendar--day" ng-repeat="day in trip track by $index" > 
-            <span>{{ getWkday(day) }}</span>
-            <span> {{ day.getDate() }}</span>
+    	<div ng-repeat="day in trip track by $index" class="calendar--box">
+	        <div class="calendar--day"> 
+	            <span>{{ getWkday(day) }}</span>
+	            <span> {{ day.getDate() }}</span>
+	        </div>
+            
+            <!-- moved 'todays--events' div in here until I figure out another way to integrate slider -->
+            <div class="todays--events">
+	            <div ng-repeat="idea in ideas.food" ng-if="matchDate(day, idea)">
+		    		{{idea.title}}<br>
+		    		{{idea.location}}<br>
+				</div>
+		    	<div ng-repeat="idea in ideas.event" ng-if="matchDate(day, idea)">
+		    		{{idea.title}}<br>
+		    		{{idea.location}}<br>
+		    	</div>
+		    	<div ng-repeat="idea in ideas.activity" ng-if="matchDate(day, idea)">
+		    		{{idea.title}}<br>
+		    		{{idea.location}}<br>
+		    	</div>
+	    	</div>
+
         </div>
     </div>
-    <div class="todays--events"></div>
+<!--     <div class="todays--events">
+	</div> -->
+
 </div>
+

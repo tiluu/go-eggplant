@@ -1,5 +1,5 @@
 (function() {
-	var date = angular.module("datePanels", ['calServices', 'tripServices']);
+	var date = angular.module("datePanels", ['calServices', 'tripServices', 'ngResource']);
 
     date.directive('slickSlider',function($timeout){
          return {
@@ -12,7 +12,18 @@
          }
         }); 
 
-	date.controller('DateCtrl', function($scope, mnthService, tripDays, tripData, tripMnths) {
+    date.factory("ideaData", function($resource) {
+        var div = document.getElementById('trip-data');
+        var tripURL = div.getAttribute('tripURL');
+
+        var ideas = $resource('trip-:url/ideas')
+        var getIdeas = ideas.get({url: tripURL});
+       
+        return getIdeas;
+    });
+
+	date.controller('DateCtrl', function($scope, mnthService, tripDays, 
+                                        tripData, tripMnths, ideaData) {
         // GLOBAL VARIABLES
         var m = mnthService;
         var months = Object.keys(m);      
@@ -22,6 +33,15 @@
         var d2 = tripData.end_d;
         var y1 = tripData.start_y;
         var y2 = tripData.end_y;
+
+        $scope.ideas = ideaData;
+
+        $scope.matchDate = function(date, idea) {
+            idea_date = new Date(idea.start_date);
+            idea_date.setHours(date.getHours());
+            idea_date.setDate(idea_date.getDate() + 1);
+            return idea && date.valueOf() === idea_date.valueOf();
+        };
 
         $scope.getWkday = function(date) {
                 var day = date.getDay();
@@ -50,6 +70,7 @@
                     else {
                         day;
                     }
+                    mnth= months[month]
                     var year = m[mnth].year;
                     curr_date = m.setCal(mnth, day,year);
                     day++;

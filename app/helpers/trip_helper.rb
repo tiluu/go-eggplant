@@ -10,7 +10,7 @@ module TripHelper
     def trip_countdown
         days_left = ( (@trip.start_date - Time.now)/86400 ).ceil
         trip_duration = -( (@trip.end_date - @trip.start_date)/86400 ).ceil
-        count = pluralize(days_left, 'day')
+        count = pluralize(days_left.abs, 'day')
 
         countdown = "Starts in #{count}"
        

@@ -39,7 +39,7 @@
 
 <div class="content clearfix" ng-app="trip">
     <section class="trip--calendar">
-        <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>">
+        <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>" tripURL="<%= @trip.url %>">
             <%= render 'date_panels' %>
         </div>
         <div class="calendar closed">
@@ -59,12 +59,13 @@
 
        <ol>
            <li> Changes
+             <li> added idea data to slider--see comments in _date_panels.erb
              <li> navbar & list of ideas moved to their own partials (shared/_navbar.erb, ideas/_ideas.erb) for easier access & resuability</li>
              <li> yelp API stuff finally moved to its own page (find_food.erb)
            </li>
            <li> Todo
             <li> thinking of putting edit form on this page as well</li>
-            <li> see list of pending invites</li>
+            <li> <s>see list of pending invites</s></li>
             </li>
        </ol>
 

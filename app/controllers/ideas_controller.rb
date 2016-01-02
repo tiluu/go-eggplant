@@ -18,6 +18,12 @@ class IdeasController < ApplicationController
         end
     end
 
+    def index
+        @trip = current_trips.find_by_url(params[:url])
+        @ideas = getIdeas(@trip)
+        render json: @ideas
+    end
+
     def show
         @trip = current_trips.find_by_url(params[:url])
         @idea = @trip.ideas.find(params[:id])

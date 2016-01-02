@@ -20,9 +20,7 @@ class TripsController < ApplicationController
         @action = 'create' 
         @pending = @trip.invites.where(rsvped?: nil)
 
-        @food = @trip.ideas.where(idea_category_id: 1)
-        @event = @trip.ideas.where(idea_category_id: 3) 
-        @activity = @trip.ideas.where(idea_category_id: 4)
+        getIdeas(@trip)
     end
 
     def new
