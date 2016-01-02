@@ -2,12 +2,13 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 	before(:all) do
-		@user = FactoryGirl.create(:user)
-		@user2 = FactoryGirl.create(:user2)
+		@user1 = FactoryGirl.create(:user)
+		@user2 = FactoryGirl.create(:user, :user2)
 	end
 
 	after(:all) do
-		@user.destroy
+		@user1.destroy
+		@user2.destroy
 	end
 
 	let(:invalid_attr) {
@@ -19,12 +20,22 @@ RSpec.describe User, type: :model do
 
 	describe "valid" do 
 		it 'has a valid factory' do
-			expect(@user).to be_valid
+			expect(@user1).to be_valid
+		end
+
+		it 'generated a tag after user creation' do
+			find_user = User.find_by(tag: @user1.tag)
+			expect(find_user).to eq(@user1)
 		end
 
 		it 'registered user' do
-			find_user = User.registered?(@user)
+			find_user = User.registered?(@user1)
 			expect(find_user).to be true
+		end
+
+		it 'authenticates the user and returns user given a correct email&pw' do 
+			login = User.authenticate(@user1.email, @user1.password)
+			expect(login).to eq(@user1)
 		end
 	end
 
@@ -36,22 +47,15 @@ RSpec.describe User, type: :model do
 
 		it 'raises an error if tag is not unique' do
 			expect {
-				@user.update_attribute(:tag, @user2.tag)
+				@user1.update_attribute(:tag, @user2.tag)
 				}.to raise_error(ActiveRecord::RecordNotUnique)
 		end
 
 		it 'tag generation method rescues RecordNotUnique error by regenerating tags' do
-			allow(@user).to receive(:update_attribute)
-				.with(:tag,@user2.tag)
+			allow(@user1).to receive(:update_attribute)
+				.with(:tag, @user2.tag)
 				.and_raise(ActiveRecord::RecordNotUnique)
-			expect {@user.gen_user_tag}.to_not raise_error
-		end
-	end
-
-	describe "authentication" do
-		it 'authenticates the user and returns user given a correct email&pw' do 
-			login = User.authenticate(@user.email, @user.password)
-			expect(login).to eq(@user)
+			expect {@user1.gen_user_tag}.to_not raise_error
 		end
 	end
 

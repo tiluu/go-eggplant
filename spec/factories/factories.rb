@@ -1,17 +1,11 @@
 FactoryGirl.define do
     factory :user do
+        sequence(:email) {|n| "buzz#{n}@aldrin.gov"}
         name "Buzz"
-        email "buzzz@aldrin.gov"
         password "themoon"
         password_confirmation "themoon"
 
-        after(:create) do |user|
-            create_list(:trip, 2)
-        end
-
-        factory :user2 do
-            id 2833
-            tag 239023
+        trait :user2 do
             name "Mike"
             email "mike@collins.gov"
         end
@@ -24,7 +18,21 @@ FactoryGirl.define do
         city "Houston"
         state_or_province "TX"
         country "USA"
-        :user
+
+        trait :trip2 do
+            name "Mars"
+        end
+    end
+
+    factory :relationship, aliases: [:invite] do
+        email
+        user_tag
+        sender
+        rsvped? 
+        going?
+        maybe? 
+        trip
+        user
     end
 end
 
