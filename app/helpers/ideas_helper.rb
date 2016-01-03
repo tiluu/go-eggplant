@@ -1,7 +1,7 @@
 module IdeasHelper
     def idea_user(idea)
         user = User.find_by(id: idea.user_id)
-        user.present? ? user.name : ''
+        user.present? ? user : ''
     end
 
     def display_idea(*info)

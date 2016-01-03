@@ -41,7 +41,7 @@ class IdeasController < ApplicationController
         @action = 'update'
 
         if @idea.update_attributes(idea_params)
-            redirect_to idea_path(@trip.url, params[:id])
+            redirect_to trip_path(@trip.url)
         else
             @errors = @trip.errors
             render :edit
@@ -60,7 +60,7 @@ class IdeasController < ApplicationController
                                          :end_date, :start_time,
                                          :end_time, :location,
                                          :notes, :idea_category_id,
-                                         :user_id, :trip_id, :category)
+                                         :user_id, :trip_id)
         end
        
 end

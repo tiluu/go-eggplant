@@ -37,10 +37,16 @@
         $scope.ideas = ideaData;
 
         $scope.matchDate = function(date, idea) {
-            idea_date = new Date(idea.start_date);
-            idea_date.setHours(date.getHours());
-            idea_date.setDate(idea_date.getDate() + 1);
-            return idea && date.valueOf() === idea_date.valueOf();
+            var idea_start = new Date(idea.start_date);
+            idea_start.setHours(date.getHours());
+            idea_start.setDate(idea_start.getDate() + 1);
+    
+            var idea_end = new Date(idea.end_date);
+            idea.end_date ? idea_end : idea_end = new Date(idea.start_date);
+            idea_end.setHours(date.getHours());
+            idea_end.setDate(idea_end.getDate() + 1);
+            
+            return idea && date.valueOf() >= idea_start.valueOf() && date.valueOf() <= idea_end.valueOf();
         };
 
         $scope.getWkday = function(date) {
