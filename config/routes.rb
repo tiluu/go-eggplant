@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
+
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
   get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
   post 'trip-:url/invite' => 'group_trips#send_invite'
-  #get 'trip-:url' => 'group_trips#show_group', as: :group_trip
   patch 'trip-:url/:response' => 'group_trips#rsvp', as: :rsvp
 
   delete 'trip-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
@@ -18,8 +18,7 @@ Rails.application.routes.draw do
   get 'dashboard' => 'users#show', as: :dashboard
   get 'account' => 'users#edit', as: :account
   patch 'account' => 'users#update'
-  
-  #get 'user/trip-:url/ideas/new' => 'ideas#new'
+
   post 'trip-:url' => 'ideas#create', as: :new_idea
   get 'trip-:url/idea-:id' => 'ideas#show', as: :idea
   get 'trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
@@ -32,6 +31,10 @@ Rails.application.routes.draw do
   post 'login' => 'users#authenticate'
   delete 'logout' => 'users#logout', as: :logout
  
+  get 'password_reset' => 'password_resets#new', as: :password_reset
+  post 'password_reset' => 'password_resets#create'
+  get 'password_reset/:token' => 'password_resets#edit', as: :confirm_reset
+  patch 'password_reset/:token' => 'password_resets#update'
 
   resources :users do 
     resources :trips, only: [:show, :delete] do 
@@ -39,17 +42,8 @@ Rails.application.routes.draw do
     end
   end
 
-
   root 'home_pages#home'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
 
   # Example resource route with options:
   #   resources :products do
@@ -61,12 +55,6 @@ Rails.application.routes.draw do
   #     collection do
   #       get 'sold'
   #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
   #   end
 
   # Example resource route with more complex sub-resources:
