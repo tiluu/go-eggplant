@@ -1,0 +1,12 @@
+<h1>Reset Password</h1>
+<%= render 'shared/flash_msg' %>
+
+<%= form_for @user, url: confirm_reset_path(params[:token]) do |f| %>
+	<%= f.label :password %><br>
+	<%= f.password_field :password %><br>
+
+	<%= f.label :password_confirmation %><br>
+	<%= f.password_field :password_confirmation %>
+
+	<p><%= f.submit "Reset password" %></p>
+<% end %> 

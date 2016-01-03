@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if @current_user
             login_user(@current_user)
         else
-            flash[:danger] = "Wrong email/password combination"
+            flash.now[:danger] = "Wrong email/password combination"
             render :login
         end
     end
@@ -69,7 +69,8 @@ class UsersController < ApplicationController
         def user_params
             params.require(:user).permit(:name, :email,
                                          :password, :tag,
-                                         :password_confirmation)
+                                         :password_confirmation
+                                         )
         end
 
 end

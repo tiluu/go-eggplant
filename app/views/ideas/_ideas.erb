@@ -1,5 +1,3 @@
-
-
 <div class="trip--fav_action" role="group" aria-label="...">
     <ul  class="nav nav-tabs nav-justified">
         <li ng-class="{'active':tab.isSet(1)}">
@@ -15,7 +13,7 @@
     <div class="list-group" ng-show="tab.isSet(1)">  
         <% if !@food.empty? %>             
             <% @food.each do |idea| %>
-                <%= render :partial => 'ideas/section', locals: {:idea => idea} %>
+                <%= render partial: 'ideas/section', locals: {idea: idea} %>
             <% end %>
         <% else %>
             <li>Nothing planned. Add your idea</li>
@@ -25,7 +23,7 @@
     <ul class="list-group" ng-show="tab.isSet(2)">
         <% if !@activity.empty? %>
             <% @activity.each do |idea| %>
-                <%= render :partial => 'ideas/section', locals: {:idea => idea} %>
+                <%= render partial: 'ideas/section', locals: {idea: idea} %>
             <% end %>
         <% else %>
             <li style="padding:10px 15px">Nothing planned. Add your idea</li>
@@ -35,7 +33,7 @@
     <ul class="list-group" ng-show="tab.isSet(3)">
         <% if !@event.empty? %>
              <% @event.each do |idea| %>
-                 <%= render :partial => 'ideas/section', locals: {:idea => idea} %>
+                 <%= render partial: 'ideas/section', locals: {idea: idea} %>
             <% end %>
         <% else %>
             <li  style="padding:10px 15px">Nothing planned. Add your idea</li>
