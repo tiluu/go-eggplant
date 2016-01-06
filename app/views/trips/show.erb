@@ -35,7 +35,8 @@
   <% end %>
 </header>
 
-<div class="content clearfix" ng-app="trip">
+<div class="content" ng-app="trip">
+  <div class="dashboard clearfix">
     <section class="trip--calendar">
         <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>">
             <%= render 'date_panels' %>
@@ -48,12 +49,7 @@
         </div>
     </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
-        <h4>Itineary</h4>
-
         <%= render 'ideas/ideas' %>
-
-
-       <button class="idea--form_action btn">Add + </button>
 
        <ol>
            <li> Changes
@@ -72,4 +68,5 @@
            <%= render 'ideas/idea_form' %>
        </div>
     </aside>
+  </div>
 </div>
