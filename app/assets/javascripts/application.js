@@ -49,11 +49,4 @@
 
     $('.time-picker').pickatime();
 
-    $('.calendar--slider').slick({
-        arrows: true,
-        infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 3
-    });
-
 })(jQuery, this, this.document);

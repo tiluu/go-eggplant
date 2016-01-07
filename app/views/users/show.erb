@@ -5,7 +5,7 @@
 </nav>
 
 <%= render 'shared/flash_msg' %>
-<div class="user-profile content clearfix">
+<div class="user-profile clearfix">
 	<aside>
 		<ul class="list-group">
 			<li class="list-group-item"><%= link_to "Trips", dashboard_path %></li>
@@ -13,21 +13,43 @@
             <li class="list-group-item"><%= link_to "Account info", account_path %></li>
 		</ul>
 	</aside>
-    <section>
-    	<div class="list-group">
-            <h2>Invites</h2>
-            <% @current_user.invites.each do |invite| %>
+    <section class="content">
+        <div class="list-group user_trips">
+            <div class="list-group-item clearfix">
+            
+            <% @current_user.invites.each do |invite| %> 
+            <!-- there should be a check if empty or not before doing this loop. if there are no invites this should be empty. -->
+            <%#= current_user.invites.inspect %>
                 <% if !invite.rsvped? %>
-                    <%= getTrip(invite).name %> invited by <%= User.find(invite.sender).name %>
-                    <br><%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
+                <h3>Pending trips</h3>
+                   <p> <%= User.find(invite.sender).name %> invites you</p>
+                    <div><%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
                     <%= link_to 'NO', rsvp_path(getTrip(invite).url, 'no'), method: :patch %> | 
-                    <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %><br>
+                    <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %></div>
                 <% end %>
             <% end %>
-    	</div>
+            </div>
+            <!-- thinking of bringing in the invited trip to look like the trips below. so there is info for the user to agree to.-->
+
+            <% @trips.each do |trip| %>
+                <% if current_user.id === trip.creator %>
+                    <div class="list-group-item clearfix">
+                        <figure><a href="<%= trip_path(trip.url) %>"><img src="http://loremflickr.com/320/240"/></a></figure>
+                    <h2><%= link_to "#{trip.name}", trip_path(trip.url) %> </h2>
+                    <p><%= "#{format_date(trip.start_date)} to #{format_date(trip.end_date)}" %> </p>
+                    <p><%= "#{trip.city},#{trip.country} " %> </p>
+                    <div><%= link_to 'invite people', invite_friend_path(trip.url) %> | 
+                    <%= headcount(trip) %> going |
+                        <%= link_to 'edit', edit_trip_path(trip.url) %> | 
+                        <%= link_to 'delete', [current_user, trip], method: :delete, data: {confirm: 'You sure?'} %></div>
+                  </div>
+              <% end %>
+            <% end %>
+        </div>
+            <p><%= link_to 'Add trip', new_trip_path %> </p>
         <div class="list-group">
             
-            <h2>Invited Trips</h2>
+            <h2>Pending Trips</h2>
             <% @current_user.invites.each do |invite| %>
                 <% if getTrip(invite).creator != current_user.id && invite.going? || invite.maybe? %>
                     <%= link_to getTrip(invite).name, trip_path(getTrip(invite).url) %> <br>
@@ -38,25 +60,6 @@
                 <% end %>
             <% end %>
        </div>
-
-       <div class="list-group">
-        <h2>Your Trips</h2>
-				<% @trips.each do |trip| %>
-                    <% if current_user.id === trip.creator %>
-    					<div class="list-group-item clearfix">
-    						<figure><a href="<%= trip_path(trip.url) %>"><img src="http://loremflickr.com/320/240"/></a></figure>
-    				    <h2><%= link_to "#{trip.name}", trip_path(trip.url) %> </h2>
-    				    <div><%= "#{format_date(trip.start_date)} to #{format_date(trip.end_date)} to #{trip.city},#{trip.country} " %>
-                        <%= link_to 'invite people', invite_friend_path(trip.url) %> | 
-                        <%= headcount(trip) %> going |
-    					    <%= link_to 'edit', edit_trip_path(trip.url) %> | 
-    					    <%= link_to 'delete', [current_user, trip], method: :delete, data: {confirm: 'You sure?'} %>
-    					   </div>
-    				  </div>
-                  <% end %>
-				<% end %>
-			</div>
-			<p><%= link_to 'Add trip', new_trip_path %> </p>
 	</section>
 
 </div>

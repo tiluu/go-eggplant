@@ -1,38 +1,31 @@
 <%= render 'navbar' %>
 
 <header> 
-  <h1><%= "#{@trip.name} Dashboard" %></h1>
+  <h1><%= "#{@trip.name}" %></h1>
   <%= render 'shared/flash_msg' %>
   <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> 
   on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
   
   <div><%= trip_countdown %></div>
-  <% if current_user.id === @trip.creator && @trip.invites.length > 1 %>
-     <p>People invited:<br>
-    <% @trip.invites.each do |invite| %>
-      <% if !invite.rsvped? %>
-       <%= invite.email %> 
-        | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
-          method: :delete, data: {confirm: 'you sure?'} %><br>
-        <% end %>
-      <% end %>
-  <% end %>
-  </p>
   
-  <p>People on this trip: <br>
-  <%= User.find(@trip.creator).name %> (Created the trip)<br> 
-  <% @trip.invites.each do |invite| %>
-    <% if invite.going? %>
-        <%= User.find(invite.user_id).name %>
-    <% end %>
-
-    <p>
-      <% if invite.maybe? %>
-        <%= User.find(invite.user_id).name %> [maybe]
+  <div>People on this trip:
+    <p><%= User.find(@trip.creator).name %> (Organizer)
+  <!--BUG: creator/self shouldn't be listed twice -->
+  <!--IDEA was thining of counting the users on trips, and display the users if prompted. I was thinking this because the list can get too big with more people. What do you think -->
+    <% @trip.invites.each do |invite| %>
+     
+      <% if invite.going? %>
+          <%= User.find(invite.user_id).name %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
+            method: :delete, data: {confirm: 'you sure?'} %>
       <% end %>
+      
+      <!--IDEA: I don't know if we need to show other users if its a maybe. what do you think? -->
+      <% if invite.maybe? %>
+       <%= User.find(invite.user_id).name %> [maybe]
+      <% end %>
+    <% end %>
     </p>
-  </p>
-  <% end %>
+  </div>
 </header>
 
 <div class="content" ng-app="trip">
@@ -52,10 +45,6 @@
         <%= render 'ideas/ideas' %>
 
        <ol>
-           <li> Changes
-             <li> navbar & list of ideas moved to their own partials (shared/_navbar.erb, ideas/_ideas.erb) for easier access & resuability</li>
-             <li> yelp API stuff finally moved to its own page (find_food.erb)
-           </li>
            <li> Todo
             <li> thinking of putting edit form on this page as well</li>
             <li> see list of pending invites</li>

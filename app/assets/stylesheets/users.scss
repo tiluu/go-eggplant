@@ -8,12 +8,13 @@
 	min-width: 796px;
 	
 	aside { width: 200px; float: left;}
-	section { 
+	.content { 
 		height: 600px;
 		float: left; 
 		border-radius: 5px;
-		background-color: #fff;
 		width: 596px;
+
+		.list-group-item { padding: 0;}
 	}
 
 	figure { width: 200px; float: left; margin-right: 15px;}

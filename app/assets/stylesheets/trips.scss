@@ -85,24 +85,49 @@ CALENDAR
 		width: 14%;
 		border: 1px solid grey;}
 
-	.calendar--day { text-align: center; padding: 2px 0;}
 	.calendar--week td { height: 100px;}
 	.calendar--date { padding: 12px;}
 }
 
-.calendar--short { background-color: white;
-}
+.calendar--day { text-align: center; padding: 2px 0;}
 
 .todays--events { height: 200px; outline: 1px solid black;}
+
 .slick-prev:before, .slick-next:before { 
     color:red !important;
 }
 
 .slick-center { font-size: 1rem; font-weight: 600;}
 
-.calendar--short { margin: auto;
-    padding: 20px;
-    width: 80%;}
+.calendar--short { 
+	  margin: auto;
+    padding: 20px 30px;
+    width: 80%;
+    background-color: #fff;
+    margin-top: 1rem;
 
+  .date { display: block;}
+ }
+
+.slick-prev, .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-top: -10px\9;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    cursor: pointer;
+    color: red;
+    border: none;
+    outline: none;
+    background: red;}
+.slick-prev { left: -25px;}
+.slick-next { right: -25px;}
 
     

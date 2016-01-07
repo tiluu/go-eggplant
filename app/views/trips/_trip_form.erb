@@ -1,33 +1,30 @@
-
 <%= form_for(:trip, url: getPath('trips', @action)) do |f| %>
     <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1"><%= label_tag(:name, "Trip name") %></span>
+      <span class="input-group-addon" id="basic-addon1">Trip Name</span>
       <%= f.text_field :name, class: 'form-control'%>
     </div>
 
-    <%= f.label :start_date %><br>
-    <%= date_select :trip, :start_date, default: 1.day.from_now %><br>
-
-    <%= f.label :end_date %><br>
-    <%= date_select :trip, :end_date, default: 2.days.from_now %><br>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon2"> Where</span>
+    <%= f.text_field :start_date, class: 'date-picker', placeholder: 'Start Date' %>
+    -
+    <%= f.text_field :end_date, class: 'date-picker', placeholder: 'End Date' %> 
+    </div> 
 
     <div class="input-group">
-        <span class="input-group-addon" id="basic-addon2"><%= f.label :city %><br></span>
+        <span class="input-group-addon" id="basic-addon3">City<br></span>
          <%= f.text_field :city , class: 'form-control'%>
     </div>
-   
 
-     <div class="input-group">
+    <!-- <div class="input-group">
         <span class="input-group-addon" id="basic-addon3"><%= f.label :state_or_province %></span>
         <%= f.text_field :state_or_province, class: 'form-control'%>
-    </div>
+    </div> -->
     
-
      <div class="input-group">
-        <span class="input-group-addon" id="basic-addon4"><%= f.label :country %></span>
+        <span class="input-group-addon" id="basic-addon4">Country</span>
         <%= f.text_field :country, class: 'form-control'%>
     </div>
-
 
     <p><%= f.submit "Submit", class: 'btn' %></p>
 
