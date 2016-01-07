@@ -1,4 +1,3 @@
-<header> 
 <nav class="navbar navbar-default">
     <ul class="nav navbar-nav">
         <li>
@@ -11,9 +10,13 @@
     </ul>
 </nav>
 
-</header>
+<div class="user-profile content">
 
-<h1 class="page-header">Where are you going?</h1>
+  <h1 class="page-header">Where are you going?</h1>
 
-    <%= render 'shared/form_error' %>
+  <!--IDEA get rid of state/province. Country is enough -->
+
+  <%= render 'shared/form_error' %>
 	<%= render 'trip_form' %> 
+
+</div>

@@ -1,5 +1,5 @@
 <div class="trip--fav_action" role="group" aria-label="...">
-    <ul  class="nav nav-tabs nav-justified">
+    <ul  class="nav nav-pills nav-justified">
         <li ng-class="{'active':tab.isSet(1)}">
             <a href ng-click="tab.setTab(1)">Food</a></li>
         <li ng-class="{'active':tab.isSet(2)}">
@@ -16,27 +16,29 @@
                 <%= render partial: 'ideas/section', locals: {idea: idea} %>
             <% end %>
         <% else %>
-            <li>Nothing planned. Add your idea</li>
+            <p style="padding:10px 15px">Nothing planned. Add your idea</p>
         <% end %>
     </div>
 
-    <ul class="list-group" ng-show="tab.isSet(2)">
+    <div class="list-group" ng-show="tab.isSet(2)">
         <% if !@activity.empty? %>
             <% @activity.each do |idea| %>
                 <%= render partial: 'ideas/section', locals: {idea: idea} %>
             <% end %>
         <% else %>
-            <li style="padding:10px 15px">Nothing planned. Add your idea</li>
+            <p style="padding:10px 15px">Nothing planned. Add your idea</p>
         <% end %>
-    </ul>
+    </div>
              
-    <ul class="list-group" ng-show="tab.isSet(3)">
+    <div class="list-group" ng-show="tab.isSet(3)">
         <% if !@event.empty? %>
              <% @event.each do |idea| %>
                  <%= render partial: 'ideas/section', locals: {idea: idea} %>
             <% end %>
         <% else %>
-            <li  style="padding:10px 15px">Nothing planned. Add your idea</li>
+            <p style="padding:10px 15px">Nothing planned. Add your idea</p>
        <% end %>
-    </ul>
+    </div>
+
+    <button class="idea--form_action btn">Add + </button>
 </div>
