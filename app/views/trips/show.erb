@@ -11,7 +11,7 @@
   <div>
     <%= headcount(@trip) %> going on this trip<br/>
 
-    <%= creator(@trip) %> (Orrganizer)
+    <%= creator(@trip).name %> (Orrganizer)
     <% @trip.invites.each do |invite| %>
      
       <% if invite.going? && getUser(invite) != creator(@trip) %>
