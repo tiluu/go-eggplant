@@ -9,9 +9,13 @@
   <div><%= trip_countdown %></div>
   
   <div>
+<<<<<<< HEAD
     <%= headcount(@trip) %> going on this trip<br/>
 
     <%= creator(@trip).name %> (Orrganizer)
+=======
+    <%= headcount(@trip) %> going on this trip
+>>>>>>> 3430fac2bfb47ee9fcfc78bdf5efda22ac0908c2
     <% @trip.invites.each do |invite| %>
      
       <% if invite.going? && getUser(invite) != creator(@trip) %>
