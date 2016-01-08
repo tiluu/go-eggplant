@@ -3,10 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .idea--form { 
 	position: absolute;
-	top: 0;
+	top: 3rem;
+	left: 0;
+	right: 0;
 	padding: 1rem;
-	margin: 2rem;
-	background-color: rgba(199, 198, 198, 0.78);
+	margin: 10rem auto;
+	width: 50%;
+	background-color: rgb(199, 198, 198);
 	border: 1px solid white;
 	border-radius: 5px;
 

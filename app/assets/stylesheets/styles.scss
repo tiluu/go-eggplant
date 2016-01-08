@@ -29,10 +29,21 @@ a { color: #469047;}
 }
 
 .btn { 
-	background-color: white;
+	background-color: #fff;
 	border: 1px solid rgb(221, 221, 221);
 }
 
+.btn-green { 
+	width: 100%; 
+	border: none; 
+	background-color: #469047;
+	color: #fff;
+}
+
+.form_close { 
+	cursor: pointer;
+
+}
  
 /*********
 

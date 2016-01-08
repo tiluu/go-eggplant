@@ -25,9 +25,8 @@ header {
 
 .trip--fav {
 	float: left; 
-  width: 45%; 
+    width: 45%; 
 	height: 600px; 
-	position: relative;
 	padding: 1rem;
 
 	.btn-group { width: 100%;}
@@ -35,7 +34,7 @@ header {
 }
 
 .trip--fav_action li.active:before {
-		background-color: #FFFFFF;
+	background-color: #FFFFFF;
     content: "";
     height: 7px;
     position: absolute;
@@ -46,12 +45,13 @@ header {
 .trip--list { 
 	background-color: #fff;
 	.badge a { color: black; font-weight: normal;}
-	.btn { 
+	.btn-green { 
 		width: 100%; 
 		border: none; 
 		background-color: #469047;
 		color: #fff;
 	}
+    .list-group { margin: 0px}
 }
 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover { color: #469047;background-color: #fff}
 .nav-pills>li.active>a {

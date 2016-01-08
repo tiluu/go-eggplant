@@ -38,7 +38,7 @@
         $(this).addClass('closed');
         $('.idea--form').removeClass('closed');
     })
-    $('.idea--form_close').on('click', function(){
+    $('.form_close').on('click', function(){
         $('.idea--form_action').removeClass('closed');
         $('.idea--form').addClass('closed');
     })
