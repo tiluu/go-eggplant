@@ -16,20 +16,18 @@
     <section class="content">
         <div class="list-group user_trips">
             <div class="list-group-item clearfix">
-            
+            <% if @current_user.invites %>
             <% @current_user.invites.each do |invite| %> 
-            <!-- there should be a check if empty or not before doing this loop. if there are no invites this should be empty. -->
-            <%#= current_user.invites.inspect %>
-                <% if !invite.rsvped? %>
-                <h3>Pending trips</h3>
-                   <p> <%= User.find(invite.sender).name %> invites you</p>
-                    <div><%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
-                    <%= link_to 'NO', rsvp_path(getTrip(invite).url, 'no'), method: :patch %> | 
-                    <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %></div>
+                    <% if !invite.rsvped? %>
+                    <h3>Pending trips</h3>
+                       <p> <%= getUser(invite).name %> invites you</p>
+                        <div><%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
+                        <%= link_to 'NO', rsvp_path(getTrip(invite).url, 'no'), method: :patch %> | 
+                        <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %></div>
+                    <% end %>
                 <% end %>
             <% end %>
             </div>
-            <!-- thinking of bringing in the invited trip to look like the trips below. so there is info for the user to agree to.-->
 
             <% @trips.each do |trip| %>
                 <% if current_user.id === trip.creator %>

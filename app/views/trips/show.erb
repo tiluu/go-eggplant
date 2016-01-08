@@ -8,22 +8,16 @@
   
   <div><%= trip_countdown %></div>
   
-  <div>People on this trip:
-    <p><%= User.find(@trip.creator).name %> (Organizer)
-  <!--BUG: creator/self shouldn't be listed twice -->
-  <!--IDEA was thining of counting the users on trips, and display the users if prompted. I was thinking this because the list can get too big with more people. What do you think -->
+  <div>
+    <%= headcount(@trip) %> going on this trip
     <% @trip.invites.each do |invite| %>
      
-      <% if invite.going? %>
-          <%= User.find(invite.user_id).name %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
+      <% if invite.going? && getUser(invite) != creator(@trip) %>
+          <%= getUser(invite) %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
             method: :delete, data: {confirm: 'you sure?'} %>
       <% end %>
-      
-      <!--IDEA: I don't know if we need to show other users if its a maybe. what do you think? -->
-      <% if invite.maybe? %>
-       <%= User.find(invite.user_id).name %> [maybe]
-      <% end %>
-    <% end %>
+
+    <% end %> 
     </p>
   </div>
 </header>
