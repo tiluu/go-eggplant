@@ -1,43 +1,35 @@
 <%= render 'navbar' %>
 
 <header> 
-  <h1><%= "#{@trip.name} Dashboard" %></h1>
+  <h1><%= "#{@trip.name}" %></h1>
   <%= render 'shared/flash_msg' %>
   <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> 
   on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
   
   <div><%= trip_countdown %></div>
-
-  <p>
-  <% if current_user === creator(@trip) && !@pending.empty? %>
-     <p>People invited:<br>
-      <% @pending.each do |invite| %>
-         <%= invite.email %> 
-          | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
-            method: :delete, data: {confirm: 'you sure?'} %><br>
-        <% end %>
-  <% else %>
-    <%= link_to 'invite friends', invite_friend_path(@trip.url) %>
-  <% end %>
-  </p>
-
-  <p>
-  People on this trip: <br>
-  <%= creator(@trip).name %> (Created the trip)<br> 
-  <% @trip.invites.each do |invite| %>
-    <% if invite.going? && getUser(invite) != creator(@trip) %>
-        <%= getUser(invite).name %>
-    <% end %>
-    <p>
-      <% if invite.maybe? %>
-        <%= getUser(invite).name %> [maybe]
+  
+  <div>People on this trip:
+    <p><%= User.find(@trip.creator).name %> (Organizer)
+  <!--BUG: creator/self shouldn't be listed twice -->
+  <!--IDEA was thining of counting the users on trips, and display the users if prompted. I was thinking this because the list can get too big with more people. What do you think -->
+    <% @trip.invites.each do |invite| %>
+     
+      <% if invite.going? %>
+          <%= User.find(invite.user_id).name %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
+            method: :delete, data: {confirm: 'you sure?'} %>
       <% end %>
+      
+      <!--IDEA: I don't know if we need to show other users if its a maybe. what do you think? -->
+      <% if invite.maybe? %>
+       <%= User.find(invite.user_id).name %> [maybe]
+      <% end %>
+    <% end %>
     </p>
-  </p>
-  <% end %>
+  </div>
 </header>
 
-<div class="content clearfix" ng-app="trip">
+<div class="content" ng-app="trip">
+  <div class="dashboard clearfix">
     <section class="trip--calendar">
         <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>" tripURL="<%= @trip.url %>">
             <%= render 'date_panels' %>
@@ -50,20 +42,9 @@
         </div>
     </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
-        <h4>Itineary</h4>
-
         <%= render 'ideas/ideas' %>
 
-
-       <button class="idea--form_action btn">Add + </button>
-
        <ol>
-           <li> Changes
-             <li> idea categories refactored to a partial (shared/_section.erb)
-             <li> added idea data to slider
-             <li> navbar & list of ideas moved to their own partials (shared/_navbar.erb, ideas/_ideas.erb) for easier access & resuability</li>
-             <li> yelp API stuff finally moved to its own page (find_food.erb)
-           </li>
            <li> Todo
             <li> thinking of putting edit form on this page as well</li>
             <li> add admin user </li>
@@ -77,4 +58,5 @@
            <%= render 'ideas/idea_form' %>
        </div>
     </aside>
+  </div>
 </div>
