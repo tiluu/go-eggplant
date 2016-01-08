@@ -9,17 +9,13 @@
   <div><%= trip_countdown %></div>
   
   <div>
-<<<<<<< HEAD
     <%= headcount(@trip) %> going on this trip<br/>
 
-    <%= creator(@trip).name %> (Orrganizer)
-=======
-    <%= headcount(@trip) %> going on this trip
->>>>>>> 3430fac2bfb47ee9fcfc78bdf5efda22ac0908c2
+    <%= creator(@trip).name %> (Organizer)<br/>
     <% @trip.invites.each do |invite| %>
      
       <% if invite.going? && getUser(invite) != creator(@trip) %>
-          <%= getUser(invite) %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
+          <%= getUser(invite).name %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
             method: :delete, data: {confirm: 'you sure?'} %>
       <% end %>
 

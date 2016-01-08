@@ -46,15 +46,15 @@ class GroupTripsController < ApplicationController
        resp = params[:response]
        case resp
        when 'yes'
-        @invite.update_attribute(:going?, true)
-        @invite.update_attribute(:maybe?, false)
+        @invite.update(going?: true, maybe?: false)
        when 'maybe'
-        @invite.update_attribute(:maybe?, true)
-        @invite.update_attribute(:going?, false)
+        @invite.update_attribute(maybe?: true, going?: false)
        end
        @invite.update_attribute(:rsvped?, true)
+       
        if resp === 'no'
             flash[:info] = "RSVP updated."
+            @invite.update(maybe?: false, going?: false)
             redirect_to dashboard_path
         else
             redirect_to trip_path(@trip.url)
