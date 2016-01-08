@@ -9,7 +9,7 @@ class Trip < ActiveRecord::Base
     has_many :ideas, dependent: :destroy
 
     validates :name, :city, :country, 
-              :state_or_province, presence: true
+              presence: true
     
     validates :name, length: { maximum: 50 }
     validates_uniqueness_of :url

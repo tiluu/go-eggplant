@@ -1,5 +1,5 @@
 
-<%= form_for(getUser, url: getPath('users', @action)) do |f| %>
+<%= form_for(which_user, url: getPath('users', @action)) do |f| %>
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1"><%= f.label :name %></span>
       <%= f.text_field :name, class: 'form-control'%>
