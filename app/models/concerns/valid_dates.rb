@@ -6,13 +6,13 @@ module ValidDates
     end
 
     def start_date_not_in_past
-        if start_date < Date.today 
+        if start_date && start_date < Date.today 
             @errors.add(:start_date, "can't be in the past")
         end
     end
 
     def end_date_not_in_past
-        if end_date < start_date
+        if end_date && end_date < start_date
             @errors.add(:end_date, "can't end earlier than trip start date") 
          end
     end

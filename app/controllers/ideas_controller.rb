@@ -1,6 +1,5 @@
 class IdeasController < ApplicationController
     before_action :require_login
-    load_and_authorize_resource
 
     def new
         @trip = current_trips.find_by_url(params[:url])
@@ -17,6 +16,12 @@ class IdeasController < ApplicationController
             @errors = @idea.errors
             render :new
         end
+    end
+
+    def index
+        @trip = current_trips.find_by_url(params[:url])
+        @ideas = getIdeas(@trip)
+        render json: @ideas
     end
 
     def show
@@ -36,7 +41,7 @@ class IdeasController < ApplicationController
         @action = 'update'
 
         if @idea.update_attributes(idea_params)
-            redirect_to idea_path(@trip.url, params[:id])
+            redirect_to trip_path(@trip.url)
         else
             @errors = @trip.errors
             render :edit
@@ -55,7 +60,7 @@ class IdeasController < ApplicationController
                                          :end_date, :start_time,
                                          :end_time, :location,
                                          :notes, :idea_category_id,
-                                         :user_id, :trip_id, :category)
+                                         :user_id, :trip_id)
         end
        
 end

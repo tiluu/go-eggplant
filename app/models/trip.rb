@@ -9,7 +9,7 @@ class Trip < ActiveRecord::Base
     has_many :ideas, dependent: :destroy
 
     validates :name, :city, :country, 
-              :state_or_province, presence: true
+              presence: true
     
     validates :name, length: { maximum: 50 }
     validates_uniqueness_of :url
@@ -19,6 +19,8 @@ class Trip < ActiveRecord::Base
    
     def gen_trip_url 
         update_column :url, SecureRandom.urlsafe_base64
+        not_unique = Trip.where(url: self.url).length > 1
+        raise ActiveRecord::RecordNotUnique if not_unique
         retries = 5
     rescue ActiveRecord::RecordNotUnique => e
         retries -= 1

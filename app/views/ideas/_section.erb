@@ -1,0 +1,13 @@
+ <div class="list-group-item">
+    <h4 class="list-group-item-heading"><%= idea.title %></h4>
+
+    <% if current_user === idea_user(idea) || current_user === creator(@trip) %>
+        <span class="badge"><%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %></span>
+        <span class="badge" ng-click=""><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>
+        <p class="list-group-item-text">
+    <% end %>
+
+    When: <%= format_date(idea.start_date) %> -  <%= format_date(idea.end_date) %><br>
+    Where: <%= idea.location%> <br>
+    Suggested by: <%= idea_user(idea).name %></p>
+    </div>

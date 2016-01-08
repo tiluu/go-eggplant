@@ -3,8 +3,7 @@ class TripsController < ApplicationController
 
     def find_food
         @trip = current_trips.find_by_url(params[:url])
-
-        location = @trip.city + @trip.state_or_province + @trip.country
+        location = @trip.city + " " + @trip.state_or_province + " " + @trip.country
         if !params[:neighborhood] 
            search_params = location 
         else 
@@ -19,11 +18,9 @@ class TripsController < ApplicationController
     def show
         @trip = current_trips.find_by_url(params[:url])
         @action = 'create' 
-        @invite = @trip.invites 
+        @pending = @trip.invites.where(rsvped?: nil)
 
-        @food = @trip.ideas.where(idea_category_id: 1)
-        @event = @trip.ideas.where(idea_category_id: 3) 
-        @activity = @trip.ideas.where(idea_category_id: 4)
+        getIdeas(@trip)
     end
 
     def new

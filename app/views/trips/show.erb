@@ -8,22 +8,16 @@
   
   <div><%= trip_countdown %></div>
   
-  <div>People on this trip:
-    <p><%= User.find(@trip.creator).name %> (Organizer)
-  <!--BUG: creator/self shouldn't be listed twice -->
-  <!--IDEA was thining of counting the users on trips, and display the users if prompted. I was thinking this because the list can get too big with more people. What do you think -->
+  <div>
+    <%= headcount(@trip) %> going on this trip
     <% @trip.invites.each do |invite| %>
      
-      <% if invite.going? %>
-          <%= User.find(invite.user_id).name %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
+      <% if invite.going? && getUser(invite) != creator(@trip) %>
+          <%= getUser(invite) %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
             method: :delete, data: {confirm: 'you sure?'} %>
       <% end %>
-      
-      <!--IDEA: I don't know if we need to show other users if its a maybe. what do you think? -->
-      <% if invite.maybe? %>
-       <%= User.find(invite.user_id).name %> [maybe]
-      <% end %>
-    <% end %>
+
+    <% end %> 
     </p>
   </div>
 </header>
@@ -31,7 +25,7 @@
 <div class="content" ng-app="trip">
   <div class="dashboard clearfix">
     <section class="trip--calendar">
-        <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>">
+        <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>" tripURL="<%= @trip.url %>">
             <%= render 'date_panels' %>
         </div>
         <div class="calendar closed">
@@ -47,7 +41,8 @@
        <ol>
            <li> Todo
             <li> thinking of putting edit form on this page as well</li>
-            <li> see list of pending invites</li>
+            <li> add admin user </li>
+            <li> <s>see list of pending invites</s></li>
             </li>
        </ol>
 

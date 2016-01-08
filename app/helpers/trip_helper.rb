@@ -3,10 +3,14 @@ module TripHelper
         Trip.find(invite.trip_id)
     end
 
+    def creator(trip)
+        User.find(trip.creator)
+    end
+
     def trip_countdown
         days_left = ( (@trip.start_date - Time.now)/86400 ).ceil
         trip_duration = -( (@trip.end_date - @trip.start_date)/86400 ).ceil
-        count = pluralize(days_left, 'day')
+        count = pluralize(days_left.abs, 'day')
 
         countdown = "Starts in #{count}"
        
@@ -31,19 +35,4 @@ module TripHelper
         end
         pluralize(count, 'person')
     end
-
-    def yelp_api(location, terms, sort=0, category='', offset=0, limit=15, radius=5000) 
-        begin
-            @result = Yelp.client.search(location, 
-                                         {term: terms,
-                                          limit: limit,
-                                          sort: sort,
-                                          offset: offset,
-                                          radius_filter: radius,
-                                          category_filter: category })
-        rescue Yelp::Error::UnavailableForLocation => e
-            @yelp_error = "No results available for #{location}"
-        end
-    end
-
 end

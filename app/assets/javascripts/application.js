@@ -19,7 +19,8 @@
 //= require_tree .
 
 (function($){
-	var app = angular.module('trip', ['Calendar', 'calServices', 'tripServices', 'datePanels']);
+	var app = angular.module('trip', ['Calendar', 'calServices', 
+                                      'tripServices', 'datePanels']);
 
 	app.controller("TabController", function(){
 		this.tab = 1;
@@ -31,8 +32,6 @@
       return this.tab === tabName;
     };
 });
-
-
 
     $('.idea--form_action').on('click', function(){
         $(this).addClass('closed');

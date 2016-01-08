@@ -15,11 +15,6 @@ RSpec.describe TripsController, type: :controller do
 #            expect(response).to eq(response)
 #        end
 #    end
-    describe "External API requests" do
-        it 'calls the Yelp API' do
-            y = mock(Yelp::Client)
-            
-    end
 
     describe 'GET index' do
         before(:each) do 
@@ -57,12 +52,11 @@ RSpec.describe TripsController, type: :controller do
                 end_date: "Oct 20 2015", 
                 city: "Portland",
                 state_or_province: "OR", 
-                country: "USA",
-                password: "portland" }
+                country: "USA"}
         end
 
         after(:each) do
-            trip = Pin.find_by_name("Portland 2015")
+            trip = Trip.find_by_name("Portland 2015")
             trip.destroy if !trip.nil?
         end
 

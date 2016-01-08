@@ -91,7 +91,7 @@
         var months = Object.keys(mnthService);  
 
         var trip = {};
-        trip.week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs','Fri',  'Sat'];
+        trip.week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'];
 
         trip.getDay = function(day,week) {
             return day + 7*week;
