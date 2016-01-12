@@ -20,7 +20,7 @@
             <% @current_user.invites.each do |invite| %> 
                     <% if !invite.rsvped? %>
                     <h3>Pending trips</h3>
-                       <p> <%= getUser(invite).name %> invites you</p>
+                       <p> <%= User.find(invite.sender).name %> invites you</p>
                         <div><%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
                         <%= link_to 'NO', rsvp_path(getTrip(invite).url, 'no'), method: :patch %> | 
                         <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %></div>
