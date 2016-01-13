@@ -3,7 +3,6 @@
 GLOBAL
 
 ***********/
-
 html { font-size: 16px;}
 body {}
 
@@ -29,10 +28,31 @@ a { color: #469047;}
 }
 
 .btn { 
-	background-color: white;
+	background-color: #fff;
 	border: 1px solid rgb(221, 221, 221);
 }
 
+.btn-green { 
+	border: none; 
+	background-color: #469047;
+	color: #fff;
+}
+
+.form_close { 
+	cursor: pointer;
+}
+
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
  
 /*********
 

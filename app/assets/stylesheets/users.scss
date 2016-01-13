@@ -14,8 +14,10 @@
 		border-radius: 5px;
 		width: 596px;
 
-		.list-group-item { padding: 0;}
+		.list-group-item { position: relative; padding: 0;}
 	}
+
+	.trip-status { position: absolute; background-color: orange; top: 0; right: 0; padding: 4px;}
 
 	figure { width: 200px; float: left; margin-right: 15px;}
 
