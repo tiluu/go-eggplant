@@ -1,33 +1,21 @@
 <%= form_for(:idea, url: getPath('ideas', @action)) do |f| %>
     <%= f.hidden_field :user_id, value: current_user.id %>
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1">What</span>
-      <%= f.text_field :title, class: 'form-control' %> 
-    </div>
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon2">Category</span>
-        <%= f.collection_select :idea_category_id, IdeaCategory.all, :id, :name, class: 'dropdown-toggle' %>
-    </div>
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon3">When</span>
-  
-      <%= f.text_field :start_date, class: 'date-picker', placeholder: 'Start Date' %><br> 
-      <%= f.text_field :start_time, class: 'time-picker', placeolder:'Time' %><br>
-      - <br>
-      <%= f.text_field :end_date, class: 'date-picker', placeholder: 'End Date' %><br>
-      <%= f.text_field :end_time, class: 'time-picker', placeholder: 'Time' %> <br>     
-    </div>
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon4">Where</span>
-      <%= f.text_field :location, class: 'form-control' %>
-    </div>
-    
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon5">Details</span>
-      <%= f.text_area :notes, rows: 3, class: 'form-control' %>
-    </div>
+      <%= f.text_field :title, class: 'form-control', placeholder: 'What', :required => true %> 
 
-    <%= f.submit "Submit", class: 'btn' %>
+      <%= f.collection_select :idea_category_id, IdeaCategory.all, :id, :name, class: 'form-control dropdown-toggle', placeholder: 'Category' %>
+  
+      <%= f.text_field :start_date, class: 'date-picker', placeholder: 'Start Date', :required => true %>
+      <%= f.text_field :start_time, class: 'time-picker', placeolder:'Time' %>
+      <div class="closed">
+      <%= f.text_field :end_date, class: 'date-picker', placeholder: 'End Date', :required => true %>
+      <%= f.text_field :end_time, class: 'time-picker', placeholder: 'Time' %>     
+      </div>
+
+      <%= f.text_field :location, class: 'form-control', placeholder: 'Where', :required => true %>
+    
+      <%= f.text_area :notes, rows: 3, class: 'form-control', placeholder: 'Details' %>
+
+    <%= f.submit "Submit", class: 'btn btn-green' %>
 <% end %>
     
 
