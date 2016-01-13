@@ -12,10 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require angular
 //= require angular-resource
 //= require ./picker.js
 //= require ./slick.min.js
+//= require best_in_place
+//= require best_in_place.jquery-ui
 //= require_tree .
 
 (function($){
@@ -42,10 +45,13 @@
         $('.idea--form').addClass('closed');
     })
 
-    $('.date-picker').pickadate({
-        today: '',
-    });
+ //   $('.date-picker').pickadate({
+ //       today: '',
+ //   });
 
     $('.time-picker').pickatime();
+
+    $('.best_in_place').best_in_place();
+    $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd'});
 
 })(jQuery, this, this.document);

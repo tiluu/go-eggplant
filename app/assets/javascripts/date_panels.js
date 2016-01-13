@@ -25,8 +25,9 @@
 	date.controller('DateCtrl', function($scope, mnthService, tripDays, 
                                         tripData, tripMnths, ideaData) {
         // GLOBAL VARIABLES
-        var m = mnthService;
-        var months = Object.keys(m);      
+        var m = mnthService;  
+        var months = Object.keys(m);     
+        $scope.months = months;
         var m1 = tripData.start_m;
         var m2 = tripData.end_m;
         var d1 = tripData.start_d;

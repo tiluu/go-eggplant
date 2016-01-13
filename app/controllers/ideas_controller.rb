@@ -1,5 +1,6 @@
 class IdeasController < ApplicationController
     before_action :require_login
+    respond_to :html, :json 
 
     def new
         @trip = current_trips.find_by_url(params[:url])
@@ -29,11 +30,11 @@ class IdeasController < ApplicationController
         @idea = @trip.ideas.find(params[:id])
     end
 
-    def edit
-        @trip = current_trips.find_by_url(params[:url])
-        @idea = @trip.ideas.find(params[:id])
-        @action = 'edit'
-    end
+#    def edit
+#        @trip = current_trips.find_by_url(params[:url])
+#        @idea = @trip.ideas.find(params[:id])
+#        @action = 'edit'
+#    end
 
     def update
         @trip = current_trips.find_by_url(params[:url])
@@ -41,10 +42,10 @@ class IdeasController < ApplicationController
         @action = 'update'
 
         if @idea.update_attributes(idea_params)
-            redirect_to trip_path(@trip.url)
+            respond_with @idea
         else
             @errors = @trip.errors
-            render :edit
+            redirect_to trip_path(@trip.url)
         end
     end
 

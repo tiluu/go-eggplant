@@ -55,5 +55,5 @@ class ApplicationController < ActionController::Base
     end
   end
         
-  helper_method :current_user, :require_login, :login_user, :yelp_api
+  helper_method :current_user, :yelp_api
 end

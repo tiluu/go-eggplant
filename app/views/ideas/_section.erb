@@ -1,13 +1,15 @@
  <div class="list-group-item">
-    <h4 class="list-group-item-heading"><%= idea.title %></h4>
+    <h4 class="list-group-item-heading"><%= best_in_place idea, :title, as: :input, url: edit_idea_path(@trip.url, idea.id) %></h4>
+   
 
     <% if current_user === idea_user(idea) || current_user === creator(@trip) %>
         <span class="badge"><%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %></span>
-        <span class="badge" ng-click=""><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>
-        <p class="list-group-item-text">
+        <!--<span class="badge" ng-click=""><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>-->
+               <p class="list-group-item-text">
     <% end %>
 
-    When: <%= format_date(idea.start_date) %> -  <%= format_date(idea.end_date) %><br>
-    Where: <%= idea.location%> <br>
+    When: <%= best_in_place idea, :start_date,type: :date, class: 'date-picker', url: edit_idea_path(@trip.url, idea.id) %> 
+          -  <%= best_in_place idea, :end_date, type: :date, class: 'date-picker', url: edit_idea_path(@trip.url, idea.id) %><br>
+    Where: <%= best_in_place idea, :location, as: :input, url: edit_idea_path(@trip.url, idea.id) %> <br>
     Suggested by: <%= idea_user(idea).name %></p>
     </div>

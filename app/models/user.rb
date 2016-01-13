@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
     after_create :gen_user_tag
 
     def gen_user_tag
-        num = User.count * 9999
+        num = (User.count + 1 )* 9999
         update_column :tag, SecureRandom.random_number(num)
         retries = 5
     rescue ActiveRecord::RecordNotUnique => e
