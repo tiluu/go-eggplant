@@ -2,7 +2,6 @@
 
 <header> 
   <h1><%= "#{@trip.name}" %></h1>
-  <%= render 'shared/flash_msg' %>
   <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> 
   on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
   
@@ -44,7 +43,6 @@
            <li> Todo
             <li> thinking of putting edit form on this page as well</li>
             <li> add admin user </li>
-            <li> <s>see list of pending invites</s></li>
             </li>
        </ol>
 

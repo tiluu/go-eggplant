@@ -12,9 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require angular
 //= require angular-resource
 //= require ./slick.min.js
+//= require best_in_place
+//= require best_in_place.jquery-ui
 //= require_tree .
 
 (function($){
@@ -49,5 +52,8 @@
         minDate: new Date(start_date.getFullYear(),start_date.getMonth(),start_date.getDate()),
         maxDate: new Date(end_date.getFullYear(),end_date.getMonth(),end_date.getDate()),
     });
+
+    $('.best_in_place').best_in_place();
+    $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd'});
 
 })(jQuery, this, this.document);

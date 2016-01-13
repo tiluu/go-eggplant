@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
   post 'trip-:url/invite' => 'group_trips#send_invite'
   patch 'trip-:url/:response' => 'group_trips#rsvp', as: :rsvp
+  get 'invites' => 'group_trips#invites', as: :invites
 
   delete 'trip-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
   delete 'trip-:url/uninvite-:tag' => 'group_trips#uninvite', as: :uninvite
@@ -21,8 +22,8 @@ Rails.application.routes.draw do
 
   post 'trip-:url' => 'ideas#create', as: :new_idea
   get 'trip-:url/idea-:id' => 'ideas#show', as: :idea
-  get 'trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
-  post 'trip-:url/idea-:id/edit' => 'ideas#update'
+#  get 'trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
+  put 'trip-:url/idea-:id/edit' => 'ideas#update', as: :edit_idea
   get 'trip-:url/ideas' => 'ideas#index'
 
   get 'signup' => 'users#new', as: :signup

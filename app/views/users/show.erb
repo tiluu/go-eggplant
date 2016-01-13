@@ -11,6 +11,7 @@
 			<li class="list-group-item"><%= link_to "Trips", dashboard_path %></li>
 			<li class="list-group-item">Past Trips</li>
             <li class="list-group-item"><%= link_to "Account info", account_path %></li>
+            <li class="list-group-item"><%= link_to "Trip invites", invites_path %></li>
 		</ul>
 	</aside>
     <section class="content">
@@ -20,9 +21,11 @@
             <% @current_user.invites.each do |invite| %> 
                     <% if !invite.rsvped? %>
                     <h3>Pending trips</h3>
-                       <p> <%= User.find(invite.sender).name %> invites you</p>
+                       <p>
+                       <%= getTrip(invite).name %><br/> 
+                       <%= getSender(invite).name %> invites you</p>
                         <div><%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
-                        <%= link_to 'NO', rsvp_path(getTrip(invite).url, 'no'), method: :patch %> | 
+                        <%= link_to 'NO', leave_trip_path(getTrip(invite).url), method: :delete, data: {confirm: 'You sure?'} %> | 
                         <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %></div>
                     <% end %>
                 <% end %>
@@ -53,9 +56,8 @@
                 <% if getTrip(invite).creator != current_user.id && invite.going? || invite.maybe? %>
                     <%= link_to getTrip(invite).name, trip_path(getTrip(invite).url) %> <br>
                     Change RSVP: <%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> |
-                    <%= link_to 'NO', rsvp_path(getTrip(invite).url, 'no'), method: :patch %> | 
                     <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %> |
-                    <%= link_to 'leave trip', leave_trip_path(getTrip(invite).url), method: :delete, data: {confirm: 'You sure?'} %>
+                    <%= link_to 'NO', leave_trip_path(getTrip(invite).url), method: :delete, data: {confirm: 'You sure?'} %>
                 <% end %>
             <% end %>
        </div>
