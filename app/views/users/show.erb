@@ -40,6 +40,7 @@
                     <%= headcount(trip) %> going |
                         <%= link_to 'edit', edit_trip_path(trip.url) %> | 
                         <%= link_to 'delete', [current_user, trip], method: :delete, data: {confirm: 'You sure?'} %></div>
+                    <span class="trip-status">Pending</span>
                   </div>
               <% end %>
             <% end %>

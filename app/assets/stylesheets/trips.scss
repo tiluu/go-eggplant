@@ -44,14 +44,12 @@ header {
 
 .trip--list { 
 	background-color: #fff;
-	.badge a { color: black; font-weight: normal;}
-	.btn-green { 
-		width: 100%; 
-		border: none; 
-		background-color: #469047;
-		color: #fff;
-	}
-    .list-group { margin: 0px}
+	.badge a { font-weight: normal;}
+	.idea--form_action { width: 100%;}
+
+    .list-group { margin: 0px;}
+    .list-group-item { border-left: none; border-right: none;}
+    .list-group-item:first-child { border-top: none;}
 }
 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover { color: #469047;background-color: #fff}
 .nav-pills>li.active>a {

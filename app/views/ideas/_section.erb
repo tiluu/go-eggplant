@@ -2,8 +2,8 @@
     <h4 class="list-group-item-heading"><%= idea.title %></h4>
 
     <% if current_user === idea_user(idea) || current_user === creator(@trip) %>
-        <span class="badge"><%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"} %></span>
-        <span class="badge" ng-click=""><%= link_to "edit", edit_idea_path(@trip.url, idea.id) %> </span>
+        <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"}, class: "badge btn-green"  %>
+        <%= link_to "edit", edit_idea_path(@trip.url, idea.id), class: "badge btn-green" %>
         <p class="list-group-item-text">
     <% end %>
 

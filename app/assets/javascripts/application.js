@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require angular
 //= require angular-resource
-//= require ./picker.js
 //= require ./slick.min.js
 //= require_tree .
 
@@ -37,15 +36,18 @@
         $(this).addClass('closed');
         $('.idea--form').removeClass('closed');
     })
-    $('.form_close').on('click', function(){
+    $('.glyphicon-remove').on('click', function(){
         $('.idea--form_action').removeClass('closed');
         $('.idea--form').addClass('closed');
     })
 
-    $('.date-picker').pickadate({
-        today: '',
-    });
+    var div = document.getElementById('trip-data');
+    var start_date = new Date(div.getAttribute("start_date"));
+    var end_date = new Date(div.getAttribute("end_date"));
 
-    $('.time-picker').pickatime();
+    $('.date-picker').datepicker({
+        minDate: new Date(start_date.getFullYear(),start_date.getMonth(),start_date.getDate()),
+        maxDate: new Date(end_date.getFullYear(),end_date.getMonth(),end_date.getDate()),
+    });
 
 })(jQuery, this, this.document);
