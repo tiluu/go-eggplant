@@ -1,16 +1,25 @@
-<h1>Manage Your Invites</h1>
+<h1>Pending Invites</h1>
 
+<p>
 <% @trips.each do |trip| %>
-	<p>
+	<% if trip.invites.length > 1 %>
 		<h2><%= trip.name %></h2>
-		<% if trip.invites %>
-			<% trip.invites.each do |invite| %>
-				<% if current_user != creator(trip) %>
-					<%= getUser(invite).name %><br/>
-					invite sent <%= invite_date(trip) %> by <%= User.find(invite.sender) %>
-					<%= link_to 'uninvite', uninvite_path(trip.url, getUser(invite).tag) %>
+			
+		<% trip.invites.each do |invite| %>
+			<% if !invite.rsvped?%>
+				<h3><%= getUser(invite).name %></h3>
+				invite sent <%= invite_date(trip) %> by <%= getSender(invite).name %>
+
+				<% if current_user == creator(trip) %>
+					<br/><%= link_to 'uninvite', uninvite_path(trip.url, getUser(invite).tag) %>
+				<% else %>
+					<%= render partial: 'trips/rsvp', locals: {invite: invite} %>
 				<% end %>
+
 			<% end %>
 		<% end %>
-	</p>
+	<% end %>
 <% end %>
+</p>
+
+<%= link_to "Back", dashboard_path %>

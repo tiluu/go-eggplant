@@ -24,9 +24,7 @@
                        <p>
                        <%= getTrip(invite).name %><br/> 
                        <%= getSender(invite).name %> invites you</p>
-                        <div><%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
-                        <%= link_to 'NO', leave_trip_path(getTrip(invite).url), method: :delete, data: {confirm: 'You sure?'} %> | 
-                        <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %></div>
+                       <%= render partial: 'trips/rsvp', locals: {invite: invite} %>
                     <% end %>
                 <% end %>
             <% end %>
@@ -54,9 +52,7 @@
             <% @current_user.invites.each do |invite| %>
                 <% if getTrip(invite).creator != current_user.id && invite.going? || invite.maybe? %>
                     <%= link_to getTrip(invite).name, trip_path(getTrip(invite).url) %> <br>
-                    Change RSVP: <%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> |
-                    <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %> |
-                    <%= link_to 'NO', leave_trip_path(getTrip(invite).url), method: :delete, data: {confirm: 'You sure?'} %>
+                    Change RSVP: <%= render partial: 'trips/rsvp', locals: {invite: invite} %>
                 <% end %>
             <% end %>
        </div>

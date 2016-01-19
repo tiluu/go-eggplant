@@ -1,0 +1,5 @@
+<div>
+	<%= link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch %> | 
+    <%= link_to 'NO', leave_trip_path(getTrip(invite).url), method: :delete, data: {confirm: 'You sure?'} %> | 
+    <%= link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch %>
+</div>
