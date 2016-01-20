@@ -3,6 +3,10 @@ module TripHelper
         Trip.find(invite.trip_id)
     end
 
+    def tripEnded?(trip)
+        Date.today > trip.end_date
+    end
+
     def creator(trip)
         User.find(trip.creator)
     end

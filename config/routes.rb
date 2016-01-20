@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   delete 'trip-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
   delete 'trip-:url/uninvite-:tag' => 'group_trips#uninvite', as: :uninvite
 
-  get 'trip-:url/find_food' => 'trips#find_food', as: :find_food
+  get 'trip-:url/find-food' => 'trips#find_food', as: :find_food
   get 'trip-:url' => 'trips#show', as: :trip
   get 'trip-:url/edit' => 'trips#edit', as: :edit_trip
   post 'trip-:url/edit' => 'trips#update'

@@ -3,7 +3,7 @@ class TripsController < ApplicationController
 
     def find_food
         @trip = current_trips.find_by_url(params[:url])
-        location = @trip.city + " " + @trip.state_or_province + " " + @trip.country
+        location = @trip.city + " " + @trip.country
         if !params[:neighborhood] 
            search_params = location 
         else 

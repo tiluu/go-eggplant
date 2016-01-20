@@ -39,6 +39,12 @@ class ApplicationController < ActionController::Base
     {food: @food, event: @event, activity: @activity}
   end
 
+  def location_error(location)
+     l = location.split(' ')
+     loc = l.join(" ")
+     @yelp_error = "No results available for #{loc}"
+  end
+
   def yelp_api(location, terms, sort=0, category='', offset=0, limit=15, radius=5000) 
      begin
          @result = Yelp.client.search(location, 
@@ -49,9 +55,9 @@ class ApplicationController < ActionController::Base
                                        radius_filter: radius,
                                        category_filter: category })
     rescue Yelp::Error::UnavailableForLocation => e
-        l = location.split(' ')
-        loc = l.join(" ")
-        @yelp_error = "No results available for #{loc}"
+       location_error(location)
+    rescue JSON::ParserError => e
+      location_error(location)
     end
   end
         

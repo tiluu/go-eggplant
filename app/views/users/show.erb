@@ -7,7 +7,7 @@
 <%= render 'shared/flash_msg' %>
 <div class="user-profile clearfix">
 	<aside>
-		<ul class="list-group">
+		<ul class="list-group"o>
 			<li class="list-group-item"><%= link_to "Trips", dashboard_path %></li>
 			<li class="list-group-item">Past Trips</li>
             <li class="list-group-item"><%= link_to "Account info", account_path %></li>
@@ -31,7 +31,7 @@
             </div>
 
             <% @trips.each do |trip| %>
-                <% if current_user.id === trip.creator %>
+                <% if current_user.id === trip.creator && !tripEnded?(trip) %>
                     <div class="list-group-item clearfix">
                         <figure><a href="<%= trip_path(trip.url) %>"><img src="http://loremflickr.com/320/240"/></a></figure>
                     <h2><%= link_to "#{trip.name}", trip_path(trip.url) %> </h2>
@@ -47,6 +47,23 @@
             <% end %>
         </div>
             <p><%= link_to 'Add trip', new_trip_path %> </p>
+
+        <div class="list-group">
+            
+            <h2>Past Trips [feel free to move or do some JS/CSS magic on this section :)]</h2>
+            <% @trips.each do |trip| %> 
+                <% if tripEnded?(trip) %> 
+                    <div class="list-group-item clearfix">
+                        <h2><%= link_to "#{trip.name}", trip_path(trip.url) %> </h2>
+                        <p><%= "#{format_date(trip.start_date)} to #{format_date(trip.end_date)}" %> </p>
+                        <p><%= "#{trip.city},#{trip.country} " %> </p>
+                        <%= headcount(trip) %> went
+                    </div>
+                <% end %> 
+            <% end %> 
+
+       </div>
+
         <div class="list-group">
             
             <h2>Pending Trips</h2>
