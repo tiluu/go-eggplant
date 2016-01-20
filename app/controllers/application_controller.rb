@@ -45,11 +45,10 @@ class ApplicationController < ActionController::Base
      @yelp_error = "No results available for #{loc}"
   end
 
-  def yelp_api(location, terms, sort=0, category='', offset=0, limit=15, radius=5000) 
+  def yelp_api(location, terms, sort=0, category='', offset=0, radius=5000) 
      begin
          @result = Yelp.client.search(location, 
                                       {term: terms,
-                                       limit: limit,
                                        sort: sort,
                                        offset: offset,
                                        radius_filter: radius,
@@ -57,6 +56,8 @@ class ApplicationController < ActionController::Base
     rescue Yelp::Error::UnavailableForLocation => e
        location_error(location)
     rescue JSON::ParserError => e
+      location_error(location)
+    rescue Yelp::Error::InvalidParameter => e
       location_error(location)
     end
   end

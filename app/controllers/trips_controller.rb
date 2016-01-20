@@ -74,8 +74,7 @@ class TripsController < ApplicationController
 #    end
 
     def destroy
-        @user = current_user
-        @user.trips.find_by_id(params[:id]).destroy
+        currrent_trips.find_by_url(params[:url]).destroy
         redirect_to dashboard_path
     end
 

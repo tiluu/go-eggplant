@@ -2,6 +2,18 @@ class IdeasController < ApplicationController
     before_action :require_login
     respond_to :html, :json 
 
+    def add_yelp
+        @trip = current_trips.find_by_url(params[:url])
+        @idea = @trip.ideas.build(title: params[:food], location: params[:address],
+                                  idea_category_id: 1, user_id: current_user.id)
+        if @idea.save
+            redirect_to trip_path(@trip.url)
+        else
+            @errors = @idea.errors
+            render :new
+        end
+    end
+
     def new
         @trip = current_trips.find_by_url(params[:url])
         @idea = @trip.ideas.build
@@ -50,7 +62,7 @@ class IdeasController < ApplicationController
     end
 
     def destroy
-        @trip = current_trips.find(params[:trip_id])
+        @trip = current_trips.find_by_url(params[:url])
         @trip.ideas.find(params[:id]).destroy
         redirect_to trip_path(@trip.url)
     end

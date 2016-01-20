@@ -8,14 +8,20 @@
   <div><%= trip_countdown %></div>
   
   <div>
-    <%= headcount(@trip) %> going on this trip<br/>
+    <%= headcount(@trip) %> 
+    <%= tripEnded?(@trip) ? "went" : "going" %> 
+     on this trip<br/>
 
     <%= creator(@trip).name %> (Organizer)<br/>
     <% @trip.invites.each do |invite| %>
      
       <% if invite.going? && getUser(invite) != creator(@trip) %>
-          <%= getUser(invite).name %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
-            method: :delete, data: {confirm: 'you sure?'} %>
+          <%= getUser(invite).name %>  
+          <% if current_user = getUser(invite) %>
+            | <%= link_to 'leave trip', leave_trip_path(@trip.url), method: :delete, data: {confirm: 'You sure?'} %>
+          <% elsif creator?(@trip) %>
+            <%= link_to 'uninvite', uninvite_path(@trip.url, getUser(invite).tag), method: :delete, data: {confirm: 'You sure?'} %> 
+          <% end %>
       <% end %>
 
     <% end %> 
@@ -42,8 +48,10 @@
        <ol>
            <li> Todo/ideas
             <li> Add instagram pics to the 'Discover' tab and remove the 'Hotel' link?</li>
-            <li> Add yelp search results to itinerary</li>
             </li>
+          <li> Changes
+            <li> Can now add yelp search results to itinerary!</li>
+          </li>
        </ol>
 
        <div class="idea--form closed">
