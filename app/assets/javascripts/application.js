@@ -29,11 +29,31 @@
 		this.setTab = function(newValue){
             this.tab = newValue;
         };
-        
-    this.isSet = function(tabName){
-      return this.tab === tabName;
-    };
-});
+        this.isSet = function(tabName){
+          return this.tab === tabName;
+        };
+    });
+
+    app.factory("rateData", function($http) {
+        var data = {};
+        data.getData = function(base) {
+            var uri = 'http://api.fixer.io/latest?base='+base
+            return $http.get(uri);
+        };
+        return data;
+    });
+
+    app.controller("CurrencyCtrl", function($scope, rateData) {
+        $scope.convert = function(amt, base_curr, new_curr) {
+            rateData.getData(base_curr).success(function(data) {
+                var rates = data.rates;
+                $scope.new_amt =  parseFloat(amt) * rates[new_curr];
+            })
+            .error(function(data, status) {
+                console.log("Error: " + status);
+            });
+        };
+    }); 
 
     $('.idea--form_action').on('click', function(){
         $(this).addClass('closed');

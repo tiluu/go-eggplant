@@ -29,8 +29,10 @@
   </div>
 </header>
 
+
 <div class="content" ng-app="trip">
   <div class="dashboard clearfix">
+
     <section class="trip--calendar">
         <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>" tripURL="<%= @trip.url %>">
             <%= render 'date_panels' %>
@@ -41,16 +43,36 @@
                 <%= render 'calendar' %> 
             </div>
         </div>
+
+      <div ng-controller="CurrencyCtrl">
+        <h2>Exchange Rates</h2>
+        <%#= form_tag trip_path(@trip.url), method: "get" do %>
+          <%= text_field_tag "base_amt", '1', size: 5, ng_model: "base_amt" %>
+          <%= select_tag "base_currency", options_for_select(getCurrency), ng_model: "base_currency" %> to
+          <%= select_tag "new_currency", options_for_select(getCurrency), ng_model: "new_currency" %>
+
+          <%= submit_tag "Convert", class: 'btn', ng_click: "convert(base_amt, base_currency, new_currency)" %>
+        <%# end %>
+        <p>
+        <span ng-bind="base_amt"></span> 
+        <span ng-bind="base_currency"></span>
+        <span style="margin-left: 20px">{{ new_amt }}</span>
+        <span ng-bind="new_currency"></span>
+        </p>
+    </div>
+
     </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
         <%= render 'ideas/ideas' %>
 
        <ol>
            <li> Todo/ideas
-            <li> Add instagram pics to the 'Discover' tab and remove the 'Hotel' link?</li>
+            <li> Add instagram pics and/or foursquare API to the 'Discover' tab and remove the 'Hotel' link?</li>
+            <li>No end date in add idea form & form doesn't close anymore?</li>
             </li>
           <li> Changes
             <li> Can now add yelp search results to itinerary!</li>
+            <li> Currency exchange form--do we like this?</li>
           </li>
        </ol>
 
@@ -62,5 +84,6 @@
            <%= render 'ideas/idea_form' %>
        </div>
     </aside>
+
   </div>
 </div>

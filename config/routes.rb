@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   post 'trip-:url/add-:food/address-:address' => 'ideas#add_yelp', as: :add_yelp
 
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   

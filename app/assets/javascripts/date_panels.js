@@ -1,5 +1,7 @@
 (function() {
-	var date = angular.module("datePanels", ['calServices', 'tripServices', 'ngResource']);
+
+	var date = angular.module("datePanels", ['calServices', 'tripServices', 
+                                             'ngResource']);
 
     date.directive('slickSlider',function($timeout){
          return {

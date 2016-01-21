@@ -32,6 +32,18 @@ class ApplicationController < ActionController::Base
       redirect_to dashboard_path
   end
 
+  def currency
+    url = "http://api.fixer.io/latest"
+    @rates = HTTParty.get(url)
+    JSON.parse(@rates.body)
+  end
+
+  def getCurrency
+    list = currency['rates'].keys
+    list << currency['base']
+    list.sort!
+  end
+
   def getIdeas(trip)
     @food = trip.ideas.where(idea_category_id: 1)
     @event = trip.ideas.where(idea_category_id: 3) 
@@ -62,5 +74,5 @@ class ApplicationController < ActionController::Base
     end
   end
         
-  helper_method :current_user, :yelp_api
+  helper_method :current_user, :yelp_api, :getCurrency
 end
