@@ -46,23 +46,27 @@ module TripHelper
         end
     end
 
-    def trip_countdown
-        days_left = ( (@trip.start_date - Time.now)/86400 ).ceil
-        trip_duration = -( (@trip.end_date - @trip.start_date)/86400 ).ceil
-        count = pluralize(days_left.abs, 'day')
+    def days_left(startdate, enddate)
+        ( (startdate - enddate)/86400 ).ceil
+    end
 
-        countdown = "Starts in #{count}"
-       
-        if days_left === 1
+    def count(days)
+        pluralize(days.abs, 'day')
+    end
+
+    def trip_countdown
+        if days_left(@trip.start_date, Time.now) > 1
+            num_days = days_left(@trip.start_date, Time.now)
+            countdown = "Starts in #{count(num_days)}"
+        elsif days_left(@trip.start_date, Time.now) === 1
         	countdown = "Starts tomorrow!"
-        elsif days_left < 0 && days_left > trip_duration
-        	days_left = ( (Time.now - @trip.start_date)/86400 ).ceil
-        	countdown = "Started #{count} ago"
-        elsif days_left < trip_duration
-        	days_left = ( (Time.now - @trip.end_date)/86400 ).ceil
-        	countdown = "Ended #{count} ago"
+        elsif @trip.start_date <= Time.now && @trip.end_date >= Time.now
+        	num_days = days_left(Time.now, @trip.start_date)
+        	countdown = "Started #{count(num_days)} ago"
+        elsif @trip.end_date < Time.now
+        	num_days = days_left(Time.now, @trip.end_date)
+        	countdown = "Ended #{count(num_days)} ago"
         end
-        countdown
     end
 
     def headcount(trip)

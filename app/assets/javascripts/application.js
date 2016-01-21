@@ -64,6 +64,11 @@
         $('.idea--form').addClass('closed');
     })
 
+    $('.new-trip').datepicker({ 
+        minDate: new Date(),
+        dateFormat: 'dd-mm-yy' 
+    });
+
     var div = document.getElementById('trip-data');
     var start_date = new Date(div.getAttribute("start_date"));
     var end_date = new Date(div.getAttribute("end_date"));

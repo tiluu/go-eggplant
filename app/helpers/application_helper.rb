@@ -27,7 +27,5 @@ module ApplicationHelper
     def end_d
         format_date(@trip.end_date)
     end
-  
-
       
-   end
+end

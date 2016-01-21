@@ -46,13 +46,11 @@
 
       <div ng-controller="CurrencyCtrl">
         <h2>Exchange Rates</h2>
-        <%#= form_tag trip_path(@trip.url), method: "get" do %>
           <%= text_field_tag "base_amt", '1', size: 5, ng_model: "base_amt" %>
           <%= select_tag "base_currency", options_for_select(getCurrency), ng_model: "base_currency" %> to
           <%= select_tag "new_currency", options_for_select(getCurrency), ng_model: "new_currency" %>
 
           <%= submit_tag "Convert", class: 'btn', ng_click: "convert(base_amt, base_currency, new_currency)" %>
-        <%# end %>
         <p>
         <span ng-bind="base_amt"></span> 
         <span ng-bind="base_currency"></span>
@@ -66,11 +64,12 @@
         <%= render 'ideas/ideas' %>
 
        <ol>
-           <li> Todo/ideas
+           <li> <strong>Todo/ideas</strong>
             <li> Add instagram pics and/or foursquare API to the 'Discover' tab and remove the 'Hotel' link?</li>
-            <li>No end date in add idea form & form doesn't close anymore?</li>
+            <li> No end date in add idea form & form doesn't close anymore?</li>
+            <li> Decide how to let users know they can edit ideas on this page by clicking on them</li>
             </li>
-          <li> Changes
+          <li> <strong>Changes</strong>
             <li> Can now add yelp search results to itinerary!</li>
             <li> Currency exchange form--do we like this?</li>
           </li>
