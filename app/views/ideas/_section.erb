@@ -8,8 +8,10 @@
         <p class="list-group-item-text">
     <% end %>
 
-    When: <%= best_in_place idea, :start_date, as: :date, url: edit_idea_path(@trip.url, idea.id) %> 
-          -  <%= best_in_place idea, :end_date, as: :date,  url: edit_idea_path(@trip.url, idea.id) %><br>
+
+    When: <%= best_in_place idea, :start_date,type: :date, url: edit_idea_path(@trip.url, idea.id) %> 
+          -  <%= best_in_place idea, :end_date, type: :date, url: edit_idea_path(@trip.url, idea.id) %><br>
+
     Where: <%= best_in_place idea, :location, as: :input, url: edit_idea_path(@trip.url, idea.id) %> <br>
     Suggested by: <%= idea_user(idea).name %></p>
     </div>
