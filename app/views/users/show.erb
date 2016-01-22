@@ -48,10 +48,25 @@
                   </div>
               <% end %>
             <% end %>
+
+            <% @current_user.invites.each do |invite| %>
+                <% if !tripEnded?(getTrip(invite)) && !creator?(invite) && (invite.going? || invite.maybe?) %>
+                    <div class="list-group-item clearfix">
+                        <figure><a href="<%= trip_path(getTrip(invite).url) %>"><img src="http://loremflickr.com/320/240"/></a></figure>
+                        <h2><%= link_to getTrip(invite).name, trip_path(getTrip(invite).url) %></h2>
+                         <p>
+                            <%= "#{format_date( getTrip(invite).start_date )} to #{format_date( getTrip(invite).end_date )}" %>
+                        </p>
+                        <p><%= "#{getTrip(invite).city},#{getTrip(invite).country} " %> </p>
+                        <p><%= headcount( getTrip(invite) ) %> going </p>
+                        <span class="trip-status"><%= render partial: 'trips/rsvp', locals: {invite: invite} %></span>
+                </div>
+                <% end %>
+            <% end %>
         </div>
             <p><%= link_to 'Add trip', new_trip_path %> </p>
 
-        <div class="list-group">
+        <div class="list-group closed">
             
             <h2>Past Trips [feel free to move or do some JS/CSS magic on this section :)]</h2>
             <% @trips.each do |trip| %>
@@ -69,31 +84,13 @@
 
        </div>
 
-        <div class="list-group">
-            
-            <h2>Upcoming Trips</h2>
-            <% @current_user.invites.each do |invite| %>
-                <% if !tripEnded?(getTrip(invite)) && !creator?(invite) && (invite.going? || invite.maybe?) %>
-                    <h3><%= link_to getTrip(invite).name, trip_path(getTrip(invite).url) %></h3> <br/>
-                    <%= render partial: 'trips/rsvp', locals: {invite: invite} %>
-                    <%= headcount( getTrip(invite) ) %> going
-                     <p>
-                        <%= "#{format_date( getTrip(invite).start_date )} to #{format_date( getTrip(invite).end_date )}" %>
-                    </p>
-                    <p><%= "#{getTrip(invite).city},#{getTrip(invite).country} " %> </p>
-                <% end %>
-            <% end %>
-       </div>
 	</section>
 
-    <div style="outline:1px solid black; position:absolute; bottom:0; right: 0;margin-bottom: 150px;width: 300px"><strong>TO DO</strong>
+    <div style="outline:1px solid black; position:absolute; bottom:0; right: 0;width: 300px"><strong>TO DO</strong>
         <ol>
-            <li> Fix trip creation form - datepicker buried underneath other text fields</li>
-            <li> maybe move login page to the landing page? Thoughts?</li>
-            <li> <strong>CHANGES</strong>
-                <li>inline styles in 'trips/_rsvp.erb' to highlight change--feel free to change/remove</li>
-                <li> manage invites page added 'group_trips/invites.erb'</li>
-            </li>
+            <li> Fix trip creation form - datepicker buried underneath other text fields -- we should move the creation form to this page so it is a popup</li>
+            <li> maybe move login page to the landing page? Thoughts? --Are we logged in already? so we dont need to show it? </li>
+            <li>move past trip to its own page, the nav is on the left</li>
         </ol>
     </div>
 </div>

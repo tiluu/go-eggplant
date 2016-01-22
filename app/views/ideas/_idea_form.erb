@@ -1,19 +1,16 @@
 <%= form_for(:idea, url: getPath('ideas', @action)) do |f| %>
     <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.collection_select :idea_category_id, IdeaCategory.all, :id, :name, {:prompt=>'Category'},{:class=>'form-control'} %>
       <%= f.text_field :title, class: 'form-control', placeholder: 'What', :required => true %> 
-
-      <%= f.collection_select :idea_category_id, IdeaCategory.all, :id, :name, class: 'form-control dropdown-toggle', placeholder: 'Category' %>
   
-      <%= f.text_field :start_date, class: 'date-picker', placeholder: 'Start Date', :required => true %>
+      <%= f.text_field :start_date, class: 'date-picker form-control', placeholder: 'Start Date', :required => true %>
 
-      <%= f.text_field :start_time, class: 'time-picker', placeolder:  'Time' %>
+      <%= f.text_field :start_time, class: 'time-picker form-control', placeolder: 'Time' %>
 
-      <div class="closed">
-      <%= f.text_field :end_date, class: 'date-picker', placeholder: 'End Date', :required => true %>
-      <%= f.text_field :end_time, class: 'time-picker', placeholder: 'Time' %>     
-      </div>
+      <%= f.text_field :end_date, class: 'date-picker form-control', placeholder: 'End Date', :required => true %>
+      <%= f.text_field :end_time, class: 'time-picker form-control', placeholder: 'Time' %>     
 
-      <%= f.text_field :location, class: 'form-control', placeholder: 'Where', :required => true %>
+      <%= f.text_field :location, class: 'form-control form-control', placeholder: 'Where', :required => true %>
     
       <%= f.text_area :notes, rows: 3, class: 'form-control', placeholder: 'Details' %>
 

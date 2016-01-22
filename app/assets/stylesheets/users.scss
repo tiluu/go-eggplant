@@ -6,6 +6,8 @@
 	width: 75%; 
 	margin: 0 auto;
 	min-width: 796px;
+
+	h2 { padding-top: 17px;}
 	
 	aside { width: 200px; float: left;}
 	.content { 
@@ -20,5 +22,4 @@
 	.trip-status { position: absolute; background-color: orange; top: 0; right: 0; padding: 4px;}
 
 	figure { width: 200px; float: left; margin-right: 15px;}
-
 }
