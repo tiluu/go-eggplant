@@ -79,6 +79,10 @@
     });
 
     $('.best_in_place').best_in_place();
-    $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd'});
+    $.datepicker.setDefaults({ 
+        dateFormat: 'yy-mm-dd',
+        minDate: new Date(start_date.getFullYear(),start_date.getMonth(),start_date.getDate()),
+        maxDate: new Date(end_date.getFullYear(),end_date.getMonth(),end_date.getDate())
+    });
 
 })(jQuery, this, this.document);

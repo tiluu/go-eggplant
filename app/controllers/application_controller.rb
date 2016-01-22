@@ -33,9 +33,14 @@ class ApplicationController < ActionController::Base
   end
 
   def currency
-    url = "http://api.fixer.io/latest"
-    @rates = HTTParty.get(url)
-    JSON.parse(@rates.body)
+    begin 
+      url = "http://api.fixer.io/latest"
+      @rates = HTTParty.get(url)
+      JSON.parse(@rates.body)
+    rescue JSON::ParserError => e
+      flash[:danger] = "Something went wrong--please refresh the trip page."
+      redirect_to dashboard_path
+    end
   end
 
   def getCurrency
