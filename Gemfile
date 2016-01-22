@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # angular
 gem 'angularjs-rails'
 
+gem 'httparty'
 # APIs
 gem 'yelp', require: 'yelp'
 

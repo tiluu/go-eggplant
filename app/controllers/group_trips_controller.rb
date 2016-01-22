@@ -48,10 +48,10 @@ class GroupTripsController < ApplicationController
        when 'yes'
         @invite.update(going?: true, maybe?: false)
        when 'maybe'
-        @invite.update_attribute(maybe?: true, going?: false)
+        @invite.update_attributes(maybe?: true, going?: false)
        end
        @invite.update_attribute(:rsvped?, true)
-
+       redirect_to dashboard_path
        # if resp === 'no'
        #      flash[:info] = "RSVP updated."
        #      @invite.update(maybe?: false, going?: false)

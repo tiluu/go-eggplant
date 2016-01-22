@@ -3,13 +3,15 @@
    
 
     <% if current_user === idea_user(idea) || current_user === creator(@trip) %>
-        <%= link_to "delete", [current_user,@trip, idea], method: :delete, data: {confirm: "You sure?"}, class: "badge btn-green"  %>
+        <%= link_to "delete", delete_idea_path(@trip.url, idea.id), method: :delete, data: {confirm: "You sure?"}, class: "badge btn-green"  %>
         <%= link_to "edit", edit_idea_path(@trip.url, idea.id), class: "badge btn-green" %>
         <p class="list-group-item-text">
     <% end %>
 
-    When: <%= best_in_place idea, :start_date,type: :date, class: 'date-picker', url: edit_idea_path(@trip.url, idea.id) %> 
-          -  <%= best_in_place idea, :end_date, type: :date, class: 'date-picker', url: edit_idea_path(@trip.url, idea.id) %><br>
+
+    When: <%= best_in_place idea, :start_date,type: :date, url: edit_idea_path(@trip.url, idea.id) %> 
+          -  <%= best_in_place idea, :end_date, type: :date, url: edit_idea_path(@trip.url, idea.id) %><br>
+
     Where: <%= best_in_place idea, :location, as: :input, url: edit_idea_path(@trip.url, idea.id) %> <br>
     Suggested by: <%= idea_user(idea).name %></p>
     </div>

@@ -1,5 +1,8 @@
 <section>
 <h1>Discover Restaurants in <%= @trip.city %></h1>
+
+<%= link_to "Back", trip_path(@trip.url) %>
+
     <p>
     <%= form_tag find_food_path(@trip.url), method: "get" do %>
         <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %><br>
@@ -28,9 +31,14 @@
     <% @result.businesses.each do |b| %>
         <p>
         <figure style="width:200px"><%= image_tag(b.image_url, alt: "#{b.name}") %> </figure><br>
+        <% if Idea.find_by_title(b.name) %>
+            <strong>ADDED</strong><br/>
+        <% else %>
+            <%= button_to "Add to itinerary?", add_yelp_path(@trip.url, b.name, b.location.display_address), method: :post, data: {confirm: "Add to itinerary?"} %> 
+        <% end %>
+
         <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
         Rating: <%= b.rating %><br>
-
 
         <%= safe_join(b.location.display_address, '<br>'.html_safe) %><br>
         

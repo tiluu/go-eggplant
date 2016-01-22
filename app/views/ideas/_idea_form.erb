@@ -5,7 +5,9 @@
       <%= f.collection_select :idea_category_id, IdeaCategory.all, :id, :name, class: 'form-control dropdown-toggle', placeholder: 'Category' %>
   
       <%= f.text_field :start_date, class: 'date-picker', placeholder: 'Start Date', :required => true %>
-      <%= f.text_field :start_time, class: 'time-picker', placeolder:'Time' %>
+
+      <%= f.text_field :start_time, class: 'time-picker', placeolder:  'Time' %>
+
       <div class="closed">
       <%= f.text_field :end_date, class: 'date-picker', placeholder: 'End Date', :required => true %>
       <%= f.text_field :end_time, class: 'time-picker', placeholder: 'Time' %>     

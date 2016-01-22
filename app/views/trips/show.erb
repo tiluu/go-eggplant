@@ -8,14 +8,20 @@
   <div><%= trip_countdown %></div>
   
   <div>
-    <%= headcount(@trip) %> going on this trip<br/>
+    <%= headcount(@trip) %> 
+    <%= tripEnded?(@trip) ? "went" : "going" %> 
+     on this trip<br/>
 
     <%= creator(@trip).name %> (Organizer)<br/>
     <% @trip.invites.each do |invite| %>
      
       <% if invite.going? && getUser(invite) != creator(@trip) %>
-          <%= getUser(invite).name %> | <%= link_to 'uninvite', uninvite_path(@trip.url, invite.user_tag), 
-            method: :delete, data: {confirm: 'you sure?'} %>
+          <%= getUser(invite).name %>  
+          <% if current_user = getUser(invite) %>
+            | <%= link_to 'leave trip', leave_trip_path(@trip.url), method: :delete, data: {confirm: 'You sure?'} %>
+          <% elsif creator?(@trip) %>
+            <%= link_to 'uninvite', uninvite_path(@trip.url, getUser(invite).tag), method: :delete, data: {confirm: 'You sure?'} %> 
+          <% end %>
       <% end %>
 
     <% end %> 
@@ -23,8 +29,10 @@
   </div>
 </header>
 
+
 <div class="content" ng-app="trip">
   <div class="dashboard clearfix">
+
     <section class="trip--calendar">
         <div ng-controller="DateCtrl"  id="trip-data" start_date="<%= start_d %>" end_date="<%= end_d %>" tripURL="<%= @trip.url %>">
             <%= render 'date_panels' %>
@@ -35,15 +43,36 @@
                 <%= render 'calendar' %> 
             </div>
         </div>
+
+      <div ng-controller="CurrencyCtrl">
+        <h2>Exchange Rates</h2>
+          <%= text_field_tag "base_amt", '1', size: 5, ng_model: "base_amt" %>
+          <%= select_tag "base_currency", options_for_select(getCurrency), ng_model: "base_currency" %> to
+          <%= select_tag "new_currency", options_for_select(getCurrency), ng_model: "new_currency" %>
+
+          <%= submit_tag "Convert", class: 'btn', ng_click: "convert(base_amt, base_currency, new_currency)" %>
+        <p>
+        <span ng-bind="base_amt"></span> 
+        <span ng-bind="base_currency"></span>
+        <span style="margin-left: 20px">{{ new_amt }}</span>
+        <span ng-bind="new_currency"></span>
+        </p>
+    </div>
+
     </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
         <%= render 'ideas/ideas' %>
 
        <ol>
-           <li> Todo
-            <li> thinking of putting edit form on this page as well</li>
-            <li> add admin user </li>
+           <li> <strong>Todo/ideas</strong>
+            <li> Add instagram pics and/or foursquare API to the 'Discover' tab and remove the 'Hotel' link?</li>
+            <li> No end date in add idea form & form doesn't close anymore?</li>
+            <li> Decide how to let users know they can edit ideas on this page by clicking on them</li>
             </li>
+          <li> <strong>Changes</strong>
+            <li> Can now add yelp search results to itinerary!</li>
+            <li> Currency exchange form--do we like this?</li>
+          </li>
        </ol>
 
        <div class="idea--form closed">
@@ -54,5 +83,6 @@
            <%= render 'ideas/idea_form' %>
        </div>
     </aside>
+
   </div>
 </div>

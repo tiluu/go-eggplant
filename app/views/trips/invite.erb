@@ -1,7 +1,0 @@
-<%= form_for([@user, @trip]) do |f| %>
-    <%= label_tag(:email, "Your friend's email") %>
-
-    <%= f.text_field :email %>
-
-    <p><%= f.submit "Invite", class: 'btn' %> </p>
-<% end %>

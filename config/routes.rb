@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post 'trip-:url/add-:food/address-:address' => 'ideas#add_yelp', as: :add_yelp
 
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
   get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
@@ -9,7 +10,8 @@ Rails.application.routes.draw do
   delete 'trip-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
   delete 'trip-:url/uninvite-:tag' => 'group_trips#uninvite', as: :uninvite
 
-  get 'trip-:url/find_food' => 'trips#find_food', as: :find_food
+  get 'trip-:url/find-food' => 'trips#find_food', as: :find_food
+  delete 'trip-:url/delete' => 'trips#destroy', as: :delete_trip
   get 'trip-:url' => 'trips#show', as: :trip
   get 'trip-:url/edit' => 'trips#edit', as: :edit_trip
   post 'trip-:url/edit' => 'trips#update'
@@ -22,8 +24,8 @@ Rails.application.routes.draw do
 
   post 'trip-:url' => 'ideas#create', as: :new_idea
   get 'trip-:url/idea-:id' => 'ideas#show', as: :idea
-#  get 'trip-:url/idea-:id/edit' => 'ideas#edit', as: :edit_idea
   put 'trip-:url/idea-:id/edit' => 'ideas#update', as: :edit_idea
+  delete 'trip-:url/idea-:id/delete' => 'ideas#destroy', as: :delete_idea
   get 'trip-:url/ideas' => 'ideas#index'
 
   get 'signup' => 'users#new', as: :signup

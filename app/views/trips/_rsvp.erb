@@ -1,0 +1,8 @@
+<div>
+
+     Your RSVP: <span style="background: #469047;color:#fff;padding: 2px;border-radius: 7px"><%= getRSVP(invite) %></span><br/>
+     Change RSVP: 
+        <% linkRSVP(invite).each do |link| %>
+            <%= link %> 
+        <% end %> 
+</div>

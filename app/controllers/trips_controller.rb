@@ -3,7 +3,7 @@ class TripsController < ApplicationController
 
     def find_food
         @trip = current_trips.find_by_url(params[:url])
-        location = @trip.city + " " + @trip.state_or_province + " " + @trip.country
+        location = @trip.city + " " + @trip.country
         if !params[:neighborhood] 
            search_params = location 
         else 
@@ -19,7 +19,7 @@ class TripsController < ApplicationController
         @trip = current_trips.find_by_url(params[:url])
         @action = 'create' 
         @pending = @trip.invites.where(rsvped?: nil)
-        
+
         getIdeas(@trip)
     end
 
@@ -74,8 +74,7 @@ class TripsController < ApplicationController
 #    end
 
     def destroy
-        @user = current_user
-        @user.trips.find_by_id(params[:id]).destroy
+        currrent_trips.find_by_url(params[:url]).destroy
         redirect_to dashboard_path
     end
 
@@ -83,7 +82,6 @@ class TripsController < ApplicationController
         def trip_params
             params.require(:trip).permit(:name, :url, :start_date,
                                          :end_date, :city, 
-                                         :state_or_province,
                                          :country, :creator)
         end 
 end
