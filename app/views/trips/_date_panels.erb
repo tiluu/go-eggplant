@@ -11,7 +11,7 @@
   
     	<div class="slider--events" ng-repeat="day in trip track by $index">
 	    	<div ng-repeat="idea in ideas.food" ng-if="matchDate(day, idea)">
-	    		{{idea.title}}<br>
+	    		{{idea.title}}<br/>
 	    		{{idea.location}}<br>
 			</div>
 	    	<div ng-repeat="idea in ideas.event" ng-if="matchDate(day, idea)">

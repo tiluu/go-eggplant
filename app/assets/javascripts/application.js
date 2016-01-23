@@ -22,7 +22,8 @@
 
 (function($){
 	var app = angular.module('trip', ['Calendar', 'calServices', 
-                                      'tripServices', 'datePanels']);
+                                      'tripServices', 'datePanels',
+                                      'Timezones']);
 
 	app.controller("TabController", function(){
 		this.tab = 1;
@@ -42,6 +43,7 @@
         };
         return data;
     });
+
 
     app.controller("CurrencyCtrl", function($scope, rateData) {
         $scope.convert = function(amt, base_curr, new_curr) {
@@ -63,6 +65,7 @@
         $('.idea--form_action').removeClass('closed');
         $('.idea--form').addClass('closed');
     })
+
 
     $('.new-trip').datepicker({ 
         minDate: new Date(),

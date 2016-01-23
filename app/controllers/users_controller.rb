@@ -37,11 +37,19 @@ class UsersController < ApplicationController
         end
     end
 
-  def show
+    def show
+        @current_user = current_user
+        @trips = @current_user.trips
+        @invites = @current_user.invites
+        @action = 'create'
+    end
+
+    def past_trips
         @current_user = current_user
         @trips = @current_user.trips
         @invites = @current_user.invites
     end
+
 
     def edit
         @current_user = current_user

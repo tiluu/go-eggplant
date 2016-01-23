@@ -1,0 +1,29 @@
+<nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+        <li><%= link_to 'Log out', logout_path, method: :delete %></li>
+    </ul>
+</nav>
+
+<div class="user-profile clearfix">
+    <%= render 'nav' %>
+    
+    <section class="content">
+        <div class="list-group user_trips">
+            
+            <h2>Past Trips</h2>
+            <% @trips.each do |trip| %>
+                <% if tripEnded?(trip) && getInvite(trip).going? %> 
+
+                    <div class="list-group-item clearfix">
+                        <h2><%= link_to "#{trip.name}", trip_path(trip.url) %> </h2>
+                        <p><%= "#{format_date(trip.start_date)} to #{format_date(trip.end_date)}" %> </p>
+                        <p><%= "#{trip.city},#{trip.country} " %> </p>
+                        <%= headcount(trip) %> went
+                    </div>
+
+                <% end %> 
+            <% end %> 
+
+        </div>
+    </section>
+</div>
