@@ -8,7 +8,7 @@
 	right: 0;
 	padding: 1rem;
 	margin: 10rem auto;
-	width: 430px;
+	width: 440px;
 	background-color: rgb(199, 198, 198);
 	border: 1px solid white;
 	border-radius: 5px;
@@ -22,3 +22,5 @@
 	.date-picker, .time-picker { width: 50%; float: left;}
 
 }
+.discover_yelp tr { margin-bottom: 2rem;}
+.yelp_restaurant { float: left; width: 200px;}
