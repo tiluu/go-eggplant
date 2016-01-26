@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   post 'trip-:url/add-:food/address-:address' => 'ideas#add_yelp', as: :add_yelp
+  get 'all-timezones' => 'trips#timezones'
 
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
   get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
   get 'trips/new' => 'trips#new', as: :new_trip
   post 'trips/new' => 'trips#create'
   
+  get 'past-trips' => 'users#past_trips', as: :past_trips
   get 'dashboard' => 'users#show', as: :dashboard
   get 'account' => 'users#edit', as: :account
   patch 'account' => 'users#update'

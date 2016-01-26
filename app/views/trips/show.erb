@@ -59,18 +59,30 @@
         </p>
     </div>
 
+    <div ng-controller="TimezoneCtrl">
+        <h2>Timezone</h2>
+        Time where you are: <%= format_time(Time.now) %><br/>
+        Time elsewhere: {{ timezone }}<br/>
+        Select timezone: 
+          <%= select_tag :timezone, options_for_select(timezones), ng_model: "zone_name" %>
+          <%= submit_tag "Select", ng_click: "getTime(zone_name)" %>
+
+      </div>
+
     </section>
     <aside class="trip--fav" ng-controller="TabController as tab">
         <%= render 'ideas/ideas' %>
 
        <ol>
            <li> <strong>Todo/ideas</strong>
-            <li> Add instagram pics and/or foursquare API to the 'Discover' tab and remove the 'Hotel' link?</li>
+            <li> Add instagram pics and/or foursquare [app needs to be deployed before this can be done] API to the 'Discover' tab and remove the 'Hotel' link?</li>
             <li> No end date in add idea form & form doesn't close anymore?</li>
-            <li> Decide how to let users know they can edit ideas on this page by clicking on them</li>
+            <li> Decide how to let users know they can edit ideas on this page by clicking on them --> maybe highlight text & show an edit icon or even just the word 'edit' on mouseover? </li>
             </li>
-          <li> <strong>Changes</strong>
-          </li>
+          <li> <strong>Changes</strong>     </li>
+
+          <li> Added timezone--not sure if keen on it as is--thoughts?</li>
+     
        </ol>
 
        <div class="idea--form closed">

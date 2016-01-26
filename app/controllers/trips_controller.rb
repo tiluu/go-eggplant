@@ -14,6 +14,14 @@ class TripsController < ApplicationController
 
         yelp_api(search_params, 'restaurants', sort)
     end
+
+    def timezones
+        @timezones = {}
+        ActiveSupport::TimeZone.all.each do |zone|
+            @timezones[zone.name] = zone.utc_offset
+        end
+        render json: @timezones
+    end
   
     def show
         @trip = current_trips.find_by_url(params[:url])
