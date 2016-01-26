@@ -22,7 +22,8 @@
 
 (function($){
 	var app = angular.module('trip', ['Calendar', 'calServices', 
-                                      'tripServices', 'datePanels']);
+                                      'tripServices', 'datePanels',
+                                      'Timezones']);
 
 	app.controller("TabController", function(){
 		this.tab = 1;
@@ -42,6 +43,7 @@
         };
         return data;
     });
+
 
     app.controller("CurrencyCtrl", function($scope, rateData) {
         $scope.convert = function(amt, base_curr, new_curr) {
@@ -80,6 +82,10 @@
     });
 
     $('.best_in_place').best_in_place();
-    $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd'});
+    $.datepicker.setDefaults({ 
+        dateFormat: 'yy-mm-dd',
+        minDate: new Date(start_date.getFullYear(),start_date.getMonth(),start_date.getDate()),
+        maxDate: new Date(end_date.getFullYear(),end_date.getMonth(),end_date.getDate())
+    });
 
 })(jQuery, this, this.document);

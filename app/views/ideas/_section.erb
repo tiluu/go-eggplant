@@ -1,6 +1,7 @@
  <div class="list-group-item">
-    <h4 class="list-group-item-heading"><%= best_in_place idea, :title, as: :input, url: edit_idea_path(@trip.url, idea.id) %></h4>
-   
+    <h4 class="list-group-item-heading">
+        <%= best_in_place idea, :title, as: :input, url: edit_idea_path(@trip.url, idea.id) %>
+    </h4>
 
     <% if current_user === idea_user(idea) || current_user === creator(@trip) %>
         <%= link_to "delete", delete_idea_path(@trip.url, idea.id), method: :delete, data: {confirm: "You sure?"}, class: "badge btn-green"  %>
@@ -14,4 +15,6 @@
 
     Where: <%= best_in_place idea, :location, as: :input, url: edit_idea_path(@trip.url, idea.id) %> <br>
     Suggested by: <%= idea_user(idea).name %></p>
-    </div>
+
+    <p><div ng-bind="ideaTitle"></div></p>    
+</div>

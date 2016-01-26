@@ -7,14 +7,7 @@
 <%= render 'shared/flash_msg' %>
 
 <div class="user-profile clearfix">
-	<aside>
-		<ul class="list-group"o>
-			<li class="list-group-item"><%= link_to "Trips", dashboard_path %></li>
-			<li class="list-group-item">Past Trips</li>
-            <li class="list-group-item"><%= link_to "Account info", account_path %></li>
-            <li class="list-group-item"><%= link_to "Trip invites", invites_path %></li>
-		</ul>
-	</aside>
+    <%= render 'nav' %>
 
     <section class="content">
         <div class="list-group user_trips">
@@ -65,32 +58,19 @@
             <% end %>
         </div>
             <p><%= link_to 'Add trip', new_trip_path %> </p>
-
-        <div class="list-group closed">
-            
-            <h2>Past Trips [feel free to move or do some JS/CSS magic on this section :)]</h2>
-            <% @trips.each do |trip| %>
-                <% if tripEnded?(trip) && getInvite(trip).going? %> 
-
-                    <div class="list-group-item clearfix">
-                        <h2><%= link_to "#{trip.name}", trip_path(trip.url) %> </h2>
-                        <p><%= "#{format_date(trip.start_date)} to #{format_date(trip.end_date)}" %> </p>
-                        <p><%= "#{trip.city},#{trip.country} " %> </p>
-                        <%= headcount(trip) %> went
-                    </div>
-
-                <% end %> 
-            <% end %> 
-
-       </div>
+            <%= render 'trips/trip_form' %>
 
 	</section>
 
     <div style="outline:1px solid black; position:absolute; bottom:0; right: 0;width: 300px"><strong>TO DO</strong>
         <ol>
-            <li> Fix trip creation form - datepicker buried underneath other text fields -- we should move the creation form to this page so it is a popup</li>
-            <li> maybe move login page to the landing page? Thoughts? --Are we logged in already? so we dont need to show it? </li>
-            <li>move past trip to its own page, the nav is on the left</li>
+            <li> Trip creation form - datepicker buried underneath other text fields -- we should move the creation form to this page so it is a popup <u>done!</u></li>
+            <li> move login page to the landing page?  --Are we logged in already? so we dont need to show it? <u>If you're logged in already you're redirect to dash, but thinking more in terms of what if someone logged out or is logging in for the first time--do we want to just have the login form [and maybe even the signup form?] on the home page or as a popup?</u></li>
+            <li><strong>CHANGES</strong>
+                <li> trip form moved to user dash</li>
+                <li> past trip moved to separate page [users/past_trips.erb], side nav updated</li>
+                <li> side nav moved to users/_nav.erb so we can reuse it for past trips page [unless we can dynamically hide/show current & past trips on the current page?]</li>
+            </li>
         </ol>
     </div>
 </div>

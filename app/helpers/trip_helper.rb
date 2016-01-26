@@ -23,6 +23,36 @@ module TripHelper
         end
     end
 
+    def currency
+        begin 
+          url = "http://api.fixer.io/latest"
+          rates = HTTParty.get(url)
+          JSON.parse(rates.body)
+        rescue JSON::ParserError => e
+          flash[:danger] = "Something went wrong--please refresh the trip page."
+          redirect_to dashboard_path
+        end
+    end
+
+    def getCurrency
+        list = currency['rates'].keys
+        list << currency['base']
+        list.sort!
+    end
+
+    def timezones
+        timezone_list = []
+        ActiveSupport::TimeZone.all.each do |zone|
+            timezone_list << zone.name
+        end
+        timezone_list
+    end
+
+    # def getTimezone
+    #     zone = @trip.timezone
+    #     ActiveSupport::TimeZone[zone].now if @trip.timezone
+    # end
+
     def getRSVP(invite)
         if invite.rsvped?
             invite.going? && !invite.maybe? ? "GOING" : "MAYBE"
