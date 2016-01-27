@@ -41,6 +41,8 @@ class UsersController < ApplicationController
         @current_user = current_user
         @trips = @current_user.trips
         @invites = @current_user.invites
+        @pending = @invites.where(rsvped?: nil)
+        @upcoming_trips = @invites.where(rsvped?: true)
         @action = 'create'
     end
 

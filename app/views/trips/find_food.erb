@@ -77,7 +77,7 @@
 
             Neighborhood: <%#= safe_join(b.location.neighborhoods, ','.html_safe) %>  
 
-            <% if Idea.find_by_title(b.name) %>
+            <% if @trip.ideas.find_by_title(b.name) %>
                 <strong>ADDED</strong><br/>
             <% else %>
                 <%= button_to "Add to itinerary", add_yelp_path(@trip.url, b.name, b.location.display_address), method: :post, data: {confirm: "Add to itinerary?"} %> 

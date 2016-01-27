@@ -12,16 +12,16 @@
     <section class="content">
         <div class="list-group user_trips">
             <div class="list-group-item clearfix">
-            <% if @current_user.invites %>
-            <% @current_user.invites.each do |invite| %> 
-                    <% if !invite.rsvped? %>
+            <% if @pending %>
+                <% @pending.each do |invite| %> 
                     <h2>Pending Invites</h2>
                        <p>
                        <h3><%= getTrip(invite).name %></h3>
                        <%= getSender(invite).name %> invites you</p>
                        <%= render partial: 'trips/rsvp', locals: {invite: invite} %>
                     <% end %>
-                <% end %>
+            <% else %>
+                No pending invites
             <% end %>
             </div>
 
@@ -42,8 +42,8 @@
               <% end %>
             <% end %>
 
-            <% @current_user.invites.each do |invite| %>
-                <% if !tripEnded?(getTrip(invite)) && !creator?(invite) && (invite.going? || invite.maybe?) %>
+            <% @upcoming_trips.each do |invite| %>
+                <% if !tripEnded?(getTrip(invite)) && !creator?(invite) %>
                     <div class="list-group-item clearfix">
                         <figure><a href="<%= trip_path(getTrip(invite).url) %>"><img src="http://loremflickr.com/320/240"/></a></figure>
                         <h2><%= link_to getTrip(invite).name, trip_path(getTrip(invite).url) %></h2>
