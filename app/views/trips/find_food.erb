@@ -1,53 +1,93 @@
-<section>
-<h1>Discover Restaurants in <%= @trip.city %></h1>
+<%= render 'navbar' %>
 
-<%= link_to "Back", trip_path(@trip.url) %>
+<header> 
+  <h1><%= "#{@trip.name}" %></h1>
+  <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> 
+  on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
+  
+  <div><%= trip_countdown %></div>
+  
+  <div>
+    <%= headcount(@trip) %> 
+    <%= tripEnded?(@trip) ? "went" : "going" %> 
+     on this trip<br/>
 
-    <p>
+    <%= creator(@trip).name %> (Organizer)<br/>
+    <% @trip.invites.each do |invite| %>
+     
+      <% if invite.going? && getUser(invite) != creator(@trip) %>
+          <%= getUser(invite).name %>  
+          <% if current_user = getUser(invite) %>
+            | <%= link_to 'leave trip', leave_trip_path(@trip.url), method: :delete, data: {confirm: 'You sure?'} %>
+          <% elsif creator?(@trip) %>
+            <%= link_to 'uninvite', uninvite_path(@trip.url, getUser(invite).tag), method: :delete, data: {confirm: 'You sure?'} %> 
+          <% end %>
+      <% end %>
+
+    <% end %> 
+    </p>
+  </div>
+</header>
+
+<section class="content">
+<div class="dashboard clearfix">
+<h2>Discover Restaurants in <%= @trip.city %></h2>
+    <div>
     <%= form_tag find_food_path(@trip.url), method: "get" do %>
-        <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %><br>
-        <%= text_field_tag(:cuisine, "", placeholder: "Cuisine") %><br>
+        <%= text_field_tag(:neighborhood, "", placeholder: "Neighborhood") %>
+        <%= text_field_tag(:cuisine, "", placeholder: "Cuisine") %>
         <%= submit_tag "Search" %> 
     <% end %> 
 
-    </p>
+    </div>
 
     <p>Sort results by:</p> 
     <%= form_tag find_food_path(@trip.url), method: "get" do %>  
         <%= radio_button_tag(:sort, 0) %>
-        <%= label_tag(:relevance, "relevance") %>
+        <%= label_tag(:relevance, "Relevance") %>
         <%= radio_button_tag(:sort, 1) %>
-        <%= label_tag(:distance, "distance") %>
+        <%= label_tag(:distance, "Distance") %>
         <%= radio_button_tag(:sort, 2) %>
-        <%= label_tag(:rating, "rating") %>
+        <%= label_tag(:rating, "Rating") %>
         <%= submit_tag "Sort" %> 
     <% end %> 
 
-    <p>Restaurants: <br>
     <% if !@yelp_error.nil? %>
-        <%= @yelp_error %>
+        <div class="error"> <%= @yelp_error %></div>
     <% else%> 
-     
-    <% @result.businesses.each do |b| %>
-        <p>
-        <figure style="width:200px"><%= image_tag(b.image_url, alt: "#{b.name}") %> </figure><br>
-        <% if @trip.ideas.find_by_title(b.name) %>
-            <strong>ADDED</strong><br/>
-        <% else %>
-            <%= button_to "Add to itinerary?", add_yelp_path(@trip.url, b.name, b.location.display_address), method: :post, data: {confirm: "Add to itinerary?"} %> 
+
+    
+    <table class="discover_yelp">
+        <tbody>
+         <tr>
+        <% @result.businesses.each_with_index do |b, index| %>
+
+        <% if index != 0 && index % 5 === 0 %>
+            </tr>
+            <tr>
         <% end %>
 
-        <strong><%= b.name %></strong> [ <%= b.is_closed ? "CLOSED" : "OPEN" %> ]<br>
-        Rating: <%= b.rating %><br>
+            <td class="yelp_restaurant">
+            <figure style="width:200px"><%= image_tag(b.image_url, alt: "#{b.name}") %> </figure>
 
-        <%= safe_join(b.location.display_address, '<br>'.html_safe) %><br>
-        
+            <h3><%= b.name %></h3>  <!-- [ <#%= b.is_closed ? "CLOSED" : "OPEN" %> ] -->
+            <span>Rating: <%= b.rating %></span>
 
-        Neighborhood: <%#= safe_join(b.location.neighborhoods, ','.html_safe) %>   
+            <%= safe_join(b.location.display_address, '<br>'.html_safe) %> 
 
-        </p>
-    <% end %> 
-   
+            Neighborhood: <%#= safe_join(b.location.neighborhoods, ','.html_safe) %>  
+
+            <% if Idea.find_by_title(b.name) %>
+                <strong>ADDED</strong><br/>
+            <% else %>
+                <%= button_to "Add to itinerary", add_yelp_path(@trip.url, b.name, b.location.display_address), method: :post, data: {confirm: "Add to itinerary?"} %> 
+            <% end %> 
+
+            </td>
+        <% end %> 
+        </tr>
+        </tbody>
+    </table>
 <% end %>
-</p>
+</div>
 </section>
