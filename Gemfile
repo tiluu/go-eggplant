@@ -29,6 +29,7 @@ gem 'angularjs-rails'
 
 gem 'httparty'
 # APIs
+gem 'dotenv-rails', require: 'dotenv/rails-now', groups: [:development, :test]
 gem 'yelp', require: 'yelp'
 
 gem 'best_in_place'
@@ -50,7 +51,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'dotenv-rails'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
