@@ -29,6 +29,7 @@ gem 'angularjs-rails'
 
 gem 'httparty'
 # APIs
+gem 'dotenv-rails', require: 'dotenv/rails-now', groups: [:development, :test]
 gem 'yelp', require: 'yelp'
 
 gem 'best_in_place'
@@ -55,4 +56,9 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+end
+
+group :production do
+  gem 'puma'
+  gem 'rails_12factor'
 end

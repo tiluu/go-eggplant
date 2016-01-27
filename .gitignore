@@ -14,7 +14,7 @@ tmp
 Gemfile.lock
 *.swp
 *.env
-config/secrets.yml
+.env.development
 secret_token.rb
 .rspec
 
