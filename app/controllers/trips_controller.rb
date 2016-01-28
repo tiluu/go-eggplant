@@ -27,6 +27,9 @@ class TripsController < ApplicationController
         @trip = current_trips.find_by_url(params[:url])
         @action = 'create' 
         @pending = @trip.invites.where(rsvped?: nil)
+        @going = @trip.invites.where(going?: true)
+
+        @group = 
 
         getIdeas(@trip)
     end

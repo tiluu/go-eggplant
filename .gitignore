@@ -15,7 +15,6 @@ Gemfile.lock
 *.swp
 *.env
 .env.development
-secret_token.rb
 .rspec
 
 .DS_Store
