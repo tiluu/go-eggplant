@@ -28,9 +28,6 @@ class TripsController < ApplicationController
         @action = 'create' 
         @pending = @trip.invites.where(rsvped?: nil)
         @going = @trip.invites.where(going?: true)
-
-        @group = 
-
         getIdeas(@trip)
     end
 
@@ -93,6 +90,6 @@ class TripsController < ApplicationController
         def trip_params
             params.require(:trip).permit(:name, :url, :start_date,
                                          :end_date, :city, 
-                                         :country, :creator)
+                                         :country, :creator, :ended?)
         end 
 end

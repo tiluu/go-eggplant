@@ -11,8 +11,8 @@
         <div class="list-group user_trips">
             
             <h2>Past Trips</h2>
-            <% @trips.each do |trip| %>
-                <% if tripEnded?(trip) && getInvite(trip).going? %> 
+            <% @ended_trips.each do |trip| %>
+                <% if getInvite(trip).going? %> 
 
                     <div class="list-group-item clearfix">
                         <h2><%= link_to "#{trip.name}", trip_path(trip.url) %> </h2>

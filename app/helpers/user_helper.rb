@@ -1,8 +1,8 @@
 module UserHelper
  def which_user
-    if current_page?(action: 'edit') || !@current_user.nil?
+    if current_page?(controller: 'users', action: 'edit') || !@current_user.nil?
         @current_user
-    elsif current_page?(action: 'new') || @user.errors
+    elsif current_page?(controller: 'home_pages', action: 'home') || @user.errors
         @user
     end
  end

@@ -30,9 +30,9 @@ Rails.application.routes.draw do
   delete 'trip-:url/idea-:id/delete' => 'ideas#destroy', as: :delete_idea
   get 'trip-:url/ideas' => 'ideas#index'
 
-  get 'signup' => 'users#new', as: :signup
+#  get 'signup' => 'users#new', as: :signup
   post 'signup' => 'users#create'
-  get 'login' => 'users#login', as: :login  
+#  get 'login' => 'users#login', as: :login  
   post 'login' => 'users#authenticate'
   delete 'logout' => 'users#logout', as: :logout
  

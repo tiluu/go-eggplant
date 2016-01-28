@@ -10,8 +10,8 @@ class UsersController < ApplicationController
     if @current_user
             login_user(@current_user)
         else
-            flash.now[:danger] = "Wrong email/password combination"
-            render :login
+            flash[:danger] = "Wrong email/password combination"
+            redirect_to root_path
         end
     end
 
@@ -39,17 +39,18 @@ class UsersController < ApplicationController
 
     def show
         @current_user = current_user
-        @trips = @current_user.trips
+
+        @created_trips = @current_user.trips.where(ended?: nil)
         @invites = @current_user.invites
         @pending = @invites.where(rsvped?: nil)
-        @upcoming_trips = @invites.where(rsvped?: true)
+        @invited_trips = @invites.where(rsvped?: true)
         @action = 'create'
     end
 
     def past_trips
         @current_user = current_user
-        @trips = @current_user.trips
         @invites = @current_user.invites
+        @ended_trips = @current_user.trips.where(ended?: true)
     end
 
 

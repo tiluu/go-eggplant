@@ -16,12 +16,10 @@
       <%= getUser(invite).name %> 
         <% if getUser(invite) == creator(@trip) %> 
         (Organizer)
-        <% end %>
-        <% if !creator?(nil, @trip) && current_user == getUser(invite) %>
-          | <%= link_to 'leave trip', leave_trip_path(@trip.url), method: :delete, data: {confirm: 'You sure?'} %>
-        <% elsif creator?(nil, @trip) %>
-            <%= link_to 'uninvite', uninvite_path(@trip.url, getUser(invite).tag), method: :delete, data: {confirm: 'You sure?'} %> 
-        <% end %><br/>
+        <% else %> 
+          | <%= !creator?(nil, @trip) ? leave(@trip) : uninvite(@trip, invite) %>
+        <% end %> 
+          <br/>
 
     <% end %> 
     </p>

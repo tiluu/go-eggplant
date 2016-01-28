@@ -28,4 +28,10 @@ class Trip < ActiveRecord::Base
         raise e, "An error has occurred, try again later"
     end
 
+    def trip_end
+        if Date.today > self.end_date
+            self.update_attribute(:ended?, true)
+        end
+    end
+
 end

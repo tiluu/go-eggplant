@@ -46,7 +46,7 @@ class GroupTripsController < ApplicationController
        resp = params[:response]
        case resp
        when 'yes'
-        @invite.update(going?: true, maybe?: false)
+        @invite.update_attributes(going?: true, maybe?: false)
        when 'maybe'
         @invite.update_attributes(maybe?: true, going?: false)
        end
@@ -62,7 +62,8 @@ class GroupTripsController < ApplicationController
     end  
 
     def invites
-        @trips = current_trips
+        @ongoing_trips = current_trips.where(ended?: nil)
+        @my_pending = current_user.invites.where(rsvped?: nil)
     end
 
     private
