@@ -1,0 +1,25 @@
+<header> 
+  <h1><%= "#{@trip.name}" %></h1>
+  <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> 
+  on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
+  
+  <div><%= trip_countdown %></div>
+  
+  <div>
+    <%= headcount(@trip) %> 
+    <%= tripEnded?(@trip) ? "went" : "going" %> 
+     on this trip<br/>
+
+    <% @going.each do |invite| %>
+      <%= getUser(invite).name %> 
+        <% if getUser(invite) == creator(@trip) %> 
+        (Organizer)
+        <% else %> 
+          | <%= !creator?(nil, @trip) ? leave(@trip) : uninvite(@trip, invite) %>
+        <% end %> 
+          <br/>
+
+    <% end %> 
+    </p>
+  </div>
+</header>

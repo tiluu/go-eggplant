@@ -2,10 +2,32 @@ class IdeasController < ApplicationController
     before_action :require_login
     respond_to :html, :json 
 
-    def add_yelp
+    def find_food
         @trip = current_trips.find_by_url(params[:url])
-        @idea = @trip.ideas.build(title: params[:food], location: params[:address],
-                                  idea_category_id: 1, user_id: current_user.id)
+        @going = @trip.invites.where(going?: true) # for header
+        
+        location = @trip.city + " " + @trip.country
+        search_params ||= api_params(params[:neighborhood],  
+                                   location, location)
+        sort ||= api_params(params[:sort], 0, 0)
+       
+        yelp_api(search_params, 'restaurants', sort)
+    end
+
+    def find_events
+        @trip = current_trips.find_by_url(params[:url])
+        @going = @trip.invites.where(going?: true)
+
+        location = @trip.city + " " + @trip.country
+        category ||= api_params(params[:event_category], 
+                                '4d4b7104d754a06370d81259','')
+        @attractions = foursquare_api(location, category)  
+    end
+
+    def add_idea
+        @trip = current_trips.find_by_url(params[:url])
+        @idea = @trip.ideas.build(title: params[:title], location: params[:address],
+                                  idea_category_id: params[:category].to_i, user_id: current_user.id)
         if @idea.save
             redirect_to trip_path(@trip.url)
         else

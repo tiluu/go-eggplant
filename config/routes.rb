@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  post 'trip-:url/add-:food/address-:address' => 'ideas#add_yelp', as: :add_yelp
+  post 'trip-:url/add-:title/:category/address-:address' => 'ideas#add_idea', as: :add_idea
   get 'all-timezones' => 'trips#timezones'
+  get 'trip-:url/find-events' => 'ideas#find_events', as: :find_events
+    get 'trip-:url/find-food' => 'ideas#find_food', as: :find_food
 
   #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
   get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
@@ -11,7 +13,6 @@ Rails.application.routes.draw do
   delete 'trip-:url/leave' => 'group_trips#leave_trip', as: :leave_trip
   delete 'trip-:url/uninvite-:tag' => 'group_trips#uninvite', as: :uninvite
 
-  get 'trip-:url/find-food' => 'trips#find_food', as: :find_food
   delete 'trip-:url/delete' => 'trips#destroy', as: :delete_trip
   get 'trip-:url' => 'trips#show', as: :trip
   get 'trip-:url/edit' => 'trips#edit', as: :edit_trip

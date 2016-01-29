@@ -31,9 +31,6 @@ gem 'httparty'
 # APIs
 gem 'dotenv-rails', require: 'dotenv/rails-now', groups: [:development, :test]
 gem 'yelp', require: 'yelp'
-gem 'json'
-gem 'typhoeus'
-gem 'quimby'
 
 gem 'best_in_place'
 gem 'responders'

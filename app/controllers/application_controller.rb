@@ -45,6 +45,21 @@ class ApplicationController < ActionController::Base
      @yelp_error = "No results available for #{loc}"
   end
 
+  def api_params(param, default_value, param_modifier)
+    !param ? default_value : param + param_modifier
+  end
+
+  def foursquare_api(location, category)
+     id = ENV['4SQUARE_CLIENT_ID']
+      secret = ENV['4SQUARE_CLIENT_SECRET']
+      version=Time.now.strftime("%Y%m%d")
+
+      url= "https://api.foursquare.com/v2/venues/search?client_id="+id+"&client_secret="+secret+"&v="+version+"&near="+location+"&categoryId="+category+"&limit=50"
+      request = HTTParty.get(url)
+      attractions = JSON.parse(request.body)
+      @result = attractions['response']['venues']  
+  end
+
   def yelp_api(location, terms, sort=0, category='', offset=0, radius=5000) 
      begin
          @result = Yelp.client.search(location, 
@@ -54,7 +69,7 @@ class ApplicationController < ActionController::Base
                                        radius_filter: radius,
                                        category_filter: category })
     rescue Yelp::Error::UnavailableForLocation => e
-       location_error(location)
+       location_error(location) 
     rescue JSON::ParserError => e
       location_error(location)
     rescue Yelp::Error::InvalidParameter => e
@@ -62,5 +77,5 @@ class ApplicationController < ActionController::Base
     end
   end
         
-  helper_method :current_user, :yelp_api
+  helper_method :current_user, :yelp_api, :api_params
 end

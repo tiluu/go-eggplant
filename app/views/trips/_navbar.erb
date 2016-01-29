@@ -20,8 +20,8 @@
         </li>
         <li><a href="#"class="dropdown-toggle" data-toggle="dropdown" >Discover<span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><%= link_to 'Restaurants', find_food_path %></li>
-                <li>Events</li>
+                <li><%= link_to 'Restaurants', find_food_path(@trip.url) %></li>
+                <li><%= link_to 'Attractions', find_events_path(@trip.url) %></li>
                 <li>Scenery</li>
             </ul>
         </li>

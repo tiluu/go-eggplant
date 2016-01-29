@@ -1,33 +1,5 @@
-<%= render 'navbar' %>
-
-<header> 
-  <h1><%= "#{@trip.name}" %></h1>
-  <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> 
-  on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
-  
-  <div><%= trip_countdown %></div>
-  
-  <div>
-    <%= headcount(@trip) %> 
-    <%= tripEnded?(@trip) ? "went" : "going" %> 
-     on this trip<br/>
-
-    <%= creator(@trip).name %> (Organizer)<br/>
-    <% @trip.invites.each do |invite| %>
-     
-      <% if invite.going? && getUser(invite) != creator(@trip) %>
-          <%= getUser(invite).name %>  
-          <% if current_user = getUser(invite) %>
-            | <%= link_to 'leave trip', leave_trip_path(@trip.url), method: :delete, data: {confirm: 'You sure?'} %>
-          <% elsif creator?(@trip) %>
-            <%= link_to 'uninvite', uninvite_path(@trip.url, getUser(invite).tag), method: :delete, data: {confirm: 'You sure?'} %> 
-          <% end %>
-      <% end %>
-
-    <% end %> 
-    </p>
-  </div>
-</header>
+<%= render 'trips/navbar' %>
+<%= render 'trips/header' %>
 
 <section class="content">
 <div class="dashboard clearfix">
@@ -80,7 +52,7 @@
             <% if @trip.ideas.find_by_title(b.name) %>
                 <strong>ADDED</strong><br/>
             <% else %>
-                <%= button_to "Add to itinerary", add_yelp_path(@trip.url, b.name, b.location.display_address), method: :post, data: {confirm: "Add to itinerary?"} %> 
+                <%= button_to "Add to itinerary", add_idea_path(@trip.url, b.name, 1, b.location.display_address), method: :post, data: {confirm: "Add to itinerary?"} %> 
             <% end %> 
 
             </td>

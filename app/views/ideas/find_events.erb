@@ -1,0 +1,40 @@
+<%= render 'trips/navbar' %>
+<%= render 'trips/header' %>
+
+<section class="content">
+  <div class="dashboard clearfix">
+    <h1>Discover attractions & activities in <%= @trip.city %></h1>
+    <%= link_to "<< Back", trip_path(@trip.url) %>
+  </div>
+  <p>Select category: <br/>
+  <%= form_tag find_events_path(@trip.url), method: "get" do %>
+    <%= radio_button_tag :event_category, "4d4b7104d754a06370d81259" %>
+    <%= label_tag :entertainment, "Arts & Entertainment" %>  
+    <%= radio_button_tag :event_category, "4d4b7105d754a06373d81259" %>
+    <%= label_tag :events, "Events" %>  
+    <%= radio_button_tag :event_category, "4d4b7105d754a06376d81259" %>
+    <%= label_tag :nightlife, "Nightlife" %>
+    <%= radio_button_tag :event_category, "4d4b7105d754a06377d81259" %>
+    <%= label_tag :outdoors, "Outdoors & Recreation" %><br/>
+    <%= radio_button_tag :event_category, "4bf58dd8d48988d163941735" %>
+    <%= label_tag :parks, "Parks" %>
+    <%= radio_button_tag :event_category, "4bf58dd8d48988d165941735" %>
+    <%= label_tag :scenery, "Scenic Lookouts" %>
+    <%= radio_button_tag :event_category, "4d4b7105d754a06378d81259" %>
+    <%= label_tag :shopping, "Shopping" %>
+    <br/><%= submit_tag "Search" %>
+  <% end %> 
+  </p>
+
+  <% @attractions.each do |item| %> 
+    <p>
+      <h2><%= item['name'] %></h2>
+      <%= safe_join(item['location']['formattedAddress'], '<br>'.html_safe) %><br/>
+      <% if @trip.ideas.find_by_title(item['name']) %>
+        <strong>ADDED</strong><br/>
+      <% else %>
+        <%= button_to "Add to itinerary", add_idea_path(@trip.url, item['name'], 4, item['location']['formattedAddress']), data: {confirm: "Add to itinerary?"} %>
+      <% end %>
+    </p>
+  <% end %> 
+</section>

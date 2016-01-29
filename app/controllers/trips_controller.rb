@@ -1,20 +1,6 @@
 class TripsController < ApplicationController
     before_action :require_login
 
-    def find_food
-        @trip = current_trips.find_by_url(params[:url])
-        location = @trip.city + " " + @trip.country
-        if !params[:neighborhood] 
-           search_params = location 
-        else 
-           search_params = params[:neighborhood] + location 
-        end 
-
-        params[:sort].present? ? sort = params[:sort] : sort = 0
-
-        yelp_api(search_params, 'restaurants', sort)
-    end
-
     def timezones
         @timezones = {}
         ActiveSupport::TimeZone.all.each do |zone|

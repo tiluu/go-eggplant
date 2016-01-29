@@ -1,30 +1,5 @@
 <%= render 'navbar' %>
-
-<header> 
-  <h1><%= "#{@trip.name}" %></h1>
-  <p> You are going to <strong><%= "#{@trip.city.capitalize}, #{@trip.country}" %></strong> 
-  on <%= "#{format_date(@trip.start_date)} to #{format_date(@trip.end_date)}" %></p>
-  
-  <div><%= trip_countdown %></div>
-  
-  <div>
-    <%= headcount(@trip) %> 
-    <%= tripEnded?(@trip) ? "went" : "going" %> 
-     on this trip<br/>
-
-    <% @going.each do |invite| %>
-      <%= getUser(invite).name %> 
-        <% if getUser(invite) == creator(@trip) %> 
-        (Organizer)
-        <% else %> 
-          | <%= !creator?(nil, @trip) ? leave(@trip) : uninvite(@trip, invite) %>
-        <% end %> 
-          <br/>
-
-    <% end %> 
-    </p>
-  </div>
-</header>
+<%= render 'header' %>
 
 
 <div class="content" ng-app="trip">
@@ -72,14 +47,16 @@
 
        <ol>
            <li> <strong>Todo/ideas</strong>
-            <li> Add instagram pics and/or foursquare [app needs to be deployed before this can be done] API to the 'Discover' tab and remove the 'Hotel' link?</li>
-            <li> No end date in add idea form & form doesn't close anymore?</li>
+            <li> Add instagram pics to the 'Discover' tab</li>
+            <li> Add idea form & form doesn't close anymore?</li>
             <li> Decide how to let users know they can edit ideas on this page by clicking on them --> maybe highlight text & show an edit icon or even just the word 'edit' on mouseover? </li>
+            <li> Maybe have a link/button/tab in the trip header to direct users back to the trip dash instead of having individual links on each page?</li>
             </li>
-          <li> <strong>Changes</strong>     </li>
-
-          
-     
+          <li> <strong>Changes</strong>    
+            <li> Added foursquare API [views/ideas/find_events.erb]
+           </li>
+           <li> Moved trip header to its own partial [views/trips/_header.erb] for ease of reuse/editing</li>
+          </li>
        </ol>
 
        <div class="idea--form closed">
