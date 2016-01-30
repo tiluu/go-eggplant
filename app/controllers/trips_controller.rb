@@ -14,7 +14,8 @@ class TripsController < ApplicationController
         @action = 'create' 
         @pending = @trip.invites.where(rsvped?: nil)
         @going = @trip.invites.where(going?: true)
-        getIdeas(@trip)
+
+        @group = getIdeas(@trip)
     end
 
     def new
