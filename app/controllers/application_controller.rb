@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
       url= "https://api.foursquare.com/v2/venues/search?client_id="+id+"&client_secret="+secret+"&v="+version+"&near="+location+"&categoryId="+category+"&limit=50"
       request = HTTParty.get(url)
       attractions = JSON.parse(request.body)
-      @result = attractions['response']['venues']  
+      attractions['response']['venues']  
   end
 
   def yelp_api(location, terms, sort=0, category='', offset=0, radius=5000) 

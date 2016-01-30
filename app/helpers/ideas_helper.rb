@@ -15,5 +15,4 @@ module IdeasHelper
             result.join(" to ")
         end
     end
-
 end
