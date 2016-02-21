@@ -26,7 +26,7 @@ class TripsController < ApplicationController
 
     def create
         @trip = current_trips.build(trip_params)
-        @trip.creator = current_user.id
+        @trip.creator = current_user.id    
         @action = 'create'
         if @trip.save
             @invite = @trip.invites.create(user_id: current_user.id,
@@ -61,15 +61,8 @@ class TripsController < ApplicationController
         end
     end
 
-#    def yelp_results
-#        @user = current_user
-#        @trip = @user.trips.find_by_url(params[:url])
-#        search_params = @trip.city + @trip.state_or_province + @trip.country
-#        yelp_api(search_params, 'restaurants', 20)
-#    end
-
     def destroy
-        currrent_trips.find_by_url(params[:url]).destroy
+        current_trips.find_by_url(params[:url]).destroy
         redirect_to dashboard_path
     end
 

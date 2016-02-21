@@ -52,13 +52,6 @@ class GroupTripsController < ApplicationController
        end
        @invite.update_attribute(:rsvped?, true)
        redirect_to dashboard_path
-       # if resp === 'no'
-       #      flash[:info] = "RSVP updated."
-       #      @invite.update(maybe?: false, going?: false)
-       #      redirect_to dashboard_path
-       #  else
-       #      redirect_to trip_path(@trip.url)
-       #  end
     end  
 
     def invites

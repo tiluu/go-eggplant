@@ -38,35 +38,30 @@ class UsersController < ApplicationController
     end
 
     def show
-        @current_user = current_user
-
-        @created_trips = @current_user.trips.where(ended?: nil)
-        @invites = @current_user.invites
+        @created_trips = current_user.trips.where(ended?: nil)
+        @invites = current_user.invites
         @pending = @invites.where(rsvped?: nil)
         @invited_trips = @invites.where(rsvped?: true)
         @action = 'create'
     end
 
     def past_trips
-        @current_user = current_user
-        @invites = @current_user.invites
-        @ended_trips = @current_user.trips.where(ended?: true)
+        @invites = current_user.invites
+        @ended_trips = current_user.trips.where(ended?: true)
     end
 
 
     def edit
-        @current_user = current_user
         @action = 'edit'
     end
 
     def update
-        @current_user = current_user
         @action = 'update'
-        if @current_user.update_attributes(user_params)
+        if current_user.update_attributes(user_params)
             flash[:success] = "Profile updated"
             redirect_to dashboard_path
         else
-            @errors = @current_user.errors
+            @errors = current_user.errors
             render :edit
         end
     end

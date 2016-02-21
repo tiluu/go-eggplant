@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   post 'trip-:url/add-:title/:category/address-:address' => 'ideas#add_idea', as: :add_idea
   get 'all-timezones' => 'trips#timezones'
   get 'trip-:url/find-events' => 'ideas#find_events', as: :find_events
-    get 'trip-:url/find-food' => 'ideas#find_food', as: :find_food
+  get 'trip-:url/find-food' => 'ideas#find_food', as: :find_food
+  get 'trip-:url/scenery' => 'ideas#scenery', as: :scenery
 
-  #get 'trips/trip-:url/yelp_results' => 'trips#yelp_results', as: 'yelp_results'   
   get 'trip-:url/invite' => 'group_trips#invite', as: :invite_friend
   post 'trip-:url/invite' => 'group_trips#send_invite'
   patch 'trip-:url/:response' => 'group_trips#rsvp', as: :rsvp
@@ -31,9 +31,7 @@ Rails.application.routes.draw do
   delete 'trip-:url/idea-:id/delete' => 'ideas#destroy', as: :delete_idea
   get 'trip-:url/ideas' => 'ideas#index'
 
-#  get 'signup' => 'users#new', as: :signup
   post 'signup' => 'users#create'
-#  get 'login' => 'users#login', as: :login  
   post 'login' => 'users#authenticate'
   delete 'logout' => 'users#logout', as: :logout
  

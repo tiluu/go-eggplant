@@ -17,6 +17,6 @@ module RelationshipHelper
   end
 
   def uninvite(trip, invite)
-    link_to 'uninvite', uninvite_path(trip.url, getUser(invite).tag), method: :delete, data: {confirm: 'You sure?'}
+    link_to 'uninvite', uninvite_path(trip.url, invite.user.tag), method: :delete, data: {confirm: 'You sure?'}
   end
 end

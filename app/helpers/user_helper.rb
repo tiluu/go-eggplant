@@ -6,10 +6,6 @@ module UserHelper
         @user
     end
  end
-
- def getUser(invite)
- 	User.find(invite.user_id)
- end
  
 end
 

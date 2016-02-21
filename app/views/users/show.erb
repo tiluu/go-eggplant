@@ -16,7 +16,7 @@
                 <% @pending.each do |invite| %> 
                     <h2>Pending Invites</h2>
                        <p>
-                       <h3><%= getTrip(invite).name %></h3>
+                       <h3><%= invite.trip.name %></h3>
                        <%= getSender(invite).name %> invites you</p>
                        <%= render partial: 'trips/rsvp', locals: {invite: invite} %>
                     <% end %>
@@ -43,15 +43,15 @@
             <% end %>
 
             <% @invited_trips.each do |invite| %>
-                <% if !tripEnded?(getTrip(invite)) && !creator?(invite) %>
+                <% if !tripEnded?(invite.trip) && !creator?(invite) %>
                     <div class="list-group-item clearfix">
-                        <figure><a href="<%= trip_path(getTrip(invite).url) %>"><img src="http://loremflickr.com/320/240"/></a></figure>
-                        <h2><%= link_to getTrip(invite).name, trip_path(getTrip(invite).url) %></h2>
+                        <figure><a href="<%= trip_path(invite.trip.url) %>"><img src="http://loremflickr.com/320/240"/></a></figure>
+                        <h2><%= link_to invite.trip.name, trip_path(invite.trip.url) %></h2>
                          <p>
-                            <%= "#{format_date( getTrip(invite).start_date )} to #{format_date( getTrip(invite).end_date )}" %>
+                            <%= "#{format_date( invite.trip.start_date )} to #{format_date( invite.trip.end_date )}" %>
                         </p>
-                        <p><%= "#{getTrip(invite).city},#{getTrip(invite).country} " %> </p>
-                        <p><%= headcount( getTrip(invite) ) %> going </p>
+                        <p><%= "#{invite.trip.city},#{invite.trip.country} " %> </p>
+                        <p><%= headcount( invite.trip ) %> going </p>
                         <span class="trip-status"><%= render partial: 'trips/rsvp', locals: {invite: invite} %></span>
                 </div>
                 <% end %>

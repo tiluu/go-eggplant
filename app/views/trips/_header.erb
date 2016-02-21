@@ -11,8 +11,8 @@
      on this trip<br/>
 
     <% @going.each do |invite| %>
-      <%= getUser(invite).name %> 
-        <% if getUser(invite) == creator(@trip) %> 
+      <%= invite.user.name %> 
+        <% if invite.user == @trip.creator %> 
         (Organizer)
         <% else %> 
           | <%= !creator?(nil, @trip) ? leave(@trip) : uninvite(@trip, invite) %>

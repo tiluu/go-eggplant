@@ -1,8 +1,4 @@
 module TripHelper
-    def getTrip(invite)
-        Trip.find(invite.trip_id)
-    end
-
     def getInvite(trip)
         Relationship.where(trip_id: trip.id, user_id: current_user.id).first
     end
@@ -17,7 +13,7 @@ module TripHelper
 
     def creator?(invite=nil, trip=nil)
         if invite
-            creator( getTrip(invite) ) == current_user 
+            creator( invite.trip ) == current_user 
         else
             creator(trip) == current_user 
         end
@@ -29,8 +25,7 @@ module TripHelper
           rates = HTTParty.get(url)
           JSON.parse(rates.body)
         rescue JSON::ParserError => e
-          flash[:danger] = "Something went wrong--please refresh the trip page."
-          redirect_to dashboard_path
+          "Something went wrong--please refresh the trip page."
         end
     end
 
@@ -48,11 +43,6 @@ module TripHelper
         timezone_list
     end
 
-    # def getTimezone
-    #     zone = @trip.timezone
-    #     ActiveSupport::TimeZone[zone].now if @trip.timezone
-    # end
-
     def getRSVP(invite)
         if invite.rsvped?
             invite.going? && !invite.maybe? ? "GOING" : "MAYBE"
@@ -62,9 +52,9 @@ module TripHelper
     end
 
     def linkRSVP(invite)
-        yes_link = link_to 'YES', rsvp_path(getTrip(invite).url, 'yes'), method: :patch
-        maybe_link =  link_to 'MAYBE', rsvp_path(getTrip(invite).url, 'maybe'), method: :patch
-        no_link = link_to 'NO', leave_trip_path(getTrip(invite).url), method: :delete, data: {confirm: 'You sure?'}
+        yes_link = link_to 'YES', rsvp_path(invite.trip.url, 'yes'), method: :patch
+        maybe_link =  link_to 'MAYBE', rsvp_path(invite.trip.url, 'maybe'), method: :patch
+        no_link = link_to 'NO', leave_trip_path(invite.trip.url), method: :delete, data: {confirm: 'You sure?'}
 
         case getRSVP(invite)
         when "GOING"

@@ -3,8 +3,8 @@
 <h2>Pending RSVPs</h2>
 <% if !@my_pending.empty? %> 
 	<% @my_pending.each do |invite| %>
-		<h2><%= getTrip(invite).name %></h2>
-		invite sent <%= invite_date( getTrip(invite) ) %> by <%= getSender(invite).name %>
+		<h2><%= invite.trip.name %></h2>
+		invite sent <%= invite_date( invite.trip ) %> by <%= getSender(invite).name %>
 		<%= render partial: 'trips/rsvp', locals: {invite: invite} %>
 	<% end %>
 <% else %>
@@ -17,7 +17,7 @@
 		<h2><%= trip.name %></h2>
 		<% if !pending_invites(trip).empty? && creator?(nil, trip) %> 
 			<% pending_invites(trip).each do |invite| %> 
-				<h3><%= getUser(invite).name %></h3>
+				<h3><%= invite.user.name %></h3>
 				invite sent <%= invite_date(trip) %> by <%= getSender(invite).name %>
 
 				<% if creator?(nil, trip) %>

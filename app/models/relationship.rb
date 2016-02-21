@@ -3,11 +3,6 @@ class Relationship < ActiveRecord::Base
 
     belongs_to :user
     belongs_to :trip
-    
-    # belongs_to :friend, class_name: "User"
-    # belongs_to :group_trip, class_name: "Trip"
-    # belongs_to :invite, class_name: "User"
-    # belongs_to :invited_trip, class_name: "Trip"
 
     validates :email, presence: true
     validates_uniqueness_of :email, scope: :trip_id, 
@@ -16,15 +11,15 @@ class Relationship < ActiveRecord::Base
     def self.get_user_id(invite)
         user = User.find_by(email: invite.email)
         if user
-            invite.user_id = user.id
-            invite.user_tag = User.find(invite.user_id).tag
+            invite.user = user
+            invite.user_tag = user.tag
         else
             randnum = SecureRandom.random_number(User.count*999)
             new_user = User.create(name: "friend#{randnum}", 
                         password: "abc#{randnum}", 
                         password_confirmation: "abc#{randnum}",
                         email: invited.email)
-            invite.user_id = new_user.id
+            invite.user = new_user
         end
         invite.save
     end

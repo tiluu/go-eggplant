@@ -16,7 +16,13 @@ class Trip < ActiveRecord::Base
 
     after_create :gen_trip_url
 
-   
+    def trip_end
+        if Date.today > end_date
+            self.update_attribute(:ended?, true)
+        end
+    end
+
+    ## CALLBACKS ## 
     def gen_trip_url 
         update_column :url, SecureRandom.urlsafe_base64
         not_unique = Trip.where(url: self.url).length > 1
@@ -26,12 +32,6 @@ class Trip < ActiveRecord::Base
         retries -= 1
         retry if retries > 0
         raise e, "An error has occurred, try again later"
-    end
-
-    def trip_end
-        if Date.today > self.end_date
-            self.update_attribute(:ended?, true)
-        end
     end
 
 end
