@@ -1,22 +1,22 @@
 class User < ActiveRecord::Base
     include ValidEmails
-    
+
     has_many :invites, class_name: "Relationship",
                         foreign_key: "user_id",
                         dependent: :destroy
     has_many :trips, through: :invites
 
     has_many :ideas, through: :trips
-  
+
     has_secure_password
 
     validates :name, :email, :password, presence: true, on: :create
     validates :name, length: { maximum: 50 }
-    
-    validates :password, confirmation: true, 
+
+    validates :password, confirmation: true,
                          length: { in: 6..15 },
                          allow_nil: true
-                       
+
     validates :email, :tag, uniqueness: true
 
     after_create :gen_user_tag
@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
         retry if retries > 0
         raise e, "An error has occurred, try again later"
     end
-    
+
     def self.authenticate(email, password)
         user = User.find_by(email: email)
         if user.present? && user.authenticate(password)

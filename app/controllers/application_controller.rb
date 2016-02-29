@@ -6,30 +6,30 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def current_user
-      @current_user ||= User.find_by(id: session[:user_id])
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   def current_trips
-      @current_trip = current_user.trips
+    @current_trip = current_user.trips
   end
 
   def require_login
-      if current_user.nil? 
-          flash[:danger] = "Please log in before proceeding"
-          redirect_to login_path
-      end
+    if current_user.nil? 
+        flash[:danger] = "Please log in before proceeding"
+        redirect_to login_path
+    end
   end
   
   def require_logout
-      if current_user.present? 
-          flash[:danger] = "Please log out first"
-          redirect_to dashboard_path
-      end
+    if current_user.present? 
+      flash[:danger] = "Please log out first"
+      redirect_to dashboard_path
+    end
   end
 
   def login_user(user)
-      session[:user_id] = user.id
-      redirect_to dashboard_path
+    session[:user_id] = user.id
+    redirect_to dashboard_path
   end
 
   def getIdeas(trip)
@@ -40,9 +40,9 @@ class ApplicationController < ActionController::Base
   end
 
   def location_error(location)
-     l = location.split(' ')
-     loc = l.join(" ")
-     @yelp_error = "No results available for #{loc}"
+    l = location.split(' ')
+    loc = l.join(" ")
+    @yelp_error = "No results available for #{loc}"
   end
 
   def api_params(param, default_value, param_modifier)
@@ -50,26 +50,26 @@ class ApplicationController < ActionController::Base
   end
 
   def foursquare_api(location, category)
-     id = ENV['4SQUARE_CLIENT_ID']
-      secret = ENV['4SQUARE_CLIENT_SECRET']
-      version=Time.now.strftime("%Y%m%d")
+    id = ENV['4SQUARE_CLIENT_ID']
+     secret = ENV['4SQUARE_CLIENT_SECRET']
+     version=Time.now.strftime("%Y%m%d")
 
-      url= "https://api.foursquare.com/v2/venues/search?client_id="+id+"&client_secret="+secret+"&v="+version+"&near="+location+"&categoryId="+category+"&limit=50"
-      request = HTTParty.get(url)
-      attractions = JSON.parse(request.body)
-      attractions['response']['venues']  
+     url= "https://api.foursquare.com/v2/venues/search?client_id="+id+"&client_secret="+secret+"&v="+version+"&near="+location+"&categoryId="+category+"&limit=50"
+     request = HTTParty.get(url)
+     attractions = JSON.parse(request.body)
+     attractions['response']['venues']  
   end
 
   def yelp_api(location, terms, sort=0, category='', offset=0, radius=5000) 
-     begin
-         @result = Yelp.client.search(location, 
-                                      {term: terms,
-                                       sort: sort,
-                                       offset: offset,
-                                       radius_filter: radius,
-                                       category_filter: category })
+    begin
+    @result = Yelp.client.search(location, 
+                                 {term: terms,
+                                  sort: sort,
+                                  offset: offset,
+                                  radius_filter: radius,
+                                  category_filter: category })
     rescue Yelp::Error::UnavailableForLocation => e
-       location_error(location) 
+      location_error(location) 
     rescue JSON::ParserError => e
       location_error(location)
     rescue Yelp::Error::InvalidParameter => e

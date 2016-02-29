@@ -16,6 +16,6 @@ Gemfile.lock
 *.env
 .env.development
 .rspec
+/config/database.yml
 
 .DS_Store
-

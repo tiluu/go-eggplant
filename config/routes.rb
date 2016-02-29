@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  post 'trip-:url/add-:title/:category/address-:address' => 'ideas#add_idea', as: :add_idea
   get 'all-timezones' => 'trips#timezones'
   get 'trip-:url/find-events' => 'ideas#find_events', as: :find_events
   get 'trip-:url/find-food' => 'ideas#find_food', as: :find_food
@@ -25,6 +24,7 @@ Rails.application.routes.draw do
   get 'account' => 'users#edit', as: :account
   patch 'account' => 'users#update'
 
+  post 'trip-:url/add-:title/:category/address-:address' => 'ideas#add_idea', as: :add_idea
   post 'trip-:url' => 'ideas#create', as: :new_idea
   get 'trip-:url/idea-:id' => 'ideas#show', as: :idea
   put 'trip-:url/idea-:id/edit' => 'ideas#update', as: :edit_idea
