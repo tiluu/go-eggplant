@@ -45,19 +45,20 @@ class ApplicationController < ActionController::Base
     @yelp_error = "No results available for #{loc}"
   end
 
+  # set default values if certain API search params not present
   def api_params(param, default_value, param_modifier)
     !param ? default_value : param + param_modifier
   end
 
   def foursquare_api(location, category)
     id = ENV['4SQUARE_CLIENT_ID']
-     secret = ENV['4SQUARE_CLIENT_SECRET']
-     version=Time.now.strftime("%Y%m%d")
+    secret = ENV['4SQUARE_CLIENT_SECRET']
+    version = Time.now.strftime("%Y%m%d")
 
-     url= "https://api.foursquare.com/v2/venues/search?client_id="+id+"&client_secret="+secret+"&v="+version+"&near="+location+"&categoryId="+category+"&limit=50"
-     request = HTTParty.get(url)
-     attractions = JSON.parse(request.body)
-     attractions['response']['venues']  
+    url= "https://api.foursquare.com/v2/venues/search?client_id="+id+"&client_secret="+secret+"&v="+version+"&near="+location+"&categoryId="+category+"&limit=50"
+    request = HTTParty.get(url)
+    attractions = JSON.parse(request.body)
+    attractions['response']['venues']  
   end
 
   def yelp_api(location, terms, sort=0, category='', offset=0, radius=5000) 

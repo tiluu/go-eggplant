@@ -21,6 +21,8 @@ class IdeasController < ApplicationController
     @going = @trip.invites.where(going?: true)
 
     location = @trip.city + " " + @trip.country
+
+    # TODO: sub hard-coded Foursquare category ID [currently correspond to Arts & Entertainment] for user choice! 
     category ||= api_params(params[:event_category],
                             '4d4b7104d754a06370d81259','')
     @attractions = foursquare_api(location, category)
